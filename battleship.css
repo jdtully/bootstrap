@@ -1,0 +1,57 @@
+html {padding: 0px;
+    margin: 0px;
+}
+
+body {
+    margin: 0px;
+    margin-top: 10 px;
+    background-color: navy;
+    text-align: center;
+}
+div {margin: 0px
+}
+div.gamename {
+    margin: 0px;
+    padding: 0px;
+    font-size: 30px;
+    color: cyan;
+}
+.lab{    margin: 0px;
+    display: inline-block;
+    width: 35px;
+    height: 30px;
+    text-align:center;
+    margin-top: 2px;
+    font-size: 50px;
+    padding: 1px;
+    padding-top: 3px;}
+
+.col{
+    margin: 0px;
+    display: inline-block;
+    width: 35px;
+    height: 30px;
+    text-align:center;
+    background-color:white;
+    margin-top: 2px;
+    font-size: 50px;
+    padding: 1px;
+    padding-top: 3px;
+    }
+
+.resetbutton button {
+    padding:10px;
+    font-size: 30px;
+    margin-top: 10px;
+}
+
+#status {
+    font-size: 50px;
+    color:  red;
+    padding: 0px;
+}
+.shipbuttons button {
+    background-color: green;
+    display: inline;
+    
+}
