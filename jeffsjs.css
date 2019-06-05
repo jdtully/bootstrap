@@ -1,0 +1,38 @@
+#message {    
+    margin: 50px;
+    text-align:left;
+    width: 300px;
+    background-color: indianred;
+    margin-top: 60px;
+    font-size: 50px;
+    padding: 50px;
+    color:yellowgreen;
+    padding-top: 30px;}
+
+#table {
+    margin: 10;
+    color:  red;
+    padding: 0;
+    border: 2px red solid;
+    
+    
+}
+td {
+    text-align: center;
+    color: green;
+    padding: 10px;
+    height: 30px;
+    width: 30px;
+    border: 2px red solid;
+
+
+}
+
+
+#button1 {
+    background-color: indianred;
+    color : yellowgreen;
+    padding:10px;
+    font-size: 40px;
+    margin-top: 10px;
+}
