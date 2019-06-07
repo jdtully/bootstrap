@@ -17,11 +17,18 @@
 }
 td {
     text-align: center;
-    color: green;
+    color: black;
     padding: 10px;
     height: 30px;
     width: 40px;
     border: 2px red solid;
+    margin: 1px;
+}
+td.hover {
+    background-color:gray;
+    border-color: black;
+    border-width: 2px ;
+    margin: 3px ;
 }
 
 .btn-group-vertical {
@@ -59,6 +66,7 @@ div {
     text-align: center;
     color: blue;
 }
+
 #status{
     margin-top: 20px;
 }

@@ -3,45 +3,50 @@
   letters = ["A","B","C","D","E","F","G","H","I","J","K","L","M","N","O","P","Q","R","S","T","U","V","W","X","Y","Z"]
   currentPlayer = ["blue"]
   otherPlayer = ["red"]
-  currentShip = []
-  gamePhase = ["setup"]
+  currentship = []
+  gamePhase = ["setup","play","end"]
   
-  //set  rows  and  columns  to  variables  with a  selector
-
-
+function buildGrid(elementId) {
   //get the body
-  var tableContainer = document.getElementById('table0');
+  var tableContainer = document.getElementById(elementId);
   //create table
   var table = document.createElement('table');
-
   //create a table body
-    var tblB = document.createElement('tbody');
+  var tblB = document.createElement('tbody');
   //append table body to the table
-    table.appendChild(tblB);
+  table.appendChild(tblB);
   //nested loops  to create columns and  rows
   for(var i = 0; i<numRows; i++) {
     //create rows
     var tr = document.createElement('tr');
     //append rows  to body
     tblB.appendChild(tr);
-
     //loop for cols
     for (var j = 0; j<numCols; j++) {      
       // create cols
         var td = document.createElement('td');
+        $(td).hover( 
+          function(){ $(this).addClass('hover')
+          console.log("hovered! " + $(this).attr('id'))},
+          function(){ $(this).removeClass('hover')})
+
         // put  test text in cells
-            td.innerText=i+":" + j
+        let cellid = i + ":" + j; 
+        td.innerText = cellid;
+        td.id = elementId + "-" + cellid;
         //add cols to rows
         tr.appendChild(td);
     }
   }
-//append the table to the body
-tableContainer.appendChild(table);
+  //append the table to the body
+  tableContainer.appendChild(table);
+}
 
 //set  rows  and  columns  to  variables  with a  selector
 
 //after the body gets wrapped in  a  function there should  be a way to concatinate the current player  with the
 //get the body
+/*
 var tableContainer = document.getElementById('table1');
 //create table
 var table = document.createElement('table');
@@ -61,6 +66,11 @@ for(var i = 0; i<numRows; i++) {
   for (var j = 0; j<numCols; j++) {      
     // create cols
       var td = document.createElement('td');
+      $('td').hover( 
+        function(){ $(this).addClass('hover')},
+        function(){ $(this).removeClass('hover')}
+      )
+
       // put  test text in cells
           td.innerText=i+":" + j
       //add cols to rows
@@ -69,32 +79,32 @@ for(var i = 0; i<numRows; i++) {
 }
 //append the table to the body
 tableContainer.appendChild(table);
+ */
 
 
-
+//create ship variables
 function makeShips() {
   let redCarrier = [1,2,3,4,5]
   let redBattleship = [1,2,3,4]
   let redSubmarine = [1,2,3]
   let redCruiser = [1,2,3]
-  let rDestroyer = [1,2]
+  let redDestroyer = [1,2]
   let blueCarrier = [1,2,3,4,5]
   let blueBattleship = [1,2,3,4]
   let blueSubmarine = [1,2,3]
   let blueCruiser = [1,2,3]
   let blueDestroyer = [1,2]
 }
-function setUp () {
-  buildGrid()
-  makeShips()
-  gamePhase
 
 
-}
+
 $(document).ready(function() {
   console.log("ready")
-  debugger
-  if(gamePhase == "setup") {
+  if(gamePhase[0] === "setup") {
+    buildGrid("table0")
+    buildGrid("table1")
+    pickship()
+    placeships(pickship)
     console.log("gamePhase = setup")
     messaging("setup");
     messaging("currentplayer")
@@ -209,19 +219,25 @@ function messaging(message) {
       
   }
 }
-function start() {
-  console.log("this is  to make it stop complaining")
+//select placement area of ships during setup
+function placeships() {
+  console.log("ready to place ships")
 }
 
 
+//select  shiptype (ships are  declared  above)
 function pickship(shipType) {
     switch (shiptype) {
         case "carrier":
-            if(currentPlayer ==="blue") {
-              currentShip = currentPlayer + blueCarrier
-              console.log("Carrier Clicked");
-              $('#status').html("Carrier Selected");
-              break;
+            console.log("Carrier Clicked")
+            $('#status').html("Carrier Selected")
+            if(currentPlayer == "blue") {
+              currentship = blueCarrier;
+            }
+            else {
+              currentship = redCarrier;
+            break;
+          return(current)
             }
   
         case "battleship": 
