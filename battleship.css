@@ -1,57 +1,64 @@
-html {padding: 0px;
-    margin: 0px;
-}
-
-body {
-    margin: 0px;
-    margin-top: 10 px;
-    background-color: navy;
+.message {    
+    margin-top: 20;
     text-align: center;
+    color: blue;
 }
-div {margin: 0px
-}
-div.gamename {
-    margin: 0px;
-    padding: 0px;
-    font-size: 30px;
-    color: cyan;
-}
-.lab{    margin: 0px;
-    display: inline-block;
-    width: 35px;
-    height: 30px;
-    text-align:center;
-    margin-top: 2px;
-    font-size: 50px;
-    padding: 1px;
-    padding-top: 3px;}
-
-.col{
-    margin: 0px;
-    display: inline-block;
-    width: 35px;
-    height: 30px;
-    text-align:center;
-    background-color:white;
-    margin-top: 2px;
-    font-size: 50px;
-    padding: 1px;
-    padding-top: 3px;
-    }
-
-.resetbutton button {
-    padding:10px;
-    font-size: 30px;
-    margin-top: 10px;
+.container {
+    margin-top: 50px;
 }
 
-#status {
-    font-size: 50px;
+#table {
+    margin: 10;
     color:  red;
-    padding: 0px;
-}
-.shipbuttons button {
-    background-color: green;
-    display: inline;
+    padding: 0;
+    border: 2px red solid;
+    width: 320px; 
     
+}
+td {
+    text-align: center;
+    color: green;
+    padding: 10px;
+    height: 30px;
+    width: 40px;
+    border: 2px red solid;
+}
+
+.btn-group-vertical {
+    width: 20px;
+    border: none;
+}
+.ship {
+    background-color: blue;
+    padding:10px;
+    border-radius: 8px;
+    margin: 2px;
+    font-size: 20px;
+    align-self: center;
+    width: 150px;
+}
+.action
+{
+    background-color: orangered;
+    padding:10px;
+    border-radius: 8px;
+    margin: 0px;
+    font-size: 20px;
+    align-self: center;
+    width: 150px;
+}
+div {
+    border: transparent
+}
+.bottom-messages {
+    margin-top: 30px;
+    text-align: center;
+    color: blue;
+}
+#gamename {
+    text-align: center;
+    color: blue;
+}
+#status{
+    margin-top: 20px;
 }
