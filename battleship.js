@@ -112,6 +112,11 @@ $(document).ready(function() {
     messaging("setup");
     messaging("currentplayer")
   }
+  else{
+    console.log("time  to play")
+  }
+
+  //button handlers
   $("#button1").on ("click",(function() {
     messaging("reset");
   })); 
