@@ -1,11 +1,11 @@
-  numRows = 10
-  numCols = 10
-  letters = ["A","B","C","D","E","F","G","H","I","J","K","L","M","N","O","P","Q","R","S","T","U","V","W","X","Y","Z"]
-  currentPlayer = ["blue"]
-  otherPlayer = ["red"]
-  currentship = []
-  gamePhase = ["setup","play","end"]
-  shipinplay = []
+  numRows = 10;
+  numCols = 10;
+  letters = ["A","B","C","D","E","F","G","H","I","J","K","L","M","N","O","P","Q","R","S","T","U","V","W","X","Y","Z"];
+  currentPlayer = ["blue"];
+  otherPlayer = ["red"];
+  currentship = [];
+  gamePhase = ["setup","play","end"];
+  shipinplay = [];
   
 function buildGrid(elementId) {
   //get the body
@@ -30,7 +30,7 @@ function buildGrid(elementId) {
           function(){ $(this).addClass('hover')},
           //console.log("hovered! " + $(this).attr('id'))
           //if you  want to turn this  console back on  remember to get the curly brace and  comma  and  put it after id,))
-          function(){ $(this).removeClass('hover')})
+          function(){ $(this).removeClass('hover')});
 
         // put  test text in cells
         let cellid = i + ":" + j; 
@@ -86,7 +86,7 @@ tableContainer.appendChild(table);
 
 //create ship variables
 function makeShips() {
-  let redCarrier = [1,2,3,4,5]
+  let redCarrier = [1,2,3,4,5];
   let redBattleship = [1,2,3,4]
   let redSubmarine = [1,2,3]
   let redCruiser = [1,2,3]
@@ -96,65 +96,83 @@ function makeShips() {
   let blueSubmarine = [1,2,3]
   let blueCruiser = [1,2,3]
   let blueDestroyer = [1,2]
+  console.log("makeships done");
 }
 
 
 
 $(document).ready(function() {
-  console.log("ready")
+  console.log("ready");
   if(gamePhase[0] === "setup") {
     buildGrid("table0");
     buildGrid("table1");
     console.log("grids built");
     pickship(currentPlayer);
     placeship(shipinplay);
-    console.log("gamePhase = setup")
+    console.log("gamePhase = setup");
     messaging("setup");
-    messaging("currentplayer")
+    messaging("currentplayer");
   }
-  else{
-    console.log("time  to play")
-  }
-
-  //button handlers
-  $("#button1").on ("click",(function() {
-    messaging("reset");
-  })); 
-  $("#button2").on ("click",(function() {
-    console.log("carrier clicked")
-    pickship("Carrier");
-    messaging("carrier");
-  })); 
-  $("#button3").on ("click",(function() {
-    console.log("battleship clicked")
-    pickship("Battleship");
-    messaging("battleship");
-  })); 
-  $("#button4").on ("click",(function() {
-    console.log("cruiser clicked")
-    pickship("Cruiser");
-    messaging("cruiser");
-  })); 
-  $("#button5").on ("click",(function() {
-    console.log("submarine clicked")
-    pickship("Submarine");
-    messaging("submarine");
-  })); 
-  $("#button6").on ("click",(function() {
-    console.log("destroyer clicked")
-    pickship("Destroyer");
-    messaging("destroyer");
-  })); 
-  $("#button7").on ("click",(function() {
-    console.log("hide button clicked")
-    messaging("hide"); 
-  })); 
-  $("#button8").on ("click",(function() {
-    console.log("switchplayer button clicked")
-    messaging("switch");
-  })); 
 });
 
+  //button handlers
+  $(document).ready(function() {
+    $("#button1").on ("click",(function() {
+      messaging("reset");
+    }));
+     $("#button2").on ("click",(function() {
+      console.log("carrier clicked");
+      pickship("Carrier");
+      messaging("carrier");
+    })); 
+    $("#button3").on ("click",(function() {
+      console.log("battleship clicked");
+      pickship("Battleship");
+      messaging("battleship");
+    })); 
+    $("#button4").on ("click",(function() {
+      console.log("cruiser clicked");
+      pickship("Cruiser");
+      messaging("cruiser");
+    })); 
+    $("#button5").on ("click",(function() {
+      console.log("submarine clicked");
+      pickship("Submarine");
+      messaging("submarine");
+    })); 
+    $("#button6").on ("click",(function() {
+      console.log("destroyer clicked");
+      pickship("Destroyer");
+      messaging("destroyer");
+    })); 
+    $("#button7").on ("click",(function() {
+      console.log("hide button clicked");
+      messaging("hide"); 
+    })); 
+    $("#button8").on ("click",(function() {
+      console.log("switchplayer button clicked");
+      messaging("switch");
+    })); 
+
+    $("#button9").on ("click",(function() {
+      console.log("horiz or vert button clicked");
+      selectorientation();
+      messaging("switch");
+    }));
+  });
+
+  //if hover goes  bad  delete this  and  the hover  function  and uncomment hover  in grid  creation
+  //  $("#td".hover(this)).on ("hover" ,( 
+  //  function(){ $(this).addClass('hover')},
+  //    console.log("hovered! " + $(this).attr('id')),
+    //if you  want to turn this  console back on  remember to get the curly brace and  comma  and  put it after id,))
+  //  function(){ $(this).removeClass('hover')
+  //}));
+
+
+
+
+//hopefully all messaging  is  in here
 function messaging(message) {
   switch (message) {
       case "reset":
@@ -226,6 +244,7 @@ function messaging(message) {
       case "playing":
           $('#gamephase').html("Click a point in the right grid to attack it");
           break;
+
       case "currentplayer":
           $('#currentplayer').html("current player is " + currentPlayer);
           break;
@@ -233,7 +252,13 @@ function messaging(message) {
   }
 }
 
-
+//need a hover function
+//$("#td".hover(this)).on ("hover" ,( 
+  //function(){ $(this).addClass('hover')},
+  //  console.log("hovered! " + $(this).attr('id')),
+  //if you  want to turn this  console back on  remember to get the curly brace and  comma  and  put it after id,))
+  //function(){ $(this).removeClass('hover')
+  //}
 
 //select  shiptype (ships are  declared  above)
 function pickship(currentship) {
@@ -244,19 +269,14 @@ function pickship(currentship) {
         return (shipinplay);
 
     }
-
-
 //select placement area of ships during setup
 function placeship(shipinplay) {  
   console.log("ready to place ships")
   let orientation = ["horiz"]    
 
 }
-function pickship() {
-  console.log("Need  to write pickship")
+function selectorientation() {
+  console.log("selecting orientation")
 }
 
-//function switchPlayers() {
-  //if(currentplayer === "blue");
-  console.log("need to write switchPlayers")
-//}
+
