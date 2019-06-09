@@ -5,6 +5,7 @@
   otherPlayer = ["red"]
   currentship = []
   gamePhase = ["setup","play","end"]
+  shipinplay = []
   
 function buildGrid(elementId) {
   //get the body
@@ -26,8 +27,9 @@ function buildGrid(elementId) {
       // create cols
         var td = document.createElement('td');
         $(td).hover( 
-          function(){ $(this).addClass('hover')
-          console.log("hovered! " + $(this).attr('id'))},
+          function(){ $(this).addClass('hover')},
+          //console.log("hovered! " + $(this).attr('id'))
+          //if you  want to turn this  console back on  remember to get the curly brace and  comma  and  put it after id,))
           function(){ $(this).removeClass('hover')})
 
         // put  test text in cells
@@ -94,6 +96,7 @@ function makeShips() {
   let blueSubmarine = [1,2,3]
   let blueCruiser = [1,2,3]
   let blueDestroyer = [1,2]
+  let shipinplay = []
 }
 
 
@@ -103,8 +106,10 @@ $(document).ready(function() {
   if(gamePhase[0] === "setup") {
     buildGrid("table0")
     buildGrid("table1")
-    pickship()
-    placeships(pickship)
+    console.log("grids built")
+    pickship(currentPlayer)
+    console.log
+    placeships(shipinplay)
     console.log("gamePhase = setup")
     messaging("setup");
     messaging("currentplayer")
@@ -114,22 +119,27 @@ $(document).ready(function() {
   })); 
   $("#button2").on ("click",(function() {
     console.log("carrier clicked")
+    pickship("Carrier");
     messaging("carrier");
   })); 
   $("#button3").on ("click",(function() {
     console.log("battleship clicked")
+    pickship("Battleship");
     messaging("battleship");
   })); 
   $("#button4").on ("click",(function() {
     console.log("cruiser clicked")
+    pickship("Cruiser");
     messaging("cruiser");
   })); 
   $("#button5").on ("click",(function() {
     console.log("submarine clicked")
+    pickship("Submarine");
     messaging("submarine");
   })); 
   $("#button6").on ("click",(function() {
     console.log("destroyer clicked")
+    pickship("Destroyer");
     messaging("destroyer");
   })); 
   $("#button7").on ("click",(function() {
@@ -175,7 +185,7 @@ function messaging(message) {
           break;
       
       case "pickship":
-          $('#status').html("You picked "+ shiptype + ".")
+          $('#status').html("You picked "+ currentship + ".")
           break;
 
       case "hit":
@@ -219,46 +229,25 @@ function messaging(message) {
       
   }
 }
-//select placement area of ships during setup
-function placeships() {
-  console.log("ready to place ships")
-}
+
 
 
 //select  shiptype (ships are  declared  above)
-function pickship(shipType) {
-    switch (shiptype) {
-        case "carrier":
-            console.log("Carrier Clicked")
-            $('#status').html("Carrier Selected")
-            if(currentPlayer == "blue") {
-              currentship = blueCarrier;
-            }
-            else {
-              currentship = redCarrier;
-            break;
-          return(current)
-            }
-  
-        case "battleship": 
-            console.log ("Battleship Clicked");          
-            break;
-  
-        case "cruiser":
-            console.log ("Cruiser Clicked")
-            break;
-  
-        case "submarine":
-            console.log ("Cruiser Clicked")
-            break;
-  
-        case "destroyer":
-            console.log ("Cruiser Clicked")
-            break;
+function pickship(currentship) {
+        console.log("Picking " + currentship)
+        $('#status').html("Carrier Selected")
+        var shipinplay = currentPlayer+currentship;
+        break;
+
     }
+
+
+//select placement area of ships during setup
+function placeships(shipinplay) {  
+  console.log("ready to place ships")
+  let orientation = ["horiz"]    
+
 }
-
-
 function pickship() {
   console.log("Need  to write pickship")
 }
