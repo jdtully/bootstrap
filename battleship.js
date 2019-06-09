@@ -43,47 +43,6 @@ function buildGrid(elementId) {
   //append the table to the body
   tableContainer.appendChild(table);
 }
-
-//set  rows  and  columns  to  variables  with a  selector
-
-//after the body gets wrapped in  a  function there should  be a way to concatinate the current player  with the
-//get the body
-/*
-var tableContainer = document.getElementById('table1');
-//create table
-var table = document.createElement('table');
-
-//create a table body
-  var tblB = document.createElement('tbody');
-//append table body to the table
-  table.appendChild(tblB);
-//nested loops  to create columns and  rows
-for(var i = 0; i<numRows; i++) {
-  //create rows
-  var tr = document.createElement('tr');
-  //append rows  to body
-  tblB.appendChild(tr);
-
-  //loop for cols
-  for (var j = 0; j<numCols; j++) {      
-    // create cols
-      var td = document.createElement('td');
-      $('td').hover( 
-        function(){ $(this).addClass('hover')},
-        function(){ $(this).removeClass('hover')}
-      )
-
-      // put  test text in cells
-          td.innerText=i+":" + j
-      //add cols to rows
-      tr.appendChild(td);
-  }
-}
-//append the table to the body
-tableContainer.appendChild(table);
- */
-
-
 //create ship variables
 function makeShips() {
   let redCarrier = [1,2,3,4,5];
