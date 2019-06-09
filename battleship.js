@@ -6,6 +6,16 @@
   currentship = [];
   gamePhase = ["setup","play","end"];
   shipinplay = [];
+  redCarrier = [1,2,3,4,5];
+  redBattleship = [1,2,3,4]
+  redSubmarine = [1,2,3]
+  redCruiser = [1,2,3]
+  redDestroyer = [1,2]
+  blueCarrier = [1,2,3,4,5]
+  blueBattleship = [1,2,3,4]
+  blueSubmarine = [1,2,3]
+  blueCruiser = [1,2,3]
+  blueDestroyer = [1,2]
   
 function buildGrid(elementId) {
   //get the body
@@ -45,16 +55,16 @@ function buildGrid(elementId) {
 }
 //create ship variables
 function makeShips() {
-  let redCarrier = [1,2,3,4,5];
-  let redBattleship = [1,2,3,4]
-  let redSubmarine = [1,2,3]
-  let redCruiser = [1,2,3]
-  let redDestroyer = [1,2]
-  let blueCarrier = [1,2,3,4,5]
-  let blueBattleship = [1,2,3,4]
-  let blueSubmarine = [1,2,3]
-  let blueCruiser = [1,2,3]
-  let blueDestroyer = [1,2]
+  redCarrier = [1,2,3,4,5];
+  redBattleship = [1,2,3,4]
+  redSubmarine = [1,2,3]
+  redCruiser = [1,2,3]
+  redDestroyer = [1,2]
+  blueCarrier = [1,2,3,4,5]
+  blueBattleship = [1,2,3,4]
+  blueSubmarine = [1,2,3]
+  blueCruiser = [1,2,3]
+  blueDestroyer = [1,2]
   console.log("makeships done");
 }
 
@@ -66,11 +76,10 @@ $(document).ready(function() {
     buildGrid("table0");
     buildGrid("table1");
     console.log("grids built");
-    pickship(currentPlayer);
-    placeship(shipinplay);
+
     console.log("gamePhase = setup");
     messaging("setup");
-    messaging("currentplayer");
+    messaging("currentPlayer");
   }
 });
 
@@ -81,27 +90,32 @@ $(document).ready(function() {
     }));
      $("#button2").on ("click",(function() {
       console.log("carrier clicked");
-      pickship("Carrier");
+      let shipinplay = pickship(currentPlayer,"Carrier");
+      placeship(shipinplay)
       messaging("carrier");
     })); 
     $("#button3").on ("click",(function() {
       console.log("battleship clicked");
-      pickship("Battleship");
+      let shipinplay = pickship(currentPlayer,"Battleship");
+      placeship(shipinplay)
       messaging("battleship");
     })); 
     $("#button4").on ("click",(function() {
       console.log("cruiser clicked");
-      pickship("Cruiser");
+      let shipinplay = pickship(currentPlayer,"Cruiser");
+      placeship(shipinplay)
       messaging("cruiser");
     })); 
     $("#button5").on ("click",(function() {
       console.log("submarine clicked");
-      pickship("Submarine");
+      let shipinplay = pickship(currentPlayer,"Submarine");
+      placeship(shipinplay)
       messaging("submarine");
     })); 
     $("#button6").on ("click",(function() {
       console.log("destroyer clicked");
-      pickship("Destroyer");
+      let shipinplay = pickship(currentPlayer,"Destroyer");
+      placeship(shipinplay)
       messaging("destroyer");
     })); 
     $("#button7").on ("click",(function() {
@@ -204,8 +218,8 @@ function messaging(message) {
           $('#gamephase').html("Click a point in the right grid to attack it");
           break;
 
-      case "currentplayer":
-          $('#currentplayer').html("current player is " + currentPlayer);
+      case "currentPlayer":
+          $('#currentPlayer').html("current player is " + currentPlayer);
           break;
       
   }
@@ -220,7 +234,7 @@ function messaging(message) {
   //}
 
 //select  shiptype (ships are  declared  above)
-function pickship(currentship) {
+function pickship(currentPlayer,currentship) {
         console.log("Picking " + currentship)
         $('#status').html("Carrier Selected")
         let shipinplay = currentPlayer+currentship;
@@ -230,10 +244,13 @@ function pickship(currentship) {
     }
 //select placement area of ships during setup
 function placeship(shipinplay) {  
-  console.log("ready to place ships")
-  let orientation = ["horiz"]    
-
-}
+  console.log("ready to place ships " + shipinplay)
+  let orientation = "horiz"
+    if (orientation == "horiz") {
+      size = window[shipinplay].length
+    }
+    
+}  
 function selectorientation() {
   console.log("selecting orientation")
 }
