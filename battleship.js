@@ -3,7 +3,7 @@
   letters = ["A","B","C","D","E","F","G","H","I","J","K","L","M","N","O","P","Q","R","S","T","U","V","W","X","Y","Z"];
   currentPlayer = ["blue"];
   otherPlayer = ["red"];
-  currentship = [];
+  currentship = "";
   gamePhase = ["setup","play","end"];
   shipinplay = [];
   redCarrier = [1,2,3,4,5];
@@ -16,6 +16,7 @@
   blueSubmarine = [1,2,3]
   blueCruiser = [1,2,3]
   blueDestroyer = [1,2]
+  currentOrientation = ""
   
 function buildGrid(elementId) {
   //get the body
@@ -37,10 +38,11 @@ function buildGrid(elementId) {
       // create cols
         var td = document.createElement('td');
         $(td).hover( 
-          function(){ $(this).addClass('hover')},
+          function(){hoverShip($(this))},
+
           //console.log("hovered! " + $(this).attr('id'))
           //if you  want to turn this  console back on  remember to get the curly brace and  comma  and  put it after id,))
-          function(){ $(this).removeClass('hover')});
+          function(){unhoverShip($(this))});
 
         // put  test text in cells
         let cellid = i + ":" + j; 
@@ -245,14 +247,23 @@ function pickship(currentPlayer,currentship) {
 //select placement area of ships during setup
 function placeship(shipinplay) {  
   console.log("ready to place ships " + shipinplay)
-  let orientation = "horiz"
-    if (orientation == "horiz") {
-      size = window[shipinplay].length
-    }
-    
+  currentOrientation = "horiz"
+  currentship = shipinplay  
 }  
+
 function selectorientation() {
   console.log("selecting orientation")
 }
+function hoverShip(el) {
+  el.addClass('hover')
+
+
+}
+function unhoverShip(el) {
+  el.removeClass('hover')
+
+}
+  
+
 
 
