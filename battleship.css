@@ -44,6 +44,10 @@ td.hover {
     align-self: center;
     width: 150px;
 }
+
+.hidden {
+    visibility: hidden;
+}
 .action
 {
     background-color: orangered;

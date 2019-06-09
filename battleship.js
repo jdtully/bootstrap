@@ -96,7 +96,6 @@ function makeShips() {
   let blueSubmarine = [1,2,3]
   let blueCruiser = [1,2,3]
   let blueDestroyer = [1,2]
-  let shipinplay = []
 }
 
 
@@ -104,12 +103,11 @@ function makeShips() {
 $(document).ready(function() {
   console.log("ready")
   if(gamePhase[0] === "setup") {
-    buildGrid("table0")
-    buildGrid("table1")
-    console.log("grids built")
-    pickship(currentPlayer)
-    console.log
-    placeships(shipinplay)
+    buildGrid("table0");
+    buildGrid("table1");
+    console.log("grids built");
+    pickship(currentPlayer);
+    placeship(shipinplay);
     console.log("gamePhase = setup")
     messaging("setup");
     messaging("currentplayer")
@@ -236,14 +234,15 @@ function messaging(message) {
 function pickship(currentship) {
         console.log("Picking " + currentship)
         $('#status').html("Carrier Selected")
-        var shipinplay = currentPlayer+currentship;
-        break;
+        let shipinplay = currentPlayer+currentship;
+        console.log("currently working on " + shipinplay)
+        return (shipinplay);
 
     }
 
 
 //select placement area of ships during setup
-function placeships(shipinplay) {  
+function placeship(shipinplay) {  
   console.log("ready to place ships")
   let orientation = ["horiz"]    
 
