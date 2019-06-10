@@ -226,6 +226,13 @@ function messaging(message) {
       case "currentPlayer":
           $('#currentPlayer').html("current player is " + currentPlayer);
           break;
+      case "offedge":
+          $('#status').html("invalid placement.");
+          break;
+      case "infield":
+          $('#status').html("Good place");
+          break;
+
       
   }
 }
@@ -274,6 +281,14 @@ function hoverShip(el) {
       for (i=0 ; i < spaces ; i++) {
         nextsquare = parseInt(field[2]);
         nextsquare += i ;
+        console.log(nextsquare)
+        if(nextsquare >= numCols) {
+          messaging("offedge");
+        }
+        else{
+          messaging("infield");
+        }
+
         let celltofind = field[0] + ":" +field[1] + ":" + nextsquare
         let nextcell = document.getElementById(celltofind);
         $(nextcell).addClass("hover");
