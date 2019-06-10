@@ -58,7 +58,7 @@ function buildGrid(elementId) {
 }
 //create ship variables
 function makeShips() {
-  redCarrier = [1,2,3,4,5];
+  redCarrier = [1,2,3,4,5]
   redBattleship = [1,2,3,4]
   redSubmarine = [1,2,3]
   redCruiser = [1,2,3]
