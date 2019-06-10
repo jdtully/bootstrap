@@ -276,38 +276,59 @@ function hoverShip(el) {
   console.log(el.attr("id"))
   let field = (el.attr("id")).split(":")
   console.log(field)
-    var spaces = shipinplaylength
-    if (currentorientation ==="horiz"){
-      for (i=0 ; i < spaces ; i++) {
+  var spaces = shipinplaylength
+  //hover for horizontal
+  if (currentorientation ==="horiz"){
+    for (i=0 ; i < spaces ; i++) {
+      nextsquare = parseInt(field[2]);
+      nextsquare += i ;
+      console.log(nextsquare)
+      //check for close to edge horizonta
+      if(nextsquare >= numCols) {
+        messaging("offedge");
+        for (i=0 ; i < spaces ; i++) {
         nextsquare = parseInt(field[2]);
         nextsquare += i ;
-        console.log(nextsquare)
-        if(nextsquare >= numCols) {
-          messaging("offedge");
-        }
-        else{
-          messaging("infield");
-        }
-
+        let celltofind = field[0] + ":" +field[1] + ":" + nextsquare
+        let nextcell = document.getElementById(celltofind);
+        $(nextcell).addClass("outofbounds");
+      }
+    }
+      else{
+        messaging("infield");
         let celltofind = field[0] + ":" +field[1] + ":" + nextsquare
         let nextcell = document.getElementById(celltofind);
         $(nextcell).addClass("hover");
       }
+
+      //let celltofind = field[0] + ":" +field[1] + ":" + nextsquare
+      //let nextcell = document.getElementById(celltofind);
+      //$(nextcell).addClass("hover");
     }
-    else{
-      for (i=0 ; i < spaces ; i++) {
-        nextsquare = parseInt(field[1]);
-        nextsquare += i ;
+  }
+  else{
+    for (i=0 ; i < spaces ; i++) {
+      nextsquare = parseInt(field[1]);
+      nextsquare += i ;
+      if(nextsquare >= numRows) {
+        messaging("offedge");
+        for (i=0 ; i < spaces ; i++) {
+          nextsquare = parseInt(field[1]);
+          nextsquare += i ;
+          let celltofind = field[0] + ":" +nextsquare + ":" + field[2]
+          let nextcell = document.getElementById(celltofind);
+          $(nextcell).addClass("outofbounds");
+        }
+      }
+      else{
+        messaging("infield")
         let celltofind = field[0] + ":" +nextsquare+ ":" + field[2]
         let nextcell = document.getElementById(celltofind);
         $(nextcell).addClass("hover");
       }
-
-
     }
-
-  //for(shape = 0, end = field[2])
- }
+  }
+}
 function unhoverShip(el) {
   el.removeClass('hover')
   console.log(el.attr("id"))
@@ -318,21 +339,48 @@ function unhoverShip(el) {
     for (i=0 ; i < spaces ; i++) {
       nextsquare = parseInt(field[2]);
       nextsquare += i ;
-      let celltofind = field[0] + ":" +field[1] + ":" + nextsquare
-      let nextcell = document.getElementById(celltofind);
-      $(nextcell).removeClass("hover");  
+      if(nextsquare >= numCols) {
+        messaging("offedge");
+        for (i=0 ; i < spaces ; i++) {
+          nextsquare = parseInt(field[2]);
+          nextsquare += i ;
+          let celltofind = field[0] + ":" +field[1] + ":" + nextsquare
+          let nextcell = document.getElementById(celltofind);
+          $(nextcell).removeClass("outofbounds");
+        }
+      }
+      else{
+        messaging("infield");
+        let celltofind = field[0] + ":" +field[1] + ":" + nextsquare
+        let nextcell = document.getElementById(celltofind);
+        $(nextcell).removeClass("hover");  
+      }
     }
   }
   else{
     for (i=0 ; i < spaces ; i++) {
       nextsquare = parseInt(field[1]);
       nextsquare += i ;
-      let celltofind = field[0] + ":" +nextsquare+ ":" + field[2]
-      let nextcell = document.getElementById(celltofind);
-      $(nextcell).removeClass("hover");
+      if(nextsquare >= numCols) {
+        messaging("offedge");
+        for (i=0 ; i < spaces ; i++) {
+        nextsquare = parseInt(field[1]);
+        nextsquare += i ;
+        let celltofind = field[0] + ":" + nextsquare + ":" + field[2];
+        let nextcell = document.getElementById(celltofind);
+        $(nextcell).removeClass("outofbounds");
+      }
+    }
+      else{
+        messaging("infield")
+        let celltofind = field[0] + ":" +nextsquare+ ":" + field[2]
+        let nextcell = document.getElementById(celltofind);
+        $(nextcell).removeClass("hover");
+      }
     }
   }
 }
+
   
 
 
