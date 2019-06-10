@@ -17,7 +17,7 @@
   blueSubmarine = [1,2,3]
   blueCruiser = [1,2,3]
   blueDestroyer = [1,2]
-  currentOrientation = ""
+  currentorientation = ""
   
 function buildGrid(elementId) {
   //get the body
@@ -100,6 +100,7 @@ $(document).ready(function() {
     })); 
     $("#button3").on ("click",(function() {
       console.log("battleship clicked");
+      shipinplaylength = 4
       shipinplay = pickship(currentPlayer,"Battleship");
       placeship(shipinplay)
       messaging("battleship");
@@ -133,7 +134,7 @@ $(document).ready(function() {
 
     $("#button9").on ("click",(function() {
       console.log("horiz or vert button clicked");
-      selectorientation();
+      selectOrientation();
       messaging("switch");
     }));
   });
@@ -249,32 +250,73 @@ function pickship(currentPlayer,currentship) {
 //select placement area of ships during setup
 function placeship(shipinplay) {  
   console.log("ready to place ships " + shipinplay)
-  currentOrientation = "horiz"
-  currentship = shipinplay  
+    currentship = shipinplay  
 }  
 
-function selectorientation() {
+function selectOrientation() {
   console.log("selecting orientation")
+  if (currentorientation == "horiz") {
+    currentorientation = "vert";
+  }
+  else{
+    currentorientation = "horiz";
+  }
 }
+
+
 function hoverShip(el) {
   el.addClass('hover')
   console.log(el.attr("id"))
   let field = (el.attr("id")).split(":")
   console.log(field)
     var spaces = shipinplaylength
-    for (i=0 ; i < spaces ; i++) {
-      nextsquare = parseInt(field[2]);
-      nextsquare += i ;
-      let celltofind = field[0] + ":" +field[1] + ":" + nextsquare
-      let nextcell = document.getElementById(celltofind);
-      $(nextcell).addClass("hover");
+    if (currentorientation ==="horiz"){
+      for (i=0 ; i < spaces ; i++) {
+        nextsquare = parseInt(field[2]);
+        nextsquare += i ;
+        let celltofind = field[0] + ":" +field[1] + ":" + nextsquare
+        let nextcell = document.getElementById(celltofind);
+        $(nextcell).addClass("hover");
+      }
+    }
+    else{
+      for (i=0 ; i < spaces ; i++) {
+        nextsquare = parseInt(field[1]);
+        nextsquare += i ;
+        let celltofind = field[0] + ":" +nextsquare+ ":" + field[2]
+        let nextcell = document.getElementById(celltofind);
+        $(nextcell).addClass("hover");
+      }
+
+
     }
 
   //for(shape = 0, end = field[2])
  }
 function unhoverShip(el) {
   el.removeClass('hover')
-
+  console.log(el.attr("id"))
+  let field = (el.attr("id")).split(":")
+  console.log(field)
+  var spaces = shipinplaylength
+  if (currentorientation ==="horiz"){
+    for (i=0 ; i < spaces ; i++) {
+      nextsquare = parseInt(field[2]);
+      nextsquare += i ;
+      let celltofind = field[0] + ":" +field[1] + ":" + nextsquare
+      let nextcell = document.getElementById(celltofind);
+      $(nextcell).removeClass("hover");  
+    }
+  }
+  else{
+    for (i=0 ; i < spaces ; i++) {
+      nextsquare = parseInt(field[1]);
+      nextsquare += i ;
+      let celltofind = field[0] + ":" +nextsquare+ ":" + field[2]
+      let nextcell = document.getElementById(celltofind);
+      $(nextcell).removeClass("hover");
+    }
+  }
 }
   
 
