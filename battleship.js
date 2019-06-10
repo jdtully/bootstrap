@@ -8,10 +8,10 @@
   shipinplaylength = 0 ;
   shipinplay = "";
   redCarrier = [1,2,3,4,5];
-  redBattleship = [1,2,3,4]
+  redBattleship = [1,2,3,4];
   redSubmarine = [1,2,3]
   redCruiser = [1,2,3]
-  redDestroyer = [1,2]
+  redDestroyer = [1,2];
   blueCarrier = [1,2,3,4,5]
   blueBattleship = [1,2,3,4]
   blueSubmarine = [1,2,3]
