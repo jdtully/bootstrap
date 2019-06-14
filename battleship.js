@@ -31,10 +31,12 @@ letters = [
 currentPlayer = ["blue"];
 otherPlayer = ["red"];
 currentship = "";
-gamePhase = ["setup", "play", "end"];
+gamePhase = ["setup", "layout", "play", "end"];
 shipinplaylength = 0;
 shipinplay = "";
-redCarrier = [1, 2, 3, 4, 5];
+//each ship  has  an array for number  of  spaces, has  it been placed, has  it been  sunk,and which squares  its  on
+
+redCarrier = [[1, 2, 3, 4, 5], [false], [false]];
 redBattleship = [1, 2, 3, 4];
 redSubmarine = [1, 2, 3];
 redCruiser = [1, 2, 3];
@@ -50,6 +52,7 @@ Occupied = ["table01:1:1"];
 function buildGrid(elementId) {
   //get the body
   var tableContainer = document.getElementById(elementId);
+
   //create table
   var table = document.createElement("table");
   //create a table body
@@ -108,15 +111,15 @@ function makeShips() {
 
 $(document).ready(function() {
   console.log("ready");
-  if (gamePhase[0] === "setup") {
-    buildGrid("table0");
-    buildGrid("table1");
-    console.log("grids built");
-
-    console.log("gamePhase = setup");
-    messaging("setup");
-    messaging("currentPlayer");
-  }
+  initgame();
+  placeship();
+  //if (gamePhase[0] === "setup") {
+  // buildGrid("table0");
+  // buildGrid("table1");
+  // console.log("grids built");
+  // console.log("gamePhase = setup");
+  // messaging("setup");
+  //messaging("currentPlayer");
 });
 
 //button handlers
@@ -332,6 +335,7 @@ function hoverShip(el) {
             $(nextcell).addClass("outofbounds");
           }
         } else {
+          //doing table1 here
           messaging("infield");
           let celltofind = field[0] + ":" + field[1] + ":" + nextsquare;
           let nextcell = document.getElementById(celltofind);
@@ -423,6 +427,29 @@ function unhoverShip(el) {
     //do  on click  for  shot
   }
 }
+function modeSelector() {}
+
+class shipBuilder {
+  constructor(shipName, currentPlayer) {
+    this.currentPlayer, this.shipname;
+    (this.length = length),
+      (this.placed = false),
+      (this.sunk = false),
+      (this.occupies = []);
+  }
+}
+
+function initgame() {
+  buildGrid("table0");
+  buildGrid("table1");
+  console.log("grids built");
+  gamePhase = "setup";
+  currentPlayer = "blue";
+  console.log("gamePhase = setup");
+  messaging("setup");
+  messaging("currentPlayer");
+}
+
 //function bad place
 //starting point orientation  and  length
 

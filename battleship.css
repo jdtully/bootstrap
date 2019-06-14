@@ -1,108 +1,105 @@
-.message {    
-    margin-top: 20;
-    text-align: center;
-    color: blue;
+.message {
+  margin-top: 20;
+  text-align: center;
+  color: blue;
 }
 .container {
-    margin-top: 50px;
+  margin-top: 50px;
 }
 
 #table {
-    margin: 10;
-    color:  red;
-    padding: 0;
-    border: 2px red solid;
-    width: 320px; 
-    
+  margin: 10;
+  color: red;
+  padding: 0;
+  border: 2px red solid;
+  width: 320px;
 }
 td {
-    text-align: center;
-    color: black;
-    padding: 10px;
-    height: 30px;
-    width: 40px;
-    border: 2px red solid;
-    margin: 1px;
+  text-align: center;
+  color: black;
+  padding: 10px;
+  height: 30px;
+  width: 40px;
+  border: 2px red solid;
+  margin: 1px;
 }
 td.hover {
-    background-color:gray;
-    border-color: black;
-    border-width: 2px ;
-    margin: 3px ;
+  background-color: gray;
+  border-color: black;
+  border-width: 2px;
+  margin: 3px;
 }
 td.outofbounds {
-    background-color: red;
-    border-color: black;
-    border-width: 2px ;
-    margin: 3px ;
+  background-color: red;
+  border-color: black;
+  border-width: 2px;
+  margin: 3px;
 }
 
 .btn-group-vertical {
-    width: 20px;
-    border: none;
+  border: none;
 }
 .ship {
-    background-color: blue;
-    padding:10px;
-    border-radius: 8px;
-    margin: 2px;
-    font-size: 20px;
-    align-self: center;
-    width: 150px;
+  background-color: blue;
+  padding: 10px;
+  border-radius: 8px;
+  margin: 2px;
+  font-size: 20px;
+  align-self: center;
+  width: 150px;
 }
 
 .hidden {
-    visibility: hidden;
+  visibility: hidden;
 }
-.action
-{
-    background-color: orangered;
-    padding:10px;
-    border-radius: 8px;
-    margin: 0px;
-    font-size: 20px;
-    align-self: center;
-    width: 150px;
+.action {
+  background-color: orangered;
+  padding: 10px;
+  border-radius: 8px;
+  margin: 0px;
+  font-size: 20px;
+  align-self: center;
+  width: 150px;
 }
 div {
-    border: transparent
+  border: transparent;
 }
 .bottom-messages {
-    margin-top: 30px;
-    text-align: center;
-    color: blue;
+  margin-top: 30px;
+  text-align: center;
+  color: blue;
 }
 #gamename {
-    text-align: center;
-    color: blue;
+  text-align: center;
+  color: blue;
 }
 
-#status{
-    margin-top: 20px;
+#status {
+  margin-top: 20px;
 }
 td.col_carrier {
-    background-color: orange;
-    border-color: black;
+  background-color: orange;
+  border-color: black;
 }
 /* colors for placed ships*/
 td.col_battleship {
-    background-color: blue;
-    border-color: black;
+  background-color: blue;
+  border-color: black;
 }
 td.col_destroyer {
-    background-color: indigo;
-    border-color: black;
+  background-color: indigo;
+  border-color: black;
 }
 td.col_submarine {
-    background-color: violet;
-    border-color: black;
+  background-color: violet;
+  border-color: black;
 }
 
 td.col_carrrier {
-    background-color: chartreuse;
-    border-color: black;
+  background-color: chartreuse;
+  border-color: black;
 }
 
 td.target {
-    background-color: red;
+  background-color: red;
 }

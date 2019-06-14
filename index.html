@@ -1,54 +1,58 @@
 <!DOCTYPE html>
 <html>
-    <head>
-        <meta charset="UTF-8">
-        <link rel="stylesheet" type="text/css" href="battleship.css">
-        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" 
-        integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="stylesheet" type="text/css" href="battleship.css" />
+    <link
+      rel="stylesheet"
+      href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+      integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
+      crossorigin="anonymous"
+    />
+  </head>
 
-    </head>
+  <body>
+    <h1 id="gamename">BATTLESHIP</h1>
 
-
-
-    <body>
-        <h1 id = "gamename"> BATTLESHIP</h1>
-
-        <div class="container">
-                <div class="row">
-                <div id="table0" class="col-lg-5"></div>                                            
-                <div class="col-lg-2 btn-group-vertical"> 
-                    <button id="button1" class = "action" >Start</button> 
-                    <button id="button2" class = "ship" >Carrier</button> 
-                    <button id="button3" class = "ship" >Battleship</button> 
-                    <button id="button4" class = "ship" >Cruiser</button> 
-                    <button id="button5" class = "ship" >Submarine</button> 
-                    <button id="button6" class = "ship" >Destroyer</button>  
-                    <button id="button7" class = "action" >Hide Mine</button> 
-                    <button id="button8" class = "action" >Switch Player</button>
-                    <button id="button9" class = "action" >change orientation</button>
-                    <button id="button10" class = "action" >test button</button>
-                </div>
-                <div id="table1" class="col-lg-5"></div>                 
-            </div>
-            
-        </div>  
-        <div class = "bottom-messages">
-            <h1 id = "gamephase" class = message></h1> 
-            <h1 id = "status" class = message></h1> 
-            <h1 id = "currentplayer" class = message></h1> 
+    <div class="container">
+      <div class="row">
+        <div id="table0" class="col-lg-5"></div>
+        <div class="col-lg-2 btn-group-vertical">
+          <button id="button1" class="action">Start</button>
+          <button id="button2" class="ship">Carrier</button>
+          <button id="button3" class="ship">Battleship</button>
+          <button id="button4" class="ship">Cruiser</button>
+          <button id="button5" class="ship">Submarine</button>
+          <button id="button6" class="ship">Destroyer</button>
+          <button id="button7" class="action">Hide Mine</button>
+          <button id="button8" class="action">Switch Player</button>
+          <button id="button9" class="action">change orientation</button>
+          <button id="button10" class="action">test button</button>
         </div>
+        <div id="table1" class="col-lg-5 hidden"></div>
+      </div>
+    </div>
+    <div class="bottom-messages">
+      <h1 id="gamephase" class="message"></h1>
+      <h1 id="status" class="message"></h1>
+      <h1 id="currentplayer" class="message"></h1>
+    </div>
+  </body>
 
-    </body>
-
-
-<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" 
-        integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" 
-        crossorigin="anonymous"></script>
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" 
-        integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" 
-        crossorigin="anonymous"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" 
-        integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" 
-        crossorigin="anonymous"></script>
-<script src="battleship.js"></script>
+  <script
+    src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+    integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+    crossorigin="anonymous"
+  ></script>
+  <script
+    src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+    integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+    crossorigin="anonymous"
+  ></script>
+  <script
+    src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+    integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+    crossorigin="anonymous"
+  ></script>
+  <script src="battleship.js"></script>
 </html>
