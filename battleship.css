@@ -24,7 +24,7 @@ td {
   margin: 1px;
 }
 td.hover {
-  background-color: gray;
+  background-color: green;
   border-color: black;
   border-width: 2px;
   margin: 3px;

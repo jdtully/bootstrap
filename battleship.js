@@ -336,6 +336,25 @@ function unhoverShip(el) {
   console.log(field);
   var spaces = shipinplaylength;
   if (field[0] == "table0") {
+    if (edgecollision(el, currentorientation, spaces)) {
+      elclass = "outofbounds";
+    } else {
+      elclass = "hover";
+    }
+
+    for (i = 0; i < spaces; i++) {
+      // var squareStr;
+      if (currentorientation !== "horiz") {
+        squareStr = field[0] + ":" + (parseInt(field[1]) + i) + ":" + field[2];
+      } else {
+        squareStr = field[0] + ":" + field[1] + ":" + (parseInt(field[2]) + i);
+      }
+      var square = document.getElementById(squareStr);
+      console.log("square is" + elclass);
+      $(square).removeClass(elclass);
+    }
+
+    /*
     if (currentorientation === "horiz") {
       for (i = 0; i < spaces; i++) {
         nextsquare = parseInt(field[2]);
@@ -377,6 +396,7 @@ function unhoverShip(el) {
         }
       }
     }
+    */
   } else {
     el.removeClass("target");
     //set class
