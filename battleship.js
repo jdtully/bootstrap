@@ -125,35 +125,35 @@ $(document).ready(function() {
     messaging("reset");
   });
   // buttons 2->6  shiptypes
-  $("#button2").on("click", function() {
+  $("#btn-carrier").on("click", function() {
     console.log("carrier clicked");
     shipinplaylength = 5;
     shipinplay = pickship(currentPlayer, "Carrier");
     placeship(shipinplay);
     messaging("carrier");
   });
-  $("#button3").on("click", function() {
+  $("#btn-battleship").on("click", function() {
     console.log("battleship clicked");
     shipinplaylength = 4;
     shipinplay = pickship(currentPlayer, "Battleship");
     placeship(shipinplay);
     messaging("battleship");
   });
-  $("#button4").on("click", function() {
+  $("#btn-cruiser").on("click", function() {
     console.log("cruiser clicked");
     shipinplaylength = 3;
     shipinplay = pickship(currentPlayer, "Cruiser");
     placeship(shipinplay);
     messaging("cruiser");
   });
-  $("#button5").on("click", function() {
+  $("#btn-submarine").on("click", function() {
     console.log("submarine clicked");
     shipinplaylength = 3;
     shipinplay = pickship(currentPlayer, "Submarine");
     placeship(shipinplay);
     messaging("submarine");
   });
-  $("#button6").on("click", function() {
+  $("#btn-destroyer").on("click", function() {
     console.log("destroyer clicked");
     shipinplaylength = 2;
     shipinplay = pickship(currentPlayer, "Destroyer");
@@ -162,17 +162,17 @@ $(document).ready(function() {
   });
 
   //This button is  to hide your ship selections
-  $("#button7").on("click", function() {
+  $("#btn-hide").on("click", function() {
     console.log("hide button clicked");
     messaging("hide");
   });
   //this button flips  theplayer
-  $("#button8").on("click", function() {
+  $("#btn-flipplayer").on("click", function() {
     console.log("switchplayer button clicked");
     messaging("switch");
   });
   // this button is  to flip ship orientation during setup
-  $("#button9").on("click", function() {
+  $("#btn-fliporientation").on("click", function() {
     console.log("horiz or vert button clicked");
     currentorientation = flipOrientation(currentorientation);
   });
@@ -260,12 +260,17 @@ function messaging(message) {
     case "currentPlayer":
       $("#currentPlayer").html("current player is " + currentPlayer);
       break;
+
     case "offedge":
       $("#status").html("invalid placement.");
       break;
+
     case "infield":
       $("#status").html("Good place");
       break;
+
+    default:
+      console.warn("no message for " + message);
   }
 }
 
