@@ -34,7 +34,8 @@ currentship = "";
 gamePhase = ["setup", "layout", "play", "end"];
 shipinplaylength = 0;
 shipinplay = "";
-//each ship  has  an array for number  of  spaces, has  it been placed, has  it been  sunk,and which squares  its  on
+currentorientation = "horiz";
+//each ship  has  an arrayhoriz" for number  of  spaces, has  it been placed, has  it been  sunk,and which squares  its  on
 
 redCarrier = [[1, 2, 3, 4, 5], [false], [false]];
 redBattleship = [1, 2, 3, 4];
@@ -46,7 +47,6 @@ blueBattleship = [1, 2, 3, 4];
 blueSubmarine = [1, 2, 3];
 blueCruiser = [1, 2, 3];
 blueDestroyer = [1, 2];
-currentorientation = "";
 Occupied = ["table01:1:1"];
 
 function buildGrid(elementId) {
@@ -127,7 +127,7 @@ $(document).ready(function() {
   $("#button1").on("click", function() {
     messaging("reset");
   });
-
+  // buttons 2->6  shiptypes
   $("#button2").on("click", function() {
     console.log("carrier clicked");
     shipinplaylength = 5;
@@ -163,24 +163,24 @@ $(document).ready(function() {
     placeship(shipinplay);
     messaging("destroyer");
   });
+
+  //This button is  to hide your ship selections
   $("#button7").on("click", function() {
     console.log("hide button clicked");
     messaging("hide");
   });
+  //this button flips  theplayer
   $("#button8").on("click", function() {
     console.log("switchplayer button clicked");
     messaging("switch");
   });
-
+  // this button is  to flip ship orientation during setup
   $("#button9").on("click", function() {
     console.log("horiz or vert button clicked");
-    //detectgood()
-    selectOrientation();
-    messaging("switch");
+    currentorientation = flipOrientation(currentorientation);
   });
   $("#button10").on("click", function() {
     console.log("test button clicked");
-    //detectgood(el, currentorientation, shipinplaylength)
     messaging("switch");
   });
 });
@@ -302,12 +302,12 @@ function placeship(shipinplay) {
   currentship = shipinplay;
 }
 
-function selectOrientation() {
-  console.log("selecting orientation");
-  if (currentorientation == "horiz") {
-    currentorientation = "vert";
+function flipOrientation(orientation) {
+  console.log(orientation);
+  if (orientation === "horiz") {
+    return "vert";
   } else {
-    currentorientation = "horiz";
+    return "horiz";
   }
 }
 
@@ -317,8 +317,27 @@ function hoverShip(el) {
   let field = el.attr("id").split(":");
   console.log(field);
   var spaces = shipinplaylength;
-  //hover for horizontal
+  //checking for edge collision first
   if (field[0] == "table0") {
+    if (edgecollision(el, currentorientation, spaces)) {
+      elclass = "outofbounds";
+    } else {
+      elclass = "hover";
+    }
+
+    for (i = 0; i < spaces; i++) {
+      // var squareStr;
+      if (currentorientation !== "horiz") {
+        squareStr = field[0] + ":" + (parseInt(field[1]) + i) + ":" + field[2];
+      } else {
+        squareStr = field[0] + ":" + field[1] + ":" + (parseInt(field[2]) + i);
+      }
+      var square = document.getElementById(squareStr);
+      console.log("square is" + elclass);
+      $(square).addClass(elclass);
+    }
+
+    /*
     if (currentorientation === "horiz") {
       for (i = 0; i < spaces; i++) {
         nextsquare = parseInt(field[2]);
@@ -367,6 +386,7 @@ function hoverShip(el) {
         }
       }
     }
+    */
   } else {
     el.addClass("target");
     //set class
@@ -445,6 +465,7 @@ function initgame() {
   console.log("grids built");
   gamePhase = "setup";
   currentPlayer = "blue";
+  currentorientation = "horiz";
   console.log("gamePhase = setup");
   messaging("setup");
   messaging("currentPlayer");
@@ -456,22 +477,32 @@ function initgame() {
 // function test for edge or  collisio
 //
 
-/*
-function detectgood(el, currentorientation, shipinplaylength) {
-  debugger
+function edgecollision(el, currentorientation, shipinplaylength) {
   console.log(el, currentorientation, shipinplaylength);
-  let field = (el.attr("id")).split(":")
-  console.log(field)
-  var spaces = shipinplaylength
-  for (i = 0; i < spaces; i++) {
-    nextsquare = parseInt(field[1]);
-    nextsquare += i;
-    if (nextsquare >= numCols || nextsquare >= numRows || Occupied.includes(next)) {
-      return (false)
+  let field = el.attr("id").split(":");
+  console.log(field);
+  var x = parseInt(field[1]);
+  var y = parseInt(field[2]);
+
+  var maxx = x + shipinplaylength;
+  var maxy = y + shipinplaylength;
+
+  if (currentorientation === "horiz") {
+    if (maxy > numCols) {
+      return true;
+    } else {
+      return false;
+    }
+  } else {
+    if (maxx > numRows) {
+      return true;
+    } else {
+      return false;
     }
   }
 }
 
+/*
 function detectgood2(el, currentorientation, shipinplaylength) {
   console.log(el, currentorientation, shipinplaylength);
   let field = (el.attr("id")).split(":")
