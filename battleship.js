@@ -73,9 +73,6 @@ function buildGrid(elementId) {
         function() {
           hoverShip($(this));
         },
-
-        //console.log("hovered! " + $(this).attr('id'))
-        //if you  want to turn this  console back on  remember to get the curly brace and  comma  and  put it after id,))
         function() {
           unhoverShip($(this));
         }
@@ -185,14 +182,6 @@ $(document).ready(function() {
   });
 });
 
-//if hover goes  bad  delete this  and  the hover  function  and uncomment hover  in grid  creation
-//  $("#td".hover(this)).on ("hover" ,(
-//  function(){ $(this).addClass('hover')},
-//    console.log("hovered! " + $(this).attr('id')),
-//if you  want to turn this  console back on  remember to get the curly brace and  comma  and  put it after id,))
-//  function(){ $(this).removeClass('hover')
-//}));
-
 //hopefully all messaging  is  in here
 function messaging(message) {
   switch (message) {
@@ -280,14 +269,6 @@ function messaging(message) {
   }
 }
 
-//need a hover function
-//$("#td".hover(this)).on ("hover" ,(
-//function(){ $(this).addClass('hover')},
-//  console.log("hovered! " + $(this).attr('id')),
-//if you  want to turn this  console back on  remember to get the curly brace and  comma  and  put it after id,))
-//function(){ $(this).removeClass('hover')
-//}
-
 //select  shiptype (ships are  declared  above)
 function pickship(currentPlayer, currentship) {
   console.log("Picking " + currentship);
@@ -336,63 +317,13 @@ function hoverShip(el) {
       console.log("square is" + elclass);
       $(square).addClass(elclass);
     }
-
-    /*
-    if (currentorientation === "horiz") {
-      for (i = 0; i < spaces; i++) {
-        nextsquare = parseInt(field[2]);
-        nextsquare += i;
-        console.log(nextsquare);
-        //check for close to edge horizonta
-        if (nextsquare >= numCols) {
-          messaging("offedge");
-          for (i = 0; i < spaces; i++) {
-            nextsquare = parseInt(field[2]);
-            nextsquare += i;
-            let celltofind = field[0] + ":" + field[1] + ":" + nextsquare;
-            let nextcell = document.getElementById(celltofind);
-            $(nextcell).addClass("outofbounds");
-          }
-        } else {
-          //doing table1 here
-          messaging("infield");
-          let celltofind = field[0] + ":" + field[1] + ":" + nextsquare;
-          let nextcell = document.getElementById(celltofind);
-          $(nextcell).addClass("hover");
-        }
-
-        //let celltofind = field[0] + ":" +field[1] + ":" + nextsquare
-        //let nextcell = document.getElementById(celltofind);
-        //$(nextcell).addClass("hover");
-      }
-    } else {
-      for (i = 0; i < spaces; i++) {
-        nextsquare = parseInt(field[1]);
-        nextsquare += i;
-        if (nextsquare >= numRows) {
-          messaging("offedge");
-          for (i = 0; i < spaces; i++) {
-            nextsquare = parseInt(field[1]);
-            nextsquare += i;
-            let celltofind = field[0] + ":" + nextsquare + ":" + field[2];
-            let nextcell = document.getElementById(celltofind);
-            $(nextcell).addClass("outofbounds");
-          }
-        } else {
-          messaging("infield");
-          let celltofind = field[0] + ":" + nextsquare + ":" + field[2];
-          let nextcell = document.getElementById(celltofind);
-          $(nextcell).addClass("hover");
-        }
-      }
-    }
-    */
   } else {
     el.addClass("target");
     //set class
     //do  on click  for  shot
   }
 }
+
 function unhoverShip(el) {
   el.removeClass("hover");
   console.log(el.attr("id"));
@@ -471,12 +402,6 @@ function initgame() {
   messaging("currentPlayer");
 }
 
-//function bad place
-//starting point orientation  and  length
-
-// function test for edge or  collisio
-//
-
 function edgecollision(el, currentorientation, shipinplaylength) {
   console.log(el, currentorientation, shipinplaylength);
   let field = el.attr("id").split(":");
@@ -501,35 +426,3 @@ function edgecollision(el, currentorientation, shipinplaylength) {
     }
   }
 }
-
-/*
-function detectgood2(el, currentorientation, shipinplaylength) {
-  console.log(el, currentorientation, shipinplaylength);
-  let field = (el.attr("id")).split(":")
-  console.log(field)
-  var spaces = shipinplaylength
-  if (Occupied.includes(el)) {
-    return(false)
-  }
-  else {
-    if (currentorientation == "horiz") {
-      for (i = 0; i < spaces; i++) {
-        nextsquare = parseInt(field[2]);
-        nextsquare += i;
-        if (nextsquare >= numCols) {
-          return(false)
-        }
-        else {
-          for (i = 0; i < spaces; i++) {
-            nextsquare = parseInt(field[1]);
-            nextsquare += i;
-            if (nextsquare >= numRows) {
-              return(false);
-            }
-          }
-        }
-      }
-    }
-  }
-}
-*/
