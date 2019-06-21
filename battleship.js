@@ -35,7 +35,7 @@ gamePhase = ["setup", "layout", "play", "end"];
 shipinplaylength = 0;
 shipinplay = "";
 currentorientation = "horiz";
-redtargetfeilds = [];
+redtargetfields = [];
 bluetargetfields = [];
 currentselection = [];
 
@@ -445,6 +445,17 @@ function clickShip(el) {
     marksquares(el, currentorientation, shipinplaylength, elclass);
     createcurrentselection(el, currentorientation, shipinplaylength);
     addShipstotargetfields(currentPlayer, currentselection);
+    console.log(
+      currentPlayer +
+        " " +
+        currentselection +
+        " " +
+        "targetfields  are" +
+        " " +
+        redtargetfields.textcontent +
+        " " +
+        bluetargetfields
+    );
   } else {
     el.addClass("target");
     //set class
@@ -502,9 +513,10 @@ function addShipstotargetfields(currentPlayer, currentselection) {
   if ((currentPlayer = "blue")) {
     bluetargetfields.push(currentselection);
   } else {
-    redtargetfeilds.push(currentselection);
+    redtargetfields.push(currentselection);
   }
 }
+
 function edgecollision(el, currentorientation, shipinplaylength) {
   console.log(el, currentorientation, shipinplaylength);
   let field = el.attr("id").split(":");
