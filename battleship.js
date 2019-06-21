@@ -38,6 +38,16 @@ currentorientation = "horiz";
 redtargetfields = [];
 bluetargetfields = [];
 currentselection = [];
+redCarrier = [];
+redBattleShip = [];
+redCruiser = [];
+redSubmarine = [];
+redDestroyer = [];
+blueCarrier = [];
+blueBattleShip = [];
+blueCruiser = [];
+blueSubmarine = [];
+blueDestroyer = [];
 
 function buildGrid(elementId) {
   //get the body
@@ -97,21 +107,20 @@ class ship {
     this.targets = targets;
     this.placed = placed;
     this.sunk = sunk;
-    this.getInfo = getshipInfo;
   }
 }
 
 function makeShips() {
-  var redCarrier = new ship("Carrier", "red", "5", "[1, 2, 3, 4, 5]", "", "");
-  var redBattleS = new ship("Carrier", "red", "5", "[1, 2, 3, 4, 5]", "", "");
-  var redSubmarine = new ship("Submarine", "red", "3", "[1, 2, 3]", "", "");
-  var redCruiser = new ship("Cruiser", "red", "3", "[1, 2, 3]", "", "");
-  var redDestroyer = new ship("Destroyer", "red", "3", "[1, 2]", "", "");
-  var blueCarrier = new ship("Carrier", "blue", "3", "[1, 2, 3, 4, 5]", "", "");
-  var blueBattleS = new ship("Battleship", "blue", "3", "[1, 2, 3, 4]", "", "");
-  var blueSubmarine = ("Submarine", "red", "3", "[1, 2, 3]", "", "");
-  var blueCruiser = new ship("Cruiser", "red", "3", "[1, 2, 3]", "", "");
-  var blueDestroyer = new ship("Destroyer", "red", "2", "[1, 2]", "", "");
+  redCarrier = new ship("Carrier", "red", "5", "[1, 2, 3, 4, 5]", "", "");
+  redBattleShip = new ship("Battleship", "red", "5", "[1, 2, 3, 4, 5]", "", "");
+  redSubmarine = new ship("Submarine", "red", "3", "[1, 2, 3]", "", "");
+  redCruiser = new ship("Cruiser", "red", "3", "[1, 2, 3]", "", "");
+  redDestroyer = new ship("Destroyer", "red", "3", "[1, 2]", "", "");
+  blueCarrier = new ship("Carrier", "blue", "3", "[1, 2, 3, 4, 5]", "", "");
+  blueBattleShip = new ship("Battleship", "blue", "3", "[1, 2, 3, 4]", "", "");
+  blueSubmarine = ("Submarine", "blue", "3", "[1, 2, 3]", "", "");
+  blueCruiser = new ship("Cruiser", "blue", "3", "[1, 2, 3]", "", "");
+  blueDestroyer = new ship("Destroyer", "blue", "2", "[1, 2]", "", "");
 
   console.log("makeships done");
 }
@@ -421,6 +430,7 @@ function modeSelector() {}
 function initgame() {
   buildGrid("table0");
   buildGrid("table1");
+  makeShips();
   console.log("grids built");
   gamePhase = "setup";
   currentPlayer = "blue";
@@ -445,17 +455,7 @@ function clickShip(el) {
     marksquares(el, currentorientation, shipinplaylength, elclass);
     createcurrentselection(el, currentorientation, shipinplaylength);
     addShipstotargetfields(currentPlayer, currentselection);
-    console.log(
-      currentPlayer +
-        " " +
-        currentselection +
-        " " +
-        "targetfields  are" +
-        " " +
-        redtargetfields.textcontent +
-        " " +
-        bluetargetfields
-    );
+    console.log("HTML is: " + redtargetfields.get(0).outerHTML);
   } else {
     el.addClass("target");
     //set class
@@ -508,6 +508,15 @@ function createcurrentselection(el, currentorientation, shipinplaylength) {
   }
 }
 function addShipstotargetfields(currentPlayer, currentselection) {
+  console.log(currentPlayer);
+  console.log(currentselection);
+  if ((currentPlayer = "blue")) {
+    bluetargetfields.push(currentselection);
+  } else {
+    redtargetfields.push(currentselection);
+  }
+}
+function notetargetfieldsonships(currentPlayer, currentselection, shipinplay) {
   console.log(currentPlayer);
   console.log(currentselection);
   if ((currentPlayer = "blue")) {
