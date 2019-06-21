@@ -80,7 +80,7 @@ function buildGrid(elementId) {
 
       $(td).click(function() {
         console.log("cell clicked");
-        assignSquarestoShip($(this));
+        clickShip($(this));
 
         //var selected =
       });
@@ -317,7 +317,9 @@ function hoverShip(el) {
       elclass = "hover";
     }
 
-    for (i = 0; i < spaces; i++) {
+    marksquares(el, currentorientation, shipinplaylength, elclass);
+
+    /*for (i = 0; i < spaces; i++) {
       // var squareStr;
       if (currentorientation !== "horiz") {
         squareStr = field[0] + ":" + (parseInt(field[1]) + i) + ":" + field[2];
@@ -328,6 +330,7 @@ function hoverShip(el) {
       console.log("square is" + elclass);
       $(square).addClass(elclass);
     }
+    */
   } else {
     el.addClass("target");
     //set class
@@ -347,8 +350,8 @@ function unhoverShip(el) {
     } else {
       elclass = "hover";
     }
-
-    for (i = 0; i < spaces; i++) {
+    unmarksquares(el, currentorientation, shipinplaylength, elclass);
+    /*for (i = 0; i < spaces; i++) {
       var squareStr;
       if (currentorientation !== "horiz") {
         squareStr = field[0] + ":" + (parseInt(field[1]) + i) + ":" + field[2];
@@ -359,6 +362,7 @@ function unhoverShip(el) {
       console.log("square is" + elclass);
       $(square).removeClass(elclass);
     }
+    */
 
     /*
     if (currentorientation === "horiz") {
@@ -432,19 +436,62 @@ function initgame() {
   messaging("setup");
   messaging("currentPlayer");
 }
-function assignSquarestoShip(el, currentorientation) {
-  el.addClass("placed_ship");
+function clickShip(el) {
+  //el.addClass("placed_ship");
   console.log(el.attr("id"));
   let field = el.attr("id").split(":");
-  let direction = currentorientation;
   console.log(field);
+  var spaces = shipinplaylength;
   //checking for edge collision first
   if (field[0] == "table0") {
-    var selection = document.getElementsByClassName("hover").length;
-    if (direction == "horiz") for (var j = 0; j < selection; j++) {} // $(square).addClass("target");
+    if (edgecollision(el, currentorientation, spaces)) {
+      elclass = "outofbounds";
+    } else {
+      elclass = "placed_ship";
+    }
+    marksquares(el, currentorientation, shipinplaylength, elclass);
+  } else {
+    el.addClass("target");
+    //set class
+    //do  on click  for  shot
   }
 }
-function marksquares(el) {
+
+function marksquares(el, currentorientation, shipinplaylength, elclass) {
+  let field = el.attr("id").split(":");
+  spaces = shipinplaylength;
+  for (i = 0; i < spaces; i++) {
+    // var squareStr;
+    if (currentorientation !== "horiz") {
+      squareStr = field[0] + ":" + (parseInt(field[1]) + i) + ":" + field[2];
+    } else {
+      squareStr = field[0] + ":" + field[1] + ":" + (parseInt(field[2]) + i);
+    }
+    var square = document.getElementById(squareStr);
+    console.log("square is" + elclass);
+    $(square).addClass(elclass);
+  }
+}
+
+function unmarksquares(el, currentorientation, shipinplaylength, elclass) {
+  let field = el.attr("id").split(":");
+  spaces = shipinplaylength;
+  for (i = 0; i < spaces; i++) {
+    // var squareStr;
+    if (currentorientation !== "horiz") {
+      squareStr = field[0] + ":" + (parseInt(field[1]) + i) + ":" + field[2];
+    } else {
+      squareStr = field[0] + ":" + field[1] + ":" + (parseInt(field[2]) + i);
+    }
+    var square = document.getElementById(squareStr);
+    console.log("square is" + elclass);
+    $(square).removeClass(elclass);
+  }
+}
+
+function createcurrentselection(el, currentorientation, shipinplaylength) {
+  let field = el.attr("id").split(":");
+  spaces = shipinplaylength;
   for (i = 0; i < spaces; i++) {
     // var squareStr;
     if (currentorientation !== "horiz") {
