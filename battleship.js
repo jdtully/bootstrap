@@ -37,6 +37,7 @@ shipinplay = "";
 currentorientation = "horiz";
 redtargetfeilds = [];
 bluetargetfields = [];
+currentselection = [];
 
 function buildGrid(elementId) {
   //get the body
@@ -482,7 +483,6 @@ function unmarksquares(el, currentorientation, shipinplaylength, elclass) {
 }
 
 function createcurrentselection(el, currentorientation, shipinplaylength) {
-  var currentselection = [];
   let field = el.attr("id").split(":");
   spaces = shipinplaylength;
   for (i = 0; i < spaces; i++) {
@@ -493,15 +493,13 @@ function createcurrentselection(el, currentorientation, shipinplaylength) {
     }
     var square = document.getElementById(squareStr);
     console.log("square is" + elclass);
-    debugger;
     currentselection.push(square);
-    return currentselection;
   }
 }
 function addShipstotargetfields(currentPlayer, currentselection) {
   console.log(currentPlayer);
   console.log(currentselection);
-  if ((currentPlayer = blue)) {
+  if ((currentPlayer = "blue")) {
     bluetargetfields.push(currentselection);
   } else {
     redtargetfeilds.push(currentselection);
