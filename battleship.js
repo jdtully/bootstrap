@@ -35,18 +35,6 @@ gamePhase = ["setup", "layout", "play", "end"];
 shipinplaylength = 0;
 shipinplay = "";
 currentorientation = "horiz";
-//each ship  has  an arrayhoriz" for number  of  spaces, has  it been placed, has  it been  sunk,and which squares  its  on
-
-redCarrier = [[1, 2, 3, 4, 5], [false], [false]];
-redBattleship = [1, 2, 3, 4];
-redSubmarine = [1, 2, 3];
-redCruiser = [1, 2, 3];
-redDestroyer = [1, 2];
-blueCarrier = [1, 2, 3, 4, 5];
-blueBattleship = [1, 2, 3, 4];
-blueSubmarine = [1, 2, 3];
-blueCruiser = [1, 2, 3];
-blueDestroyer = [1, 2];
 Occupied = ["table01:1:1"];
 
 function buildGrid(elementId) {
@@ -97,29 +85,34 @@ function buildGrid(elementId) {
   tableContainer.appendChild(table);
 }
 //create ship variables
-function makeShips() {
-  redCarrier = [1, 2, 3, 4, 5];
-  redBattleship = [1, 2, 3, 4];
-  redSubmarine = [1, 2, 3];
-  redCruiser = [1, 2, 3];
-  redDestroyer = [1, 2];
-  blueCarrier = [1, 2, 3, 4, 5];
-  blueBattleship = [1, 2, 3, 4];
-  blueSubmarine = [1, 2, 3];
-  blueCruiser = [1, 2, 3];
-  blueDestroyer = [1, 2];
-  console.log("makeships done");
-}
+
 class ship {
-  constructor(shiptype, player, length, targets) {
-    this.shiptype = "Carrier";
-    this.player = "red";
-    this.length = 5;
-    this.targets = [1, 2, 3, 4, 5];
+  constructor(shiptype, player, length, orientation, targets, placed, sunk) {
+    this.shiptype = shiptype;
+    this.player = player;
+    this.length = length;
+    this.orientation = orientation;
+    this.targets = targets;
+    this.placed = placed;
+    this.sunk = sunk;
     this.getInfo = getshipInfo;
   }
 }
 
+function makeShips() {
+  var redCarrier = new ship("Carrier", "red", "5", "[1, 2, 3, 4, 5]", "", "");
+  var redBattleS = new ship("Carrier", "red", "5", "[1, 2, 3, 4, 5]", "", "");
+  var redSubmarine = new ship("Submarine", "red", "3", "[1, 2, 3]", "", "");
+  var redCruiser = new ship("Cruiser", "red", "3", "[1, 2, 3]", "", "");
+  var redDestroyer = new ship("Destroyer", "red", "3", "[1, 2]", "", "");
+  var blueCarrier = new ship("Carrier", "blue", "3", "[1, 2, 3, 4, 5]", "", "");
+  var blueBattleS = new ship("Battleship", "blue", "3", "[1, 2, 3, 4]", "", "");
+  var blueSubmarine = ("Submarine", "red", "3", "[1, 2, 3]", "", "");
+  var blueCruiser = new ship("Cruiser", "red", "3", "[1, 2, 3]", "", "");
+  var blueDestroyer = new ship("Destroyer", "red", "2", "[1, 2]", "", "");
+
+  console.log("makeships done");
+}
 $(document).ready(function() {
   console.log("ready");
   initgame();
@@ -425,7 +418,7 @@ function unhoverShip(el) {
 function modeSelector() {}
 
 class shipBuilder {
-  constructor(shipName, currentPlayer) {
+  constructor() {
     this.currentPlayer, this.shipname;
     (this.length = length),
       (this.placed = false),
