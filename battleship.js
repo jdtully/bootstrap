@@ -110,6 +110,15 @@ function makeShips() {
   blueDestroyer = [1, 2];
   console.log("makeships done");
 }
+class ship {
+  constructor(shiptype, player, length, targets) {
+    this.shiptype = "Carrier";
+    this.player = "red";
+    this.length = 5;
+    this.targets = [1, 2, 3, 4, 5];
+    this.getInfo = getshipInfo;
+  }
+}
 
 $(document).ready(function() {
   console.log("ready");
