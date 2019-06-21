@@ -78,7 +78,12 @@ function buildGrid(elementId) {
         }
       );
 
-      $(td).click();
+      $(td).click(function() {
+        console.log("cell clicked");
+        assignSquarestoShip($(this));
+
+        //var selected =
+      });
 
       // put  test text in cells
       let cellid = i + ":" + j;
@@ -109,7 +114,7 @@ function makeShips() {
 $(document).ready(function() {
   console.log("ready");
   initgame();
-  placeship();
+  //placeship();
   //if (gamePhase[0] === "setup") {
   // buildGrid("table0");
   // buildGrid("table1");
@@ -129,35 +134,35 @@ $(document).ready(function() {
     console.log("carrier clicked");
     shipinplaylength = 5;
     shipinplay = pickship(currentPlayer, "Carrier");
-    placeship(shipinplay);
+    //placeship(shipinplay);
     messaging("carrier");
   });
   $("#btn-battleship").on("click", function() {
     console.log("battleship clicked");
     shipinplaylength = 4;
     shipinplay = pickship(currentPlayer, "Battleship");
-    placeship(shipinplay);
+    //placeship(shipinplay);
     messaging("battleship");
   });
   $("#btn-cruiser").on("click", function() {
     console.log("cruiser clicked");
     shipinplaylength = 3;
     shipinplay = pickship(currentPlayer, "Cruiser");
-    placeship(shipinplay);
+    //placeship(shipinplay);
     messaging("cruiser");
   });
   $("#btn-submarine").on("click", function() {
     console.log("submarine clicked");
     shipinplaylength = 3;
     shipinplay = pickship(currentPlayer, "Submarine");
-    placeship(shipinplay);
+    //placeship(shipinplay);
     messaging("submarine");
   });
   $("#btn-destroyer").on("click", function() {
     console.log("destroyer clicked");
     shipinplaylength = 2;
     shipinplay = pickship(currentPlayer, "Destroyer");
-    placeship(shipinplay);
+    //placeship(shipinplay);
     messaging("destroyer");
   });
 
@@ -282,6 +287,7 @@ function pickship(currentPlayer, currentship) {
   console.log("currently working on " + shipinplay);
   return shipinplay;
 }
+
 //select placement area of ships during setup
 function placeship(shipinplay) {
   console.log("ready to place ships " + shipinplay);
@@ -343,7 +349,7 @@ function unhoverShip(el) {
     }
 
     for (i = 0; i < spaces; i++) {
-      // var squareStr;
+      var squareStr;
       if (currentorientation !== "horiz") {
         squareStr = field[0] + ":" + (parseInt(field[1]) + i) + ":" + field[2];
       } else {
@@ -425,6 +431,31 @@ function initgame() {
   console.log("gamePhase = setup");
   messaging("setup");
   messaging("currentPlayer");
+}
+function assignSquarestoShip(el, currentorientation) {
+  el.addClass("placed_ship");
+  console.log(el.attr("id"));
+  let field = el.attr("id").split(":");
+  let direction = currentorientation;
+  console.log(field);
+  //checking for edge collision first
+  if (field[0] == "table0") {
+    var selection = document.getElementsByClassName("hover").length;
+    if (direction == "horiz") for (var j = 0; j < selection; j++) {} // $(square).addClass("target");
+  }
+}
+function marksquares(el) {
+  for (i = 0; i < spaces; i++) {
+    // var squareStr;
+    if (currentorientation !== "horiz") {
+      squareStr = field[0] + ":" + (parseInt(field[1]) + i) + ":" + field[2];
+    } else {
+      squareStr = field[0] + ":" + field[1] + ":" + (parseInt(field[2]) + i);
+    }
+    var square = document.getElementById(squareStr);
+    console.log("square is" + elclass);
+    $(square).addClass(elclass);
+  }
 }
 
 function edgecollision(el, currentorientation, shipinplaylength) {
