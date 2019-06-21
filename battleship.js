@@ -490,6 +490,7 @@ function unmarksquares(el, currentorientation, shipinplaylength, elclass) {
 }
 
 function createcurrentselection(el, currentorientation, shipinplaylength) {
+  var currentselection = new Array();
   let field = el.attr("id").split(":");
   spaces = shipinplaylength;
   for (i = 0; i < spaces; i++) {
@@ -501,7 +502,8 @@ function createcurrentselection(el, currentorientation, shipinplaylength) {
     }
     var square = document.getElementById(squareStr);
     console.log("square is" + elclass);
-    $(square).addClass(elclass);
+    currentselection = push(square);
+    return currentselection;
   }
 }
 
