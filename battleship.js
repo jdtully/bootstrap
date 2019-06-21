@@ -35,7 +35,8 @@ gamePhase = ["setup", "layout", "play", "end"];
 shipinplaylength = 0;
 shipinplay = "";
 currentorientation = "horiz";
-Occupied = ["table01:1:1"];
+redtargetfeilds = [];
+bluetargetfields = [];
 
 function buildGrid(elementId) {
   //get the body
@@ -322,8 +323,7 @@ function hoverShip(el) {
     marksquares(el, currentorientation, shipinplaylength, elclass);
 
     /*for (i = 0; i < spaces; i++) {
-      // var squareStr;
-      if (currentorientation !== "horiz") {
+        if (currentorientation !== "horiz") {
         squareStr = field[0] + ":" + (parseInt(field[1]) + i) + ":" + field[2];
       } else {
         squareStr = field[0] + ":" + field[1] + ":" + (parseInt(field[2]) + i);
@@ -417,16 +417,6 @@ function unhoverShip(el) {
 }
 function modeSelector() {}
 
-class shipBuilder {
-  constructor() {
-    this.currentPlayer, this.shipname;
-    (this.length = length),
-      (this.placed = false),
-      (this.sunk = false),
-      (this.occupies = []);
-  }
-}
-
 function initgame() {
   buildGrid("table0");
   buildGrid("table1");
@@ -452,6 +442,8 @@ function clickShip(el) {
       elclass = "placed_ship";
     }
     marksquares(el, currentorientation, shipinplaylength, elclass);
+    createcurrentselection(el, currentorientation, shipinplaylength);
+    addShipstotargetfields(currentPlayer, currentselection);
   } else {
     el.addClass("target");
     //set class
@@ -463,14 +455,13 @@ function marksquares(el, currentorientation, shipinplaylength, elclass) {
   let field = el.attr("id").split(":");
   spaces = shipinplaylength;
   for (i = 0; i < spaces; i++) {
-    // var squareStr;
     if (currentorientation !== "horiz") {
       squareStr = field[0] + ":" + (parseInt(field[1]) + i) + ":" + field[2];
     } else {
       squareStr = field[0] + ":" + field[1] + ":" + (parseInt(field[2]) + i);
     }
     var square = document.getElementById(squareStr);
-    console.log("square is" + elclass);
+    console.log("fields are " + elclass);
     $(square).addClass(elclass);
   }
 }
@@ -479,7 +470,6 @@ function unmarksquares(el, currentorientation, shipinplaylength, elclass) {
   let field = el.attr("id").split(":");
   spaces = shipinplaylength;
   for (i = 0; i < spaces; i++) {
-    // var squareStr;
     if (currentorientation !== "horiz") {
       squareStr = field[0] + ":" + (parseInt(field[1]) + i) + ":" + field[2];
     } else {
@@ -492,11 +482,10 @@ function unmarksquares(el, currentorientation, shipinplaylength, elclass) {
 }
 
 function createcurrentselection(el, currentorientation, shipinplaylength) {
-  var currentselection = new Array();
+  var currentselection = [];
   let field = el.attr("id").split(":");
   spaces = shipinplaylength;
   for (i = 0; i < spaces; i++) {
-    // var squareStr;
     if (currentorientation !== "horiz") {
       squareStr = field[0] + ":" + (parseInt(field[1]) + i) + ":" + field[2];
     } else {
@@ -504,11 +493,20 @@ function createcurrentselection(el, currentorientation, shipinplaylength) {
     }
     var square = document.getElementById(squareStr);
     console.log("square is" + elclass);
-    currentselection = push(square);
+    debugger;
+    currentselection.push(square);
     return currentselection;
   }
 }
-
+function addShipstotargetfields(currentPlayer, currentselection) {
+  console.log(currentPlayer);
+  console.log(currentselection);
+  if ((currentPlayer = blue)) {
+    bluetargetfields.push(currentselection);
+  } else {
+    redtargetfeilds.push(currentselection);
+  }
+}
 function edgecollision(el, currentorientation, shipinplaylength) {
   console.log(el, currentorientation, shipinplaylength);
   let field = el.attr("id").split(":");
