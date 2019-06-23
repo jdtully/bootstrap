@@ -466,8 +466,6 @@ function clickShip(el) {
     );
 
     addShipstotargetfields(currentPlayer, currentselection);
-    stringify(redtargetfields);
-    stringify(bluetargetfields);
 
     //console.log("HTML is: " + redtargetfields.get(0).outerHTML);
   } else {
