@@ -28,8 +28,8 @@ letters = [
   "Y",
   "Z"
 ];
-currentPlayer = ["blue"];
-otherPlayer = ["red"];
+currentPlayer = [];
+otherPlayer = [];
 currentship = "";
 gamePhase = ["setup", "layout", "play", "end"];
 shipinplaylength = 0;
@@ -37,7 +37,6 @@ shipinplay = "";
 currentorientation = "horiz";
 redtargetfields = [];
 bluetargetfields = [];
-currentselection = [];
 redCarrier = [];
 redBattleShip = [];
 redCruiser = [];
@@ -187,6 +186,8 @@ $(document).ready(function() {
   //this button flips  theplayer
   $("#btn-flipplayer").on("click", function() {
     console.log("switchplayer button clicked");
+    currentPlayer = changeCurrentPlayer(currentPlayer);
+    console.log(currentPlayer);
     messaging("switch");
   });
   // this button is  to flip ship orientation during setup
@@ -285,6 +286,10 @@ function messaging(message) {
 
     case "infield":
       $("#status").html("Good place");
+      break;
+
+    case "switch":
+      $("#currentPlayer").html("current player is " + currentPlayer);
       break;
 
     default:
@@ -453,9 +458,18 @@ function clickShip(el) {
       elclass = "placed_ship";
     }
     marksquares(el, currentorientation, shipinplaylength, elclass);
-    createcurrentselection(el, currentorientation, shipinplaylength);
+
+    var currentselection = createcurrentselection(
+      el,
+      currentorientation,
+      shipinplaylength
+    );
+
     addShipstotargetfields(currentPlayer, currentselection);
-    console.log("HTML is: " + redtargetfields.get(0).outerHTML);
+    stringify(redtargetfields);
+    stringify(bluetargetfields);
+
+    //console.log("HTML is: " + redtargetfields.get(0).outerHTML);
   } else {
     el.addClass("target");
     //set class
@@ -493,7 +507,17 @@ function unmarksquares(el, currentorientation, shipinplaylength, elclass) {
   }
 }
 
+function changeCurrentPlayer(currentPlayer) {
+  if (currentPlayer === "blue") {
+    currentPlayer = "red";
+  } else {
+    currentPlayer = "blue";
+  }
+  return currentPlayer;
+}
+
 function createcurrentselection(el, currentorientation, shipinplaylength) {
+  var currentselection = [];
   let field = el.attr("id").split(":");
   spaces = shipinplaylength;
   for (i = 0; i < spaces; i++) {
@@ -506,24 +530,24 @@ function createcurrentselection(el, currentorientation, shipinplaylength) {
     console.log("square is" + elclass);
     currentselection.push(square);
   }
+  return currentselection;
 }
 function addShipstotargetfields(currentPlayer, currentselection) {
   console.log(currentPlayer);
   console.log(currentselection);
-  if ((currentPlayer = "blue")) {
+  debugger;
+  if (currentPlayer === "blue") {
     bluetargetfields.push(currentselection);
   } else {
     redtargetfields.push(currentselection);
   }
 }
-function notetargetfieldsonships(currentPlayer, currentselection, shipinplay) {
-  console.log(currentPlayer);
-  console.log(currentselection);
-  if ((currentPlayer = "blue")) {
-    bluetargetfields.push(currentselection);
-  } else {
-    redtargetfields.push(currentselection);
-  }
+
+function stringify(input) {
+  datatostring = input;
+  var strungdata = JSON.stringify(datatostring, null, 2);
+  console.log(strungdata);
+  return strungdata;
 }
 
 function edgecollision(el, currentorientation, shipinplaylength) {
