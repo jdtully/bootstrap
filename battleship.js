@@ -110,10 +110,18 @@ class ship {
 }
 
 function makeShips() {
-  redCarrier = new ship("Carrier", "red", "5", "", [], false, false);
-  redBattleShip = new ship("Battleship", "red", "4", "", [], false, false);
-  redSubmarine = new ship("Submarine", "red", "3", "", [], false, false);
-  redCruiser = new ship("Cruiser", "red", "3", "", [], false, false);
+  {
+    redCarrier = new ship("Carrier", "red", "5", "", [], false, false);
+  }
+  {
+    redBattleShip = new ship("Battleship", "red", "4", "", [], false, false);
+  }
+  {
+    redSubmarine = new ship("Submarine", "red", "3", "", [], false, false);
+  }
+  {
+    redCruiser = new ship("Cruiser", "red", "3", "", [], false, false);
+  }
   redDestroyer = new ship("Destroyer", "red", "3", "", [], false, false);
   blueCarrier = new ship("Carrier", "blue", "5", "", [], false, false);
   blueBattleShip = new ship("Battleship", "blue", "4", "", [], false, false);
@@ -133,36 +141,36 @@ $(document).ready(function() {
   $("#button1").on("click", function() {
     messaging("reset");
   });
-  // buttons 2->6  shiptypes
-  $("#btn-carrier").on("click", function() {
+  // buttons 2->6  blueshiptypes
+  $("#blue-btn-carrier").on("click", function() {
     console.log("carrier clicked");
     shipinplaylength = 5;
     shipinplay = pickship(currentPlayer, "Carrier");
     //placeship(shipinplay);
     messaging("carrier");
   });
-  $("#btn-battleship").on("click", function() {
+  $("#blue-btn-battleship").on("click", function() {
     console.log("battleship clicked");
     shipinplaylength = 4;
     shipinplay = pickship(currentPlayer, "Battleship");
     //placeship(shipinplay);
     messaging("battleship");
   });
-  $("#btn-cruiser").on("click", function() {
+  $("#blue-btn-cruiser").on("click", function() {
     console.log("cruiser clicked");
     shipinplaylength = 3;
     shipinplay = pickship(currentPlayer, "Cruiser");
     //placeship(shipinplay);
     messaging("cruiser");
   });
-  $("#btn-submarine").on("click", function() {
+  $("#blue-btn-submarine").on("click", function() {
     console.log("submarine clicked");
     shipinplaylength = 3;
     shipinplay = pickship(currentPlayer, "Submarine");
     //placeship(shipinplay);
     messaging("submarine");
   });
-  $("#btn-destroyer").on("click", function() {
+  $("#blue-btn-destroyer").on("click", function() {
     console.log("destroyer clicked");
     shipinplaylength = 2;
     shipinplay = pickship(currentPlayer, "Destroyer");
@@ -186,6 +194,42 @@ $(document).ready(function() {
   $("#btn-fliporientation").on("click", function() {
     console.log("horiz or vert button clicked");
     currentorientation = flipOrientation(currentorientation);
+  });
+  // red shiptypes
+  $("#red-btn-carrier").on("click", function() {
+    console.log("carrier clicked");
+    shipinplaylength = 5;
+    shipinplay = pickship(currentPlayer, "Carrier");
+    //placeship(shipinplay);
+    messaging("carrier");
+  });
+  $("#red-btn-battleship").on("click", function() {
+    console.log("battleship clicked");
+    shipinplaylength = 4;
+    shipinplay = pickship(currentPlayer, "Battleship");
+    //placeship(shipinplay);
+    messaging("battleship");
+  });
+  $("#red-btn-cruiser").on("click", function() {
+    console.log("cruiser clicked");
+    shipinplaylength = 3;
+    shipinplay = pickship(currentPlayer, "Cruiser");
+    //placeship(shipinplay);
+    messaging("cruiser");
+  });
+  $("#red-btn-submarine").on("click", function() {
+    console.log("submarine clicked");
+    shipinplaylength = 3;
+    shipinplay = pickship(currentPlayer, "Submarine");
+    //placeship(shipinplay);
+    messaging("submarine");
+  });
+  $("#red-btn-destroyer").on("click", function() {
+    console.log("destroyer clicked");
+    shipinplaylength = 2;
+    shipinplay = pickship(currentPlayer, "Destroyer");
+    //placeship(shipinplay);
+    messaging("destroyer");
   });
 });
 
@@ -321,7 +365,10 @@ function hoverShip(el) {
   var spaces = shipinplaylength;
   //checking for edge collision first
   if (shipinplaylength > 1) {
-    if (field[0] == "table0") {
+    if (
+      field[0] == "bluetable0" ||
+      (field[0] == "redtable0" && gamePhase === "layout")
+    ) {
       if (edgecollision(el, currentorientation, spaces)) {
         elclass = "outofbounds";
       } else {
@@ -329,18 +376,6 @@ function hoverShip(el) {
       }
 
       marksquares(el, currentorientation, shipinplaylength, elclass);
-
-      /*for (i = 0; i < spaces; i++) {
-          if (currentorientation !== "horiz") {
-          squareStr = field[0] + ":" + (parseInt(field[1]) + i) + ":" + field[2];
-        } else {
-          squareStr = field[0] + ":" + field[1] + ":" + (parseInt(field[2]) + i);
-        }
-        var square = document.getElementById(squareStr);
-        console.log("square is" + elclass);
-        $(square).addClass(elclass);
-      }
-      */
     } else {
       el.addClass("target");
       //set class
@@ -350,7 +385,10 @@ function hoverShip(el) {
     messaging("noship");
   }
 }
+//functon pickActiveTable() {
+//  if(mode)
 
+//}
 function unhoverShip(el) {
   el.removeClass("hover");
   console.log(el.attr("id"));
@@ -364,82 +402,30 @@ function unhoverShip(el) {
       elclass = "hover";
     }
     unmarksquares(el, currentorientation, shipinplaylength, elclass);
-    /*for (i = 0; i < spaces; i++) {
-      var squareStr;
-      if (currentorientation !== "horiz") {
-        squareStr = field[0] + ":" + (parseInt(field[1]) + i) + ":" + field[2];
-      } else {
-        squareStr = field[0] + ":" + field[1] + ":" + (parseInt(field[2]) + i);
-      }
-      var square = document.getElementById(squareStr);
-      console.log("square is" + elclass);
-      $(square).removeClass(elclass);
-    }
-    */
-
-    /*
-    if (currentorientation === "horiz") {
-      for (i = 0; i < spaces; i++) {
-        nextsquare = parseInt(field[2]);
-        nextsquare += i;
-        if (nextsquare >= numCols) {
-          messaging("offedge");
-          for (i = 0; i < spaces; i++) {
-            nextsquare = parseInt(field[2]);
-            nextsquare += i;
-            let celltofind = field[0] + ":" + field[1] + ":" + nextsquare;
-            let nextcell = document.getElementById(celltofind);
-            $(nextcell).removeClass("outofbounds");
-          }
-        } else {
-          messaging("infield");
-          let celltofind = field[0] + ":" + field[1] + ":" + nextsquare;
-          let nextcell = document.getElementById(celltofind);
-          $(nextcell).removeClass("hover");
-        }
-      }
-    } else {
-      for (i = 0; i < spaces; i++) {
-        nextsquare = parseInt(field[1]);
-        nextsquare += i;
-        if (nextsquare >= numCols) {
-          messaging("offedge");
-          for (i = 0; i < spaces; i++) {
-            nextsquare = parseInt(field[1]);
-            nextsquare += i;
-            let celltofind = field[0] + ":" + nextsquare + ":" + field[2];
-            let nextcell = document.getElementById(celltofind);
-            $(nextcell).removeClass("outofbounds");
-          }
-        } else {
-          messaging("infield");
-          let celltofind = field[0] + ":" + nextsquare + ":" + field[2];
-          let nextcell = document.getElementById(celltofind);
-          $(nextcell).removeClass("hover");
-        }
-      }
-    }
-    */
   } else {
     el.removeClass("target");
     //set class
     //do  on click  for  shot
   }
 }
-function modeSelector() {}
+//function selectGamePhase() {
+//  if(gamePhase ===)
+//}
+
+function chooseActiveTable() {}
 
 function initgame() {
-  buildGrid("bluetable0");
-  buildGrid("bluetable1");
-  buildGrid("redtable0");
-  buildGrid("redtable1");
-
+  gamePhase = "setup";
+  buildGrid("blue-ships-table");
+  buildGrid("blue-shots-table");
+  buildGrid("red-ships-table");
+  buildGrid("red-shots-table");
   makeShips();
   console.log("grids built");
-  gamePhase = "setup";
+  gamePhase = "layout";
   currentPlayer = "blue";
   currentorientation = "horiz";
-  console.log("gamePhase = setup");
+  console.log("gamePhase = layout");
   messaging("setup");
   messaging("currentPlayer");
 }
@@ -555,6 +541,11 @@ function stringify(input) {
   console.log(strungdata);
   return strungdata;
 }
+//function setActiveTable(table) {
+// switch (message) {
+//  case
+//}
+//}
 
 function edgecollision(el, currentorientation, shipinplaylength) {
   console.log(el, currentorientation, shipinplaylength);
