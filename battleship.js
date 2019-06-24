@@ -179,22 +179,24 @@ $(document).ready(function() {
   });
 
   //This button is  to hide your ship selections
-  $("#btn-hide").on("click", function() {
+  $("#blue-btn-hide").on("click", function() {
     console.log("hide button clicked");
     messaging("hide");
   });
   //this button flips  theplayer
-  $("#btn-flipplayer").on("click", function() {
+  $("#blue-btn-flipplayer").on("click", function() {
     console.log("switchplayer button clicked");
     currentPlayer = changeCurrentPlayer(currentPlayer);
     console.log(currentPlayer);
     messaging("switch");
   });
+
   // this button is  to flip ship orientation during setup
-  $("#btn-fliporientation").on("click", function() {
+  $("#blue-btn-fliporientation").on("click", function() {
     console.log("horiz or vert button clicked");
     currentorientation = flipOrientation(currentorientation);
   });
+
   // red shiptypes
   $("#red-btn-carrier").on("click", function() {
     console.log("carrier clicked");
@@ -366,8 +368,8 @@ function hoverShip(el) {
   //checking for edge collision first
   if (shipinplaylength > 1) {
     if (
-      field[0] == "bluetable0" ||
-      (field[0] == "redtable0" && gamePhase === "layout")
+      field[0] == "blue-ships-table" ||
+      (field[0] == "red-ships-table" && gamePhase === "layout")
     ) {
       if (edgecollision(el, currentorientation, spaces)) {
         elclass = "outofbounds";
@@ -395,7 +397,10 @@ function unhoverShip(el) {
   let field = el.attr("id").split(":");
   console.log(field);
   var spaces = shipinplaylength;
-  if (field[0] == "table0") {
+  if (
+    field[0] == "blue-ships-table" ||
+    (field[0] == "red-ships-table" && gamePhase === "layout")
+  ) {
     if (edgecollision(el, currentorientation, spaces)) {
       elclass = "outofbounds";
     } else {
@@ -436,7 +441,10 @@ function clickShip(el) {
   console.log(field);
   var spaces = shipinplaylength;
   //checking for edge collision first
-  if (field[0] == "table0") {
+  if (
+    field[0] == "blue-ships-table" ||
+    (field[0] == "red-ships-table" && gamePhase === "layout")
+  ) {
     if (shipinplaylength)
       if (edgecollision(el, currentorientation, spaces)) {
         elclass = "outofbounds";
