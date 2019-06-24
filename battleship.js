@@ -33,7 +33,7 @@ otherPlayer = [];
 currentship = "";
 gamePhase = ["setup", "layout", "play", "end"];
 shipinplaylength = 0;
-shipinplay = "";
+shipinplay = [];
 currentorientation = "horiz";
 redtargetfields = [];
 bluetargetfields = [];
@@ -137,31 +137,31 @@ $(document).ready(function() {
   $("#blue-btn-carrier").on("click", function() {
     console.log("carrier clicked");
     shipinplaylength = 5;
-    shipinplay = pickship(currentPlayer, "blueCarrier");
+    shipinplay = blueCarrier;
     messaging("carrier");
   });
   $("#blue-btn-battleship").on("click", function() {
     console.log("battleship clicked");
     shipinplaylength = 4;
-    shipinplay = pickship(currentPlayer, "blueBattleship");
+    shipinplay = blueBattleship;
     messaging("battleship");
   });
   $("#blue-btn-cruiser").on("click", function() {
     console.log("cruiser clicked");
     shipinplaylength = 3;
-    shipinplay = pickship(currentPlayer, "blueCruiser");
+    shipinplay = blueCruiser;
     messaging("cruiser");
   });
   $("#blue-btn-submarine").on("click", function() {
     console.log("submarine clicked");
     shipinplaylength = 3;
-    shipinplay = pickship(currentPlayer, "blueSubmarine");
+    shipinplay = blueSubmarine;
     messaging("submarine");
   });
   $("#blue-btn-destroyer").on("click", function() {
     console.log("destroyer clicked");
     shipinplaylength = 2;
-    shipinplay = pickship(currentPlayer, "blueDestroyer");
+    shipinplay = blueDestroyer;
     messaging("destroyer");
   });
 
@@ -188,31 +188,31 @@ $(document).ready(function() {
   $("#red-btn-carrier").on("click", function() {
     console.log("carrier clicked");
     shipinplaylength = 5;
-    shipinplay = pickship(currentPlayer, "redCarrier");
+    shipinplay = redCarrier;
     messaging("carrier");
   });
   $("#red-btn-battleship").on("click", function() {
     console.log("battleship clicked");
     shipinplaylength = 4;
-    shipinplay = pickship(currentPlayer, "redBattleship");
+    shipinplay = redBattleship;
     messaging("battleship");
   });
   $("#red-btn-cruiser").on("click", function() {
     console.log("cruiser clicked");
     shipinplaylength = 3;
-    shipinplay = pickship(currentPlayer, "redCruiser");
+    shipinplay = redCruiser;
     messaging("cruiser");
   });
   $("#red-btn-submarine").on("click", function() {
     console.log("submarine clicked");
     shipinplaylength = 3;
-    shipinplay = pickship(currentPlayer, "Submarine");
+    shipinplay = redSubmarine;
     messaging("submarine");
   });
   $("#red-btn-destroyer").on("click", function() {
     console.log("destroyer clicked");
     shipinplaylength = 2;
-    shipinplay = pickship(currentPlayer, "Destroyer");
+    shipinplay = redDestroyer;
     messaging("destroyer");
   });
 });
@@ -318,13 +318,13 @@ function messaging(message) {
 }
 
 //select  shiptype (ships are  declared  above)
-function pickship(currentPlayer, currentship) {
-  console.log("Picking " + currentship);
-  $("#status").html("Carrier Selected");
-  shipinplay = currentPlayer + currentship;
-  console.log("currently working on " + shipinplay);
-  return shipinplay;
-}
+//function pickship(currentPlayer, currentship) {
+// console.log("Picking " + currentship);
+// $("#status").html("Carrier Selected");
+// shipinplay = currentPlayer + currentship;
+//console.log("currently working on " + shipinplay);
+//return shipinplay;
+//}
 
 //select placement area of ships during setup
 //function placeship(shipinplay) {
@@ -457,9 +457,13 @@ function markShipObject(shipinplay, currentorientation, currentselection) {
   shipinplay.targets = currentselection;
   shipinplay.placed = true;
 }
-function hideShipbutton(shipinplay) {
-  console.log("need  to write hide ship buttons");
-}
+//function hideShipbutton(button) {
+//switch (button) {
+//case "redCarrier;
+
+// break;
+console.log("need  to write hide ship buttons");
+//}
 
 function marksquares(el, currentorientation, shipinplaylength, elclass) {
   let field = el.attr("id").split(":");
@@ -535,9 +539,9 @@ function stringify(input) {
 }
 
 function markShipObject(shipinplay, currentorientation, currentselection) {
-  ship.shipinplay.orientation = currentorientation;
-  ship.shipinplay.targets = currentselection;
-  ship.shipinplay.placed = true;
+  shipinplay.orientation = currentorientation;
+  shipinplay.targets = currentselection;
+  shipinplay.placed = true;
 }
 //function setActiveTable(table) {
 // switch (message) {
