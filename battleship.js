@@ -110,30 +110,22 @@ class ship {
 }
 
 function makeShips() {
-  redCarrier = new ship("Carrier", "red", "5", "[1, 2, 3, 4, 5]", "", "");
-  redBattleShip = new ship("Battleship", "red", "5", "[1, 2, 3, 4, 5]", "", "");
-  redSubmarine = new ship("Submarine", "red", "3", "[1, 2, 3]", "", "");
-  redCruiser = new ship("Cruiser", "red", "3", "[1, 2, 3]", "", "");
-  redDestroyer = new ship("Destroyer", "red", "3", "[1, 2]", "", "");
-  blueCarrier = new ship("Carrier", "blue", "3", "[1, 2, 3, 4, 5]", "", "");
-  blueBattleShip = new ship("Battleship", "blue", "3", "[1, 2, 3, 4]", "", "");
-  blueSubmarine = ("Submarine", "blue", "3", "[1, 2, 3]", "", "");
-  blueCruiser = new ship("Cruiser", "blue", "3", "[1, 2, 3]", "", "");
-  blueDestroyer = new ship("Destroyer", "blue", "2", "[1, 2]", "", "");
+  redCarrier = new ship("Carrier", "red", "5", "", [], false, false);
+  redBattleShip = new ship("Battleship", "red", "4", "", [], false, false);
+  redSubmarine = new ship("Submarine", "red", "3", "", [], false, false);
+  redCruiser = new ship("Cruiser", "red", "3", "", [], false, false);
+  redDestroyer = new ship("Destroyer", "red", "3", "", [], false, false);
+  blueCarrier = new ship("Carrier", "blue", "5", "", [], false, false);
+  blueBattleShip = new ship("Battleship", "blue", "4", "", [], false, false);
+  blueSubmarine = new ship("Submarine", "blue", "3", "", [], false, false);
+  blueCruiser = new ship("Cruiser", "blue", "3", "", [], false, false);
+  blueDestroyer = new ship("Destroyer", "blue", "2", "", [], false, false);
 
   console.log("makeships done");
 }
 $(document).ready(function() {
   console.log("ready");
   initgame();
-  //placeship();
-  //if (gamePhase[0] === "setup") {
-  // buildGrid("table0");
-  // buildGrid("table1");
-  // console.log("grids built");
-  // console.log("gamePhase = setup");
-  // messaging("setup");
-  //messaging("currentPlayer");
 });
 
 //button handlers
@@ -194,10 +186,6 @@ $(document).ready(function() {
   $("#btn-fliporientation").on("click", function() {
     console.log("horiz or vert button clicked");
     currentorientation = flipOrientation(currentorientation);
-  });
-  $("#button10").on("click", function() {
-    console.log("test button clicked");
-    messaging("switch");
   });
 });
 
@@ -292,6 +280,10 @@ function messaging(message) {
       $("#currentPlayer").html("current player is " + currentPlayer);
       break;
 
+    case "noship":
+      $("#status").html(currentPlayer + " Please pick a ship");
+      break;
+
     default:
       console.warn("no message for " + message);
   }
@@ -328,30 +320,34 @@ function hoverShip(el) {
   console.log(field);
   var spaces = shipinplaylength;
   //checking for edge collision first
-  if (field[0] == "table0") {
-    if (edgecollision(el, currentorientation, spaces)) {
-      elclass = "outofbounds";
-    } else {
-      elclass = "hover";
-    }
-
-    marksquares(el, currentorientation, shipinplaylength, elclass);
-
-    /*for (i = 0; i < spaces; i++) {
-        if (currentorientation !== "horiz") {
-        squareStr = field[0] + ":" + (parseInt(field[1]) + i) + ":" + field[2];
+  if (shipinplaylength > 1) {
+    if (field[0] == "table0") {
+      if (edgecollision(el, currentorientation, spaces)) {
+        elclass = "outofbounds";
       } else {
-        squareStr = field[0] + ":" + field[1] + ":" + (parseInt(field[2]) + i);
+        elclass = "hover";
       }
-      var square = document.getElementById(squareStr);
-      console.log("square is" + elclass);
-      $(square).addClass(elclass);
+
+      marksquares(el, currentorientation, shipinplaylength, elclass);
+
+      /*for (i = 0; i < spaces; i++) {
+          if (currentorientation !== "horiz") {
+          squareStr = field[0] + ":" + (parseInt(field[1]) + i) + ":" + field[2];
+        } else {
+          squareStr = field[0] + ":" + field[1] + ":" + (parseInt(field[2]) + i);
+        }
+        var square = document.getElementById(squareStr);
+        console.log("square is" + elclass);
+        $(square).addClass(elclass);
+      }
+      */
+    } else {
+      el.addClass("target");
+      //set class
+      //do  on click  for  shot
     }
-    */
   } else {
-    el.addClass("target");
-    //set class
-    //do  on click  for  shot
+    messaging("noship");
   }
 }
 
@@ -433,8 +429,11 @@ function unhoverShip(el) {
 function modeSelector() {}
 
 function initgame() {
-  buildGrid("table0");
-  buildGrid("table1");
+  buildGrid("bluetable0");
+  buildGrid("bluetable1");
+  buildGrid("redtable0");
+  buildGrid("redtable1");
+
   makeShips();
   console.log("grids built");
   gamePhase = "setup";
@@ -452,11 +451,12 @@ function clickShip(el) {
   var spaces = shipinplaylength;
   //checking for edge collision first
   if (field[0] == "table0") {
-    if (edgecollision(el, currentorientation, spaces)) {
-      elclass = "outofbounds";
-    } else {
-      elclass = "placed_ship";
-    }
+    if (shipinplaylength)
+      if (edgecollision(el, currentorientation, spaces)) {
+        elclass = "outofbounds";
+      } else {
+        elclass = "placed_ship";
+      }
     marksquares(el, currentorientation, shipinplaylength, elclass);
 
     var currentselection = createcurrentselection(
@@ -466,6 +466,8 @@ function clickShip(el) {
     );
 
     addShipstotargetfields(currentPlayer, currentselection);
+    markShipObject(shipinplay, currentorientation, currentselection);
+    hideShipbutton(shipinplay);
 
     //console.log("HTML is: " + redtargetfields.get(0).outerHTML);
   } else {
@@ -474,6 +476,12 @@ function clickShip(el) {
     //do  on click  for  shot
   }
 }
+function markShipObject(shipinplay, currentorientation, currentselection) {
+  shipinplay.orientation = currentorientation;
+  shipinplay.targets = currentselection;
+  shipinplay.placed = true;
+}
+//function hideShipbutton(shipinplay)
 
 function marksquares(el, currentorientation, shipinplaylength, elclass) {
   let field = el.attr("id").split(":");

@@ -16,7 +16,31 @@
 
     <div class="container">
       <div class="row">
-        <div id="table0" class="col-lg-5"></div>
+        <div id="bluetable0" class="col-lg-5"></div>
+        <div class="col-lg-2 btn-group-vertical">
+          <button id="button1" class="action">Start</button>
+          <button id="blue-btn-carrier" class="ship">Carrier</button>
+          <button id="blue-btn-battleship" class="ship">Battleship</button>
+          <button id="blue-btn-cruiser" class="ship">Cruiser</button>
+          <button id="blue-btn-submarine" class="ship">Submarine</button>
+          <button id="blue-btn-destroyer" class="ship">Destroyer</button>
+          <button id="blue-btn-hide" class="action">Hide Mine</button>
+          <button id="blue btn-flipplayer" class="action">Switch Player</button>
+          <button id="blue btn-fliporientation" class="action">
+            Switch H/V
+          </button>
+        </div>
+        <div id="bluetable1" class="col-lg-5 hidden"></div>
+      </div>
+    </div>
+    <div class="bottom-messages">
+      <h1 id="gamephase" class="message"></h1>
+      <h1 id="status" class="message"></h1>
+      <h1 id="currentplayer" class="message"></h1>
+    </div>
+    <div class="container">
+      <div class="row">
+        <div id="redtable0" class="col-lg-5"></div>
         <div class="col-lg-2 btn-group-vertical">
           <button id="button1" class="action">Start</button>
           <button id="btn-carrier" class="ship">Carrier</button>
@@ -26,18 +50,10 @@
           <button id="btn-destroyer" class="ship">Destroyer</button>
           <button id="btn-hide" class="action">Hide Mine</button>
           <button id="btn-flipplayer" class="action">Switch Player</button>
-          <button id="btn-fliporientation" class="action">
-            Change Orientation
-          </button>
-          <button id="button10" class="action">test button</button>
+          <button id="btn-fliporientation" class="action">Switch H/V</button>
         </div>
-        <div id="table1" class="col-lg-5 hidden"></div>
+        <div id="redtable1" class="col-lg-5"></div>
       </div>
-    </div>
-    <div class="bottom-messages">
-      <h1 id="gamephase" class="message"></h1>
-      <h1 id="status" class="message"></h1>
-      <h1 id="currentplayer" class="message"></h1>
     </div>
   </body>
 
