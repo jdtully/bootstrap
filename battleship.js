@@ -109,12 +109,12 @@ class ship {
 
 function makeShips() {
   redCarrier = new ship("Carrier", "red", "5", "", [], false, false);
-  redBattleShip = new ship("Battleship", "red", "4", "", [], false, false);
+  redBattleship = new ship("Battleship", "red", "4", "", [], false, false);
   redSubmarine = new ship("Submarine", "red", "3", "", [], false, false);
   redCruiser = new ship("Cruiser", "red", "3", "", [], false, false);
   redDestroyer = new ship("Destroyer", "red", "3", "", [], false, false);
   blueCarrier = new ship("Carrier", "blue", "5", "", [], false, false);
-  blueBattleShip = new ship("Battleship", "blue", "4", "", [], false, false);
+  blueBattleship = new ship("Battleship", "blue", "4", "", [], false, false);
   blueSubmarine = new ship("Submarine", "blue", "3", "", [], false, false);
   blueCruiser = new ship("Cruiser", "blue", "3", "", [], false, false);
   blueDestroyer = new ship("Destroyer", "blue", "2", "", [], false, false);
@@ -441,6 +441,51 @@ function markShipObject(shipinplay, currentorientation, currentselection) {
 }
 function hideShipbutton(shipinplay) {
   switch (shipinplay.player + shipinplay.shiptype) {
+    case "blueCarrier":
+      console.log(shipinplay + " placed");
+      var buttonToHide = $("#blue-btn-carrier");
+      buttonToHide.addClass("hidden");
+      shipinplay = {};
+      currentselection = [];
+      shipinplaylength = 0;
+      break;
+
+    case "blueBattleship":
+      console.log(shipinplay + " placed");
+      var buttonToHide = $("#blue-btn-battleship");
+      buttonToHide.addClass("hidden");
+      shipinplay = {};
+      currentselection = [];
+      shipinplaylength = 0;
+      break;
+
+    case "blueSubmarine":
+      console.log(shipinplay + " placed");
+      var buttonToHide = $("#blue-btn-submarine");
+      buttonToHide.addClass("hidden");
+      shipinplay = {};
+      currentselection = [];
+      shipinplaylength = 0;
+      break;
+
+    case "blueCruiser":
+      console.log(shipinplay + " placed");
+      var buttonToHide = $("#blue-btn-cruiser");
+      buttonToHide.addClass("hidden");
+      shipinplay = {};
+      currentselection = [];
+      shipinplaylength = 0;
+      break;
+
+    case "blueDestroyer":
+      console.log(shipinplay + " placed");
+      var buttonToHide = $("#blue-btn-destroyer");
+      buttonToHide.addClass("hidden");
+      shipinplay = {};
+      currentselection = [];
+      shipinplaylength = 0;
+      break;
+
     case "redCarrier":
       console.log(shipinplay + " placed");
       var buttonToHide = $("#red-btn-carrier");
@@ -449,10 +494,44 @@ function hideShipbutton(shipinplay) {
       currentselection = [];
       shipinplaylength = 0;
       break;
+
+    case "redBattleship":
+      console.log(shipinplay + " placed");
+      var buttonToHide = $("#red-btn-battleship");
+      buttonToHide.addClass("hidden");
+      shipinplay = {};
+      currentselection = [];
+      shipinplaylength = 0;
+      break;
+
+    case "redSubmarine":
+      console.log(shipinplay + " placed");
+      var buttonToHide = $("#red-btn-submarine");
+      buttonToHide.addClass("hidden");
+      shipinplay = {};
+      currentselection = [];
+      shipinplaylength = 0;
+      break;
+
+    case "redCruiser":
+      console.log(shipinplay + " placed");
+      var buttonToHide = $("#red-btn-cruiser");
+      buttonToHide.addClass("hidden");
+      shipinplay = {};
+      currentselection = [];
+      shipinplaylength = 0;
+      break;
+
+    case "redDestroyer":
+      console.log(shipinplay + " placed");
+      var buttonToHide = $("#red-btn-destroyer");
+      buttonToHide.addClass("hidden");
+      shipinplay = {};
+      currentselection = [];
+      shipinplaylength = 0;
+      break;
   }
 }
-console.log("need  to write hide ship buttons");
-//}
 
 function marksquares(el, currentorientation, shipinplaylength, elclass) {
   let field = el.attr("id").split(":");
