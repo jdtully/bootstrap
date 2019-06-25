@@ -30,10 +30,9 @@ letters = [
 ];
 currentPlayer = [];
 otherPlayer = [];
-currentship = "";
 gamePhase = ["setup", "layout", "play", "end"];
 shipinplaylength = 0;
-shipinplay = [];
+shipinplay = {};
 currentorientation = "horiz";
 redtargetfields = [];
 bluetargetfields = [];
@@ -51,7 +50,6 @@ let blueDestroyer = [];
 function buildGrid(elementId) {
   //get the body
   var tableContainer = document.getElementById(elementId);
-
   //create table
   var table = document.createElement("table");
   //create a table body
@@ -250,10 +248,6 @@ function messaging(message) {
       $("#status").html("New game! X goes first!.");
       break;
 
-    case "pickship":
-      $("#status").html("You picked " + currentship + ".");
-      break;
-
     case "hit":
       console.log("Hit");
       $("#status").html("You hit" + otherPlayer + "vessel!");
@@ -316,21 +310,6 @@ function messaging(message) {
       console.warn("no message for " + message);
   }
 }
-
-//select  shiptype (ships are  declared  above)
-//function pickship(currentPlayer, currentship) {
-// console.log("Picking " + currentship);
-// $("#status").html("Carrier Selected");
-// shipinplay = currentPlayer + currentship;
-//console.log("currently working on " + shipinplay);
-//return shipinplay;
-//}
-
-//select placement area of ships during setup
-//function placeship(shipinplay) {
-// console.log("ready to place ships " + shipinplay);
-//  currentship = shipinplay;
-//}
 
 function flipOrientation(orientation) {
   console.log(orientation);
@@ -427,12 +406,15 @@ function clickShip(el) {
     field[0] == "blue-ships-table" ||
     (field[0] == "red-ships-table" && gamePhase === "layout")
   ) {
-    if (shipinplaylength)
+    if (shipinplaylength > 1)
       if (edgecollision(el, currentorientation, spaces)) {
         elclass = "outofbounds";
       } else {
         elclass = "placed_ship";
       }
+    else {
+      messaging("setup");
+    }
     marksquares(el, currentorientation, shipinplaylength, elclass);
 
     var currentselection = createcurrentselection(
@@ -457,11 +439,18 @@ function markShipObject(shipinplay, currentorientation, currentselection) {
   shipinplay.targets = currentselection;
   shipinplay.placed = true;
 }
-//function hideShipbutton(button) {
-//switch (button) {
-//case "redCarrier;
-
-// break;
+function hideShipbutton(shipinplay) {
+  switch (shipinplay.player + shipinplay.shiptype) {
+    case "redCarrier":
+      console.log(shipinplay + " placed");
+      var buttonToHide = $("#red-btn-carrier");
+      buttonToHide.addClass("hidden");
+      shipinplay = {};
+      currentselection = [];
+      shipinplaylength = 0;
+      break;
+  }
+}
 console.log("need  to write hide ship buttons");
 //}
 
@@ -523,7 +512,6 @@ function createcurrentselection(el, currentorientation, shipinplaylength) {
 function addShipstotargetfields(currentPlayer, currentselection) {
   console.log(currentPlayer);
   console.log(currentselection);
-  debugger;
   if (currentPlayer === "blue") {
     bluetargetfields.push(currentselection);
   } else {
