@@ -361,7 +361,11 @@ function hoverShip(el) {
       console.log("we are in ship placement mode");
     }
   } else {
-    messaging("noship");
+    if (gamePhase === "layout") {
+      console.log("hovering right grid in layout mode");
+    } else {
+      el.addClass("hover");
+    }
   }
 }
 
@@ -418,8 +422,8 @@ function clickShip(el) {
   let field = el.attr("id").split(":");
   console.log(field);
   var spaces = shipinplaylength;
-  if (gamePhase === "layout") {
-    if (field[0] == "blue-ships-table" || field[0] == "red-ships-table") {
+  if (field[0] == "blue-ships-table" || field[0] == "red-ships-table") {
+    if (gamePhase === "layout") {
       if (shipinplaylength > 1) {
         if (edgecollision(el, currentorientation, spaces)) {
           elclass = "outofbounds";
@@ -441,17 +445,14 @@ function clickShip(el) {
       addShipstotargetfields(currentPlayer, currentselection);
       markShipObject(shipinplay, currentorientation, currentselection);
       hideShipbutton(shipinplay);
-
-      //console.log("HTML is: " + redtargetfields.get(0).outerHTML);
-    } else {
-      if (
-        field[0] === "blue-shots-table" ||
-        (field[0] === "red-shots-table" && gamePhase === "play")
-      ) {
+    }
+  } else {
+    if (field[0] === "blue-shots-table" || field[0] === "red-shots-table") {
+      if (gamePhase === "play") {
         $(el).removeClass("hover");
         $(el).addClass("target");
       } else {
-        console.log("nope from  right side  table  handler");
+        console.log("gamephase is not play");
       }
     }
   }
