@@ -34,8 +34,8 @@ gamePhase = ["setup", "layout", "play", "end"];
 shipinplaylength = 0;
 shipinplay = {};
 currentorientation = "horiz";
-redtargetfields = [];
-bluetargetfields = [];
+blueships = [];
+redships = [];
 let redCarrier = [];
 let redBattleShip = [];
 let redCruiser = [];
@@ -46,8 +46,8 @@ let blueBattleShip = [];
 let blueCruiser = [];
 let blueSubmarine = [];
 let blueDestroyer = [];
-redshots = []
-blueshots = []
+redshots = [];
+blueshots = [];
 function buildGrid(elementId) {
   //get the body
   var tableContainer = document.getElementById(elementId);
@@ -110,15 +110,25 @@ class ship {
 
 function makeShips() {
   redCarrier = new ship("Carrier", "red", "5", "", [], false, false);
+  redships.push(redCarrier);
   redBattleship = new ship("Battleship", "red", "4", "", [], false, false);
+  redships.push(redBattleship);
   redSubmarine = new ship("Submarine", "red", "3", "", [], false, false);
+  redships.push(redSubmarine);
   redCruiser = new ship("Cruiser", "red", "3", "", [], false, false);
+  redships.push(redCruiser);
   redDestroyer = new ship("Destroyer", "red", "3", "", [], false, false);
+  redships.push(redDestroyer);
   blueCarrier = new ship("Carrier", "blue", "5", "", [], false, false);
+  blueships.push(blueCarrier);
   blueBattleship = new ship("Battleship", "blue", "4", "", [], false, false);
+  blueships.push(blueBattleShip);
   blueSubmarine = new ship("Submarine", "blue", "3", "", [], false, false);
+  blueships.push(blueSubmarine);
   blueCruiser = new ship("Cruiser", "blue", "3", "", [], false, false);
+  blueships.push(blueCruiser);
   blueDestroyer = new ship("Destroyer", "blue", "2", "", [], false, false);
+  blueships.push(blueDestroyer);
 
   console.log("makeships done");
 }
@@ -237,6 +247,11 @@ $(document).ready(function() {
 //hopefully all messaging  is  in here
 function messaging(message) {
   switch (message) {
+    case "repeated shot":
+      console.log("shot duplicated message");
+      $("#status").html("You already shot here");
+      break;
+
     case "reset":
       console.log("reset Clicked");
       $("#status").html("New game! blue first!.");
@@ -372,25 +387,61 @@ function hoverShip(el) {
 
 //functon pickActiveTable() {
 //  if(mode)
-function checkrepeatshot (el) {
-  console.log("checkrepeatshot")
+function checkrepeatshot(el, currentPlayer) {
+  console.log("checkrepeatshot");
+  if (currentPlayer == "blue") {
+    if (blueshots.indexOf(el.attr("id")) !== -1) {
+      return true;
+    } else {
+      return false;
+    }
+
+    //if ($.inArray(el, blueshots, [0]) !== i-1) {
+    //  return true;
+    // } else {
+    //  return false;
+  }
 }
 
-function recordshots (el) {
-  console.log("recordshots")
+// if (blueshots.includes(el)) {
+//   return true;
+// } else {
+//  return false;
+// }
+// } else {
+//if (redshots.includes(el)) {
+//    return true;
+//   } else {
+//     return false;
+//   }
+//create;
+
+function recordshots(el, currentPlayer) {
+  console.log("recording shots" + currentPlayer);
+  if (currentPlayer === "blue") {
+    blueshots.push(el.attr("id"));
+  } else {
+    redshots.push(el.attr("id"));
+  }
 }
-function markshiphits (el) {
-  console.log ("markshiphits")
+function detecthits() {
+  console.log("is  there  a hit? ");
 }
-function removefromtargetfields()){
-  console.log("removing from target fields list")
+
+function findshipshit(el, currentPlayer) {
+  console.log("figure out which  ship got hit");
+}
+function markshiphits(el, shiphit) {
+  console.log("markshiphits");
+}
+function removefromtargetfields(el, currentPlayer) {
+  console.log("removing from target fields list");
 }
 function checkshipsunk() {
-  console.log("checking to see if  ship sunk")
+  console.log("checking to see if  ship sunk");
 }
-
 function checkgameover() {
-  console.log("checking to see if game over")
+  console.log("checking to see if game over");
 }
 //}
 function unhoverShip(el) {
@@ -462,7 +513,7 @@ function clickShip(el) {
         shipinplaylength
       );
 
-      addShipstotargetfields(currentPlayer, currentselection);
+      // addShipstotargetfields(currentPlayer, currentselection);
       markShipObject(shipinplay, currentorientation, currentselection);
       hideShipbutton(shipinplay);
     }
@@ -471,7 +522,12 @@ function clickShip(el) {
       if (gamePhase === "play") {
         $(el).removeClass("hover");
         $(el).addClass("target");
-        
+        if (checkrepeatshot(el, currentPlayer)) {
+          messaging("repeated shot");
+        } else {
+          recordshots(el, currentPlayer);
+          detecthits(el, currentPlayer);
+        }
       } else {
         console.log("gamephase is not play");
       }
@@ -645,15 +701,15 @@ function createcurrentselection(el, currentorientation, shipinplaylength) {
   }
   return currentselection;
 }
-function addShipstotargetfields(currentPlayer, currentselection) {
-  console.log(currentPlayer);
-  console.log(currentselection);
-  if (currentPlayer === "blue") {
-    bluetargetfields.push(currentselection);
-  } else {
-    redtargetfields.push(currentselection);
-  }
-}
+//function addShipstotargetfields(currentPlayer, currentselection) {
+// console.log(currentPlayer);
+// console.log(currentselection);
+//if (currentPlayer === "blue") {
+//   bluetargetfields.push(currentselection);
+//  } else {
+//    redtargetfields.push(currentselection);
+//  }
+//}
 
 function stringify(input) {
   datatostring = input;
