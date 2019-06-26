@@ -46,7 +46,8 @@ let blueBattleShip = [];
 let blueCruiser = [];
 let blueSubmarine = [];
 let blueDestroyer = [];
-
+redshots = []
+blueshots = []
 function buildGrid(elementId) {
   //get the body
   var tableContainer = document.getElementById(elementId);
@@ -371,7 +372,26 @@ function hoverShip(el) {
 
 //functon pickActiveTable() {
 //  if(mode)
+function checkrepeatshot (el) {
+  console.log("checkrepeatshot")
+}
 
+function recordshots (el) {
+  console.log("recordshots")
+}
+function markshiphits (el) {
+  console.log ("markshiphits")
+}
+function removefromtargetfields()){
+  console.log("removing from target fields list")
+}
+function checkshipsunk() {
+  console.log("checking to see if  ship sunk")
+}
+
+function checkgameover() {
+  console.log("checking to see if game over")
+}
 //}
 function unhoverShip(el) {
   el.removeClass("hover");
@@ -451,6 +471,7 @@ function clickShip(el) {
       if (gamePhase === "play") {
         $(el).removeClass("hover");
         $(el).addClass("target");
+        
       } else {
         console.log("gamephase is not play");
       }
