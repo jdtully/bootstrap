@@ -97,37 +97,56 @@ function buildGrid(elementId) {
 //create ship variables
 
 class ship {
-  constructor(shiptype, player, length, orientation, targets, placed, sunk) {
+  constructor(
+    shiptype,
+    player,
+    length,
+    orientation,
+    targets,
+    hits,
+    placed,
+    sunk
+  ) {
     this.shiptype = shiptype;
     this.player = player;
     this.length = length;
     this.orientation = orientation;
     this.targets = targets;
+    this.hits = hits;
     this.placed = placed;
     this.sunk = sunk;
   }
 }
 
 function makeShips() {
-  redCarrier = new ship("Carrier", "red", "5", "", [], false, false);
+  redCarrier = new ship("Carrier", "red", "5", "", [], [], false, false);
   redships.push(redCarrier);
-  redBattleship = new ship("Battleship", "red", "4", "", [], false, false);
+  redBattleship = new ship("Battleship", "red", "4", "", [], [], false, false);
   redships.push(redBattleship);
-  redSubmarine = new ship("Submarine", "red", "3", "", [], false, false);
+  redSubmarine = new ship("Submarine", "red", "3", "", [], [], false, false);
   redships.push(redSubmarine);
-  redCruiser = new ship("Cruiser", "red", "3", "", [], false, false);
+  redCruiser = new ship("Cruiser", "red", "3", "", [], [], false, false);
   redships.push(redCruiser);
-  redDestroyer = new ship("Destroyer", "red", "3", "", [], false, false);
+  redDestroyer = new ship("Destroyer", "red", "3", "", [], [], false, false);
   redships.push(redDestroyer);
-  blueCarrier = new ship("Carrier", "blue", "5", "", [], false, false);
+  blueCarrier = new ship("Carrier", "blue", "5", "", [], [], false, false);
   blueships.push(blueCarrier);
-  blueBattleship = new ship("Battleship", "blue", "4", "", [], false, false);
-  blueships.push(blueBattleShip);
-  blueSubmarine = new ship("Submarine", "blue", "3", "", [], false, false);
+  blueBattleship = new ship(
+    "Battleship",
+    "blue",
+    "4",
+    "",
+    [],
+    [],
+    false,
+    false
+  );
+  blueships.push(blueBattleship);
+  blueSubmarine = new ship("Submarine", "blue", "3", "", [], [], false, false);
   blueships.push(blueSubmarine);
-  blueCruiser = new ship("Cruiser", "blue", "3", "", [], false, false);
+  blueCruiser = new ship("Cruiser", "blue", "3", "", [], [], false, false);
   blueships.push(blueCruiser);
-  blueDestroyer = new ship("Destroyer", "blue", "2", "", [], false, false);
+  blueDestroyer = new ship("Destroyer", "blue", "2", "", [], [], false, false);
   blueships.push(blueDestroyer);
 
   console.log("makeships done");
@@ -223,8 +242,21 @@ $(document).ready(function() {
   });
   $("#red-btn-hide").on("click", function() {
     console.log("hide button clicked");
+    currentPlayer = "red";
     hideShipsTable(currentPlayer);
     messaging("hide");
+    //This button is  to hide your ship selections
+  });
+  //this button flips  theplayer
+  $("#red-btn-flipplayer").on("click", function() {
+    console.log("switchplayer button clicked");
+    currentPlayer = changeCurrentPlayer(currentPlayer);
+    console.log(currentPlayer);
+    messaging("switch");
+  });
+  $("#red-btn-fliporientation").on("click", function() {
+    console.log("horiz or vert button clicked");
+    currentorientation = flipOrientation(currentorientation);
   });
   $("#initmode-btn").on("click", function() {
     console.log("init mode button clicked");
