@@ -31,6 +31,18 @@ td.hover {
   border-width: 2px;
   margin: 3px;
 }
+td.shotHit {
+  background-color: red;
+  border-color: black;
+  border-width: 2px;
+  margin: 3px;
+}
+td.shotMiss {
+  background-color: green;
+  border-color: black;
+  border-width: 2px;
+  margin: 3px;
+}
 td.outofbounds {
   background-color: red;
   border-color: black;

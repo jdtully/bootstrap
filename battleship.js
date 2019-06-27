@@ -97,56 +97,66 @@ function buildGrid(elementId) {
 //create ship variables
 
 class ship {
-  constructor(
-    shiptype,
-    player,
-    length,
-    orientation,
-    targets,
-    hits,
-    placed,
-    sunk
-  ) {
+  constructor(shiptype, player, length, targets, hits, placed, sunk) {
     this.shiptype = shiptype;
     this.player = player;
     this.length = length;
-    this.orientation = orientation;
     this.targets = targets;
     this.hits = hits;
     this.placed = placed;
     this.sunk = sunk;
   }
+  shipHit = function(gridlocation) {
+    for (target in this.targets) {
+      if (target.attr("id") === gridlocation) {
+        return true;
+      }
+    }
+    return false;
+  };
+}
+function shipHit(gridlocation) {
+  var j = [1, 2, 3, 4, 5];
+  if (currentPlayer === "blue") {
+    debugger;
+    //for (let ship in blueships) {
+    for (i = 0; i < j; i++) {
+      if (ship.shipHit(gridlocation)) {
+        return true;
+      }
+    }
+    return false;
+  } else {
+    for (i = 0; i < j; i++)
+      //for (let ship in blueships) {
+      debugger;
+    if (ship.shipHit(gridlocation)) {
+      return true;
+    }
+  }
+  return false;
 }
 
 function makeShips() {
-  redCarrier = new ship("Carrier", "red", "5", "", [], [], false, false);
+  redCarrier = new ship("Carrier", "red", "5", [], [], false, false);
   redships.push(redCarrier);
-  redBattleship = new ship("Battleship", "red", "4", "", [], [], false, false);
+  redBattleship = new ship("Battleship", "red", "4", [], [], false, false);
   redships.push(redBattleship);
-  redSubmarine = new ship("Submarine", "red", "3", "", [], [], false, false);
+  redSubmarine = new ship("Submarine", "red", "3", [], [], false, false);
   redships.push(redSubmarine);
-  redCruiser = new ship("Cruiser", "red", "3", "", [], [], false, false);
+  redCruiser = new ship("Cruiser", "red", "3", [], [], false, false);
   redships.push(redCruiser);
-  redDestroyer = new ship("Destroyer", "red", "3", "", [], [], false, false);
+  redDestroyer = new ship("Destroyer", "red", "3", [], [], false, false);
   redships.push(redDestroyer);
-  blueCarrier = new ship("Carrier", "blue", "5", "", [], [], false, false);
+  blueCarrier = new ship("Carrier", "blue", "5", [], [], false, false);
   blueships.push(blueCarrier);
-  blueBattleship = new ship(
-    "Battleship",
-    "blue",
-    "4",
-    "",
-    [],
-    [],
-    false,
-    false
-  );
+  blueBattleship = new ship("Battleship", "blue", "4", [], [], false, false);
   blueships.push(blueBattleship);
-  blueSubmarine = new ship("Submarine", "blue", "3", "", [], [], false, false);
+  blueSubmarine = new ship("Submarine", "blue", "3", [], [], false, false);
   blueships.push(blueSubmarine);
-  blueCruiser = new ship("Cruiser", "blue", "3", "", [], [], false, false);
+  blueCruiser = new ship("Cruiser", "blue", "3", [], [], false, false);
   blueships.push(blueCruiser);
-  blueDestroyer = new ship("Destroyer", "blue", "2", "", [], [], false, false);
+  blueDestroyer = new ship("Destroyer", "blue", "2", [], [], false, false);
   blueships.push(blueDestroyer);
 
   console.log("makeships done");
@@ -427,10 +437,16 @@ function checkrepeatshot(el, currentPlayer) {
     } else {
       return false;
     }
+  } else {
+    if (redshots.indexOf(el.attr("id")) !== -1) {
+      return true;
+    } else {
+      return false;
+    }
 
     //if ($.inArray(el, blueshots, [0]) !== i-1) {
     //  return true;
-    // } else {
+    // } else
     //  return false;
   }
 }
@@ -456,14 +472,11 @@ function recordshots(el, currentPlayer) {
     redshots.push(el.attr("id"));
   }
 }
-function detecthits() {
-  console.log("is  there  a hit? ");
-}
-
+33;
 function findshipshit(el, currentPlayer) {
   console.log("figure out which  ship got hit");
 }
-function markshiphits(el, shiphit) {
+function markshiphits(el) {
   console.log("markshiphits");
 }
 function removefromtargetfields(el, currentPlayer) {
@@ -553,12 +566,15 @@ function clickShip(el) {
     if (field[0] === "blue-shots-table" || field[0] === "red-shots-table") {
       if (gamePhase === "play") {
         $(el).removeClass("hover");
-        $(el).addClass("target");
         if (checkrepeatshot(el, currentPlayer)) {
           messaging("repeated shot");
         } else {
           recordshots(el, currentPlayer);
-          detecthits(el, currentPlayer);
+          if (shipHit(el.attr("id"))) {
+            $(el).addClass("shotHit");
+          } else {
+            $(el).addClass("shotMiss");
+          }
         }
       } else {
         console.log("gamephase is not play");
