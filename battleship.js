@@ -34,8 +34,8 @@ gamePhase = ["setup", "layout", "play", "end"];
 shipinplaylength = 0;
 shipinplay = {};
 currentorientation = "horiz";
-blueships = [];
-redships = [];
+blueShips = [];
+redShips = [];
 blueTargets = [];
 redTargets = [];
 let redCarrier = [];
@@ -127,7 +127,6 @@ function shipHit(el) {
   let target = parseInt(shot[1]) + ":" + parseInt(shot[2]);
 
   if (currentPlayer == "blue") {
-    debugger;
     for (i in redTargets) {
       if (redTargets.includes(target)) {
         return true;
@@ -136,9 +135,32 @@ function shipHit(el) {
       }
     }
   } else {
-    debugger;
     for (i in blueTargets) {
       if (blueTargets.includes(target)) {
+        return true;
+      } else {
+        return false;
+      }
+    }
+  }
+}
+function shipObjHit(el) {
+  debugger;
+  let shot = el.attr("id").split(":");
+  let target = parseInt(shot[1]) + ":" + parseInt(shot[2]);
+  if (currentPlayer === "blue") {
+    for (shipIdx in redShips) {
+      let ship = redShips[shipIdx];
+      if (ship.targets.includes(target)) {
+        return true;
+      } else {
+        return false;
+      }
+    }
+  } else {
+    for (shipIdx in blueShips) {
+      let ship = blueShips[shipIdx];
+      if (ship.targets.includes(target)) {
         return true;
       } else {
         return false;
@@ -149,14 +171,14 @@ function shipHit(el) {
 
 /*function shipHit(gridLocation) {
   if (currentPlayer === "blue") {
-    for (let ship of redships) {
+    for (let ship of redShips) {
       if (ship.shipHit(gridLocation)) {
         return true;
       }
     }
     return false;
   } else {
-    for (let ship of blueships) {
+    for (let ship of blueShips) {
       if (ship.shipHit(gridLocation)) {
         return true;
       }
@@ -168,25 +190,25 @@ function shipHit(el) {
 
 function makeShips() {
   redCarrier = new ship("Carrier", "red", "5", [], [], false, false);
-  redships.push(redCarrier);
+  redShips.push(redCarrier);
   redBattleship = new ship("Battleship", "red", "4", [], [], false, false);
-  redships.push(redBattleship);
+  redShips.push(redBattleship);
   redSubmarine = new ship("Submarine", "red", "3", [], [], false, false);
-  redships.push(redSubmarine);
+  redShips.push(redSubmarine);
   redCruiser = new ship("Cruiser", "red", "3", [], [], false, false);
-  redships.push(redCruiser);
+  redShips.push(redCruiser);
   redDestroyer = new ship("Destroyer", "red", "3", [], [], false, false);
-  redships.push(redDestroyer);
+  redShips.push(redDestroyer);
   blueCarrier = new ship("Carrier", "blue", "5", [], [], false, false);
-  blueships.push(blueCarrier);
+  blueShips.push(blueCarrier);
   blueBattleship = new ship("Battleship", "blue", "4", [], [], false, false);
-  blueships.push(blueBattleship);
+  blueShips.push(blueBattleship);
   blueSubmarine = new ship("Submarine", "blue", "3", [], [], false, false);
-  blueships.push(blueSubmarine);
+  blueShips.push(blueSubmarine);
   blueCruiser = new ship("Cruiser", "blue", "3", [], [], false, false);
-  blueships.push(blueCruiser);
+  blueShips.push(blueCruiser);
   blueDestroyer = new ship("Destroyer", "blue", "2", [], [], false, false);
-  blueships.push(blueDestroyer);
+  blueShips.push(blueDestroyer);
 
   console.log("makeships done");
 }
@@ -200,7 +222,7 @@ $(document).ready(function() {
   $("#button1").on("click", function() {
     messaging("reset");
   });
-  // buttons 2->6  blueshiptypes
+  // buttons 2->6  blueShiptypes
   $("#blue-btn-carrier").on("click", function() {
     console.log("carrier clicked");
     shipinplaylength = 5;
@@ -550,6 +572,7 @@ function clickShip(el) {
   console.log(field);
   var spaces = shipinplaylength;
   if (field[0] == "blue-ships-table" || field[0] == "red-ships-table") {
+    //this is placing
     if (gamePhase === "layout") {
       if (shipinplaylength > 1) {
         if (edgeCollision(el, currentorientation, spaces)) {
@@ -575,6 +598,7 @@ function clickShip(el) {
       }
     }
   } else {
+    //This is Shooting
     if (field[0] === "blue-shots-table" || field[0] === "red-shots-table") {
       if (gamePhase === "play") {
         $(el).removeClass("hover");
@@ -582,13 +606,20 @@ function clickShip(el) {
           messaging("repeated shot");
         } else {
           recordshots(el, currentPlayer);
-          debugger;
           if (shipHit(el)) {
             //if (shipHit(el.attr("id"))) {
             console.log("its a hit");
-            $(el).addClass("shotHit");
+            //$(el).addClass("shotHit");
           } else {
             console.log("its a miss");
+            //$(el).addClass("shotMiss");
+          }
+          if (shipObjHit(el)) {
+            //if (shipHit(el.attr("id"))) {
+            console.log("its a ship object hit");
+            $(el).addClass("shotHit");
+          } else {
+            console.log("its a ship object miss");
             $(el).addClass("shotMiss");
           }
         }
@@ -755,7 +786,7 @@ function addShipstotargetfields(currentPlayer, currentselection) {
   console.log(currentselection);
   for (i in currentselection) {
     var j = $(currentselection[i]);
-    let k = $(j.attr("id").split(":"));
+    let k = j.attr("id").split(":");
     var l = parseInt(k[1]) + ":" + parseInt(k[2]);
     if (currentPlayer === "blue") {
       blueTargets.push(l);
@@ -767,16 +798,11 @@ function addShipstotargetfields(currentPlayer, currentselection) {
 function addTargetFieldsToShips(currentPlayer, currentselection, shipinplay) {
   console.log(currentPlayer);
   console.log(currentselection);
-  debugger;
   for (i in currentselection) {
     var j = $(currentselection[i]);
-    let k = $(j.attr("id").split(":"));
+    let k = j.attr("id").split(":");
     var l = parseInt(k[1]) + ":" + parseInt(k[2]);
-    if (currentPlayer === "blue") {
-      shipinplay.targets.push(l);
-    } else {
-      shipinplay.targets.push(l);
-    }
+    shipinplay.targets.push(l);
   }
 }
 
@@ -789,7 +815,6 @@ function stringify(input) {
 
 function markShipObject(shipinplay, currentorientation, currentselection) {
   shipinplay.orientation = currentorientation;
-  shipinplay.targets = currentselection;
   shipinplay.placed = true;
 }
 
