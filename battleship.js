@@ -565,6 +565,7 @@ function clickShip(el) {
           );
 
           addShipstotargetfields(currentPlayer, currentselection);
+          addTargetFieldsToShips(currentPlayer, currentselection, shipinplay);
           markShipObject(shipinplay, currentorientation, currentselection);
           hideShipbutton(shipinplay);
         }
@@ -752,7 +753,6 @@ function createcurrentselection(el, currentorientation, shipinplaylength) {
 function addShipstotargetfields(currentPlayer, currentselection) {
   console.log(currentPlayer);
   console.log(currentselection);
-  debugger;
   for (i in currentselection) {
     var j = $(currentselection[i]);
     let k = $(j.attr("id").split(":"));
@@ -761,6 +761,21 @@ function addShipstotargetfields(currentPlayer, currentselection) {
       blueTargets.push(l);
     } else {
       redTargets.push(l);
+    }
+  }
+}
+function addTargetFieldsToShips(currentPlayer, currentselection, shipinplay) {
+  console.log(currentPlayer);
+  console.log(currentselection);
+  debugger;
+  for (i in currentselection) {
+    var j = $(currentselection[i]);
+    let k = $(j.attr("id").split(":"));
+    var l = parseInt(k[1]) + ":" + parseInt(k[2]);
+    if (currentPlayer === "blue") {
+      shipinplay.targets.push(l);
+    } else {
+      shipinplay.targets.push(l);
     }
   }
 }
