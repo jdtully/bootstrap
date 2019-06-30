@@ -93,25 +93,25 @@ div {
   margin-top: 20px;
 }
 td.col_carrier {
-  background-color: orange;
+  background-color: grey;
   border-color: black;
 }
 /* colors for placed ships*/
 td.col_battleship {
-  background-color: blue;
+  background-color: orange;
   border-color: black;
 }
-td.col_destroyer {
-  background-color: indigo;
+td.col_cruiser {
+  background-color: green;
   border-color: black;
 }
 td.col_submarine {
-  background-color: violet;
+  background-color: blue;
   border-color: black;
 }
 
-td.col_carrier {
-  background-color: chartreuse;
+td.col_destroyer {
+  background-color: yellow;
   border-color: black;
 }
 
