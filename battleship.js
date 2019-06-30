@@ -303,7 +303,6 @@ function shipObjHit(el) {
     for (shipIdx in blueShips) {
       let ship = blueShips[shipIdx];
       if (ship.targets.includes(target)) {
-        debugger;
         let hitplace = redShips.splice(shipIdx, 1);
         ship.hits.push(hitplace);
         //squareToMark.addClass("");
@@ -597,6 +596,7 @@ function hoverShip(el) {
     if (gamePhase === "layout") {
       console.log("hovering right grid in layout mode");
     } else {
+      console.log("placeholder hovership");
       el.addClass("hover");
     }
   }
@@ -661,7 +661,6 @@ function checkgameover() {
 }
 //}
 function unhoverShip(el) {
-  debugger;
   //el.removeClass("hover");
   let field = el.attr("id").split(":");
   //console.log(field);
@@ -673,10 +672,15 @@ function unhoverShip(el) {
       } else {
         elclass = "hover";
       }
-      debugger;
       unmarksquares(el, currentorientation, shipinplaylength, elclass);
     } else {
       console.log("got here");
+    }
+  } else {
+    if (gamePhase === "play") {
+      if (field[0] == "blue-shots-table" || field[0] == "red-shots-table") {
+        el.removeClass("hover");
+      }
     }
   }
 }
