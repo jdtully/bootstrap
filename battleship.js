@@ -258,28 +258,30 @@ function makeShips() {
 }
 */
 
-function shipHit(el) {
-  let shot = el.attr("id").split(":");
-  let target = parseInt(shot[1]) + ":" + parseInt(shot[2]);
+//function shipHit(el) {
+// let shot = el.attr("id").split(":");
+//let target = parseInt(shot[1]) + ":" + parseInt(shot[2]);
+//var targets = blueTargets;
+//if (currentPlayer == "blue") {
+// debugger;
+// targets = redTargets;
+//for (i in targets) {
+//  if (targets.includes(target)) {
+//   return true;
+//  } else {
+//   return false;
+// }
+//}
+//} else {
+// for (i in blueTargets) {
+//  if (blueTargets.includes(target)) {
+//    return true;
+//  } else {
+//    return false;
+// }
+//}
+//}
 
-  if (currentPlayer == "blue") {
-    for (i in redTargets) {
-      if (redTargets.includes(target)) {
-        return true;
-      } else {
-        return false;
-      }
-    }
-  } else {
-    for (i in blueTargets) {
-      if (blueTargets.includes(target)) {
-        return true;
-      } else {
-        return false;
-      }
-    }
-  }
-}
 function shipObjHit(el) {
   let shot = el.attr("id").split(":");
   let target = parseInt(shot[1]) + ":" + parseInt(shot[2]);
@@ -587,20 +589,21 @@ function hoverShip(el) {
   }
 }
 
-function checkrepeatshot(el, currentPlayer) {
-  console.log("checkrepeatshot");
-  if (currentPlayer == "blue") {
-    if (blueshots.indexOf(el.attr("id")) !== -1) {
-      return true;
-    } else {
-      return false;
-    }
+function checkRepeatShot(el, currentPlayer) {
+  var checkShots = redshots;
+  if (currentPlayer === "blue") {
+    checkShots = blueshots;
+  }
+  if (checkShots.indexOf(el.attr("id")) !== -1) {
+    return true;
   } else {
-    if (redshots.indexOf(el.attr("id")) !== -1) {
-      return true;
-    } else {
-      return false;
-    }
+    return false;
+    //  }
+    //} else {
+    //if (redshots.indexOf(el.attr("id")) !== -1) {
+    // return true;
+    // } else {
+    //   return false;
   }
 }
 
@@ -732,17 +735,17 @@ function clickShip(el) {
     if (field[0] === "blue-shots-table" || field[0] === "red-shots-table") {
       if (gamePhase === "play") {
         $(el).removeClass("hover");
-        if (checkrepeatshot(el, currentPlayer)) {
+        if (checkRepeatShot(el, currentPlayer)) {
           messaging("repeated shot");
         } else {
           recordshots(el, currentPlayer);
-          if (shipHit(el)) {
-            console.log("its a hit");
-            //$(el).addClass("shotHit");
-          } else {
-            console.log("its a miss");
-            //$(el).addClass("shotMiss");
-          }
+          //if (shipHit(el)) {
+          //  console.log("its a hit");
+          //$(el).addClass("shotHit");
+          //} else {
+          console.log("its a miss");
+          //$(el).addClass("shotMiss");
+          //}
           var ship = shipObjHit(el);
           if (ship) {
             console.log(ship.shiptype + " hit");
