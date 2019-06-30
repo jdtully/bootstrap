@@ -100,7 +100,8 @@ function buildGrid(elementId) {
 //create ship variables
 
 class ship {
-  constructor(shiptype, player, length, targets, hits, placed, sunk) {
+  constructor(shipId, shiptype, player, length, targets, hits, placed, sunk) {
+    this.shipId;
     this.shiptype = shiptype;
     this.player = player;
     this.length = length;
@@ -152,6 +153,7 @@ function shipObjHit(el) {
     for (shipIdx in redShips) {
       let ship = redShips[shipIdx];
       if (ship.targets.includes(target)) {
+        shipThatWasHit = ship;
         return true;
       } else {
         return false;
@@ -161,6 +163,7 @@ function shipObjHit(el) {
     for (shipIdx in blueShips) {
       let ship = blueShips[shipIdx];
       if (ship.targets.includes(target)) {
+        shipThatWasHit = ship;
         return true;
       } else {
         return false;
@@ -189,25 +192,115 @@ function shipObjHit(el) {
 */
 
 function makeShips() {
-  redCarrier = new ship("Carrier", "red", "5", [], [], false, false);
+  redCarrier = new ship(
+    "redCarrier",
+    "Carrier",
+    "red",
+    "5",
+    [],
+    [],
+    false,
+    false
+  );
   redShips.push(redCarrier);
-  redBattleship = new ship("Battleship", "red", "4", [], [], false, false);
+  redBattleship = new ship(
+    "redBattleship",
+    "Battleship",
+    "red",
+    "4",
+    [],
+    [],
+    false,
+    false
+  );
   redShips.push(redBattleship);
-  redSubmarine = new ship("Submarine", "red", "3", [], [], false, false);
+  redSubmarine = new ship(
+    "redSubmarine",
+    "Submarine",
+    "red",
+    "3",
+    [],
+    [],
+    false,
+    false
+  );
   redShips.push(redSubmarine);
-  redCruiser = new ship("Cruiser", "red", "3", [], [], false, false);
+  redCruiser = new ship(
+    "redCruiser",
+    "Cruiser",
+    "red",
+    "3",
+    [],
+    [],
+    false,
+    false
+  );
   redShips.push(redCruiser);
-  redDestroyer = new ship("Destroyer", "red", "3", [], [], false, false);
+  redDestroyer = new ship(
+    "redDestroyer",
+    "Destroyer",
+    "red",
+    "3",
+    [],
+    [],
+    false,
+    false
+  );
   redShips.push(redDestroyer);
-  blueCarrier = new ship("Carrier", "blue", "5", [], [], false, false);
+  blueCarrier = new ship(
+    "blueCarrier",
+    "Carrier",
+    "blue",
+    "5",
+    [],
+    [],
+    false,
+    false
+  );
   blueShips.push(blueCarrier);
-  blueBattleship = new ship("Battleship", "blue", "4", [], [], false, false);
+  blueBattleship = new ship(
+    "blueBattleship",
+    "Battleship",
+    "blue",
+    "4",
+    [],
+    [],
+    false,
+    false
+  );
   blueShips.push(blueBattleship);
-  blueSubmarine = new ship("Submarine", "blue", "3", [], [], false, false);
+  blueSubmarine = new ship(
+    "blueSubmarine",
+    "Submarine",
+    "blue",
+    "3",
+    [],
+    [],
+    false,
+    false
+  );
   blueShips.push(blueSubmarine);
-  blueCruiser = new ship("Cruiser", "blue", "3", [], [], false, false);
+  blueCruiser = new ship(
+    "blueCruiser",
+    "Cruiser",
+    "blue",
+    "3",
+    [],
+    [],
+    false,
+    false
+  );
   blueShips.push(blueCruiser);
-  blueDestroyer = new ship("Destroyer", "blue", "2", [], [], false, false);
+  blueDestroyer = new ship(
+    "blueDestroyer",
+    "Destroyer",
+    "blue",
+    "2",
+    [],
+    [],
+    false,
+    false
+  );
   blueShips.push(blueDestroyer);
 
   console.log("makeships done");
@@ -497,6 +590,21 @@ function checkrepeatshot(el, currentPlayer) {
   }
 }
 
+function markHitShips(el) {
+  if (currentPlayer === "blue") {
+    console.log(el.attr("id"));
+    let field = el.attr("id").split(":");
+    squareToMark = "red-ships-table" + ":" + field[1] + ":" + field[2];
+    squareToMark.addClass("shotHit");
+    console.log(currentPlayer + "  is blue");
+  } else {
+    console.log(el.attr("id"));
+    let field = el.attr("id").split(":");
+    squareToMark = "blue-ships-table" + ":" + field[1] + ":" + field[2];
+    squareToMark.addClass("shotHit");
+    console.log((currentPlayer = "red"));
+  }
+}
 function recordshots(el, currentPlayer) {
   if (currentPlayer === "blue") {
     blueshots.push(el.attr("id"));
@@ -566,7 +674,6 @@ function initgame() {
   messaging("currentPlayer");
 }
 function clickShip(el) {
-  //el.addClass("placed_ship");
   console.log(el.attr("id"));
   let field = el.attr("id").split(":");
   console.log(field);
@@ -607,7 +714,6 @@ function clickShip(el) {
         } else {
           recordshots(el, currentPlayer);
           if (shipHit(el)) {
-            //if (shipHit(el.attr("id"))) {
             console.log("its a hit");
             //$(el).addClass("shotHit");
           } else {
@@ -615,7 +721,6 @@ function clickShip(el) {
             //$(el).addClass("shotMiss");
           }
           if (shipObjHit(el)) {
-            //if (shipHit(el.attr("id"))) {
             console.log("its a ship object hit");
             $(el).addClass("shotHit");
           } else {
@@ -629,7 +734,9 @@ function clickShip(el) {
     }
   }
 }
-
+function markhitship() {
+  console.log("need to write mark hit ship function");
+}
 function markShipObject(shipinplay, currentorientation, currentselection) {
   shipinplay.orientation = currentorientation;
   shipinplay.targets = currentselection;
