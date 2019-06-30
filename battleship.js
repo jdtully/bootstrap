@@ -282,38 +282,23 @@ function shipHit(el) {
 }
 function shipObjHit(el) {
   let shot = el.attr("id").split(":");
-  debugger;
   let target = parseInt(shot[1]) + ":" + parseInt(shot[2]);
+  var targetShips = blueShips;
   if (currentPlayer === "blue") {
-    for (shipIdx in redShips) {
-      let ship = redShips[shipIdx];
-      //let squareToMark = "red-ships-table" + target;
-      if (ship.targets.includes(target)) {
-        let hitplace = redShips.splice(shipIdx, 1);
-        ship.hits.push(hitplace);
-        //squareToMark.addClass("");
-        shipThatWasHit = ship.shipId;
-        return true;
-      } else {
-        return false;
-      }
-    }
-  } else {
-    debugger;
-    for (shipIdx in blueShips) {
-      let ship = blueShips[shipIdx];
-      if (ship.targets.includes(target)) {
-        let hitplace = redShips.splice(shipIdx, 1);
-        ship.hits.push(hitplace);
-        //squareToMark.addClass("");
-        shipThatWasHit = ship.shipId;
-        //shipThatWasHit = ship.shipId;
-        return true;
-      } else {
-        return false;
-      }
+    targetShips = redShips;
+  }
+  debugger;
+  for (shipIdx in targetShips) {
+    let ship = targetShips[shipIdx];
+    var hitIdx = ship.targets.indexOf(target);
+
+    if (hitIdx > -1) {
+      let hitplace = ship.targets.splice(hitIdx, 1);
+      ship.hits.push(hitplace);
+      return ship;
     }
   }
+  return null;
 }
 
 /*function shipHit(gridLocation) {
@@ -758,8 +743,9 @@ function clickShip(el) {
             console.log("its a miss");
             //$(el).addClass("shotMiss");
           }
-          if (shipObjHit(el)) {
-            console.log("its a ship object hit");
+          var ship = shipObjHit(el);
+          if (ship) {
+            console.log(ship.shiptype + " hit");
             $(el).addClass("shotHit");
           } else {
             console.log("its a ship object miss");
