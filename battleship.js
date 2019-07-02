@@ -157,7 +157,7 @@ function makeShips() {
   );
   redShips.push(redCarrier);
   redBattleship = new Ship(
-    "redBattleship",
+    "redBattleShip",
     "orange",
     "Battleship",
     "red",
@@ -219,7 +219,7 @@ function makeShips() {
   blueShips.push(blueCarrier);
 
   blueBattleShip = new Ship(
-    "blueBattleship",
+    "blueBattleShip",
     "orange",
     "Battleship",
     "blue",
@@ -324,11 +324,11 @@ $(document).ready(function() {
     shipinplay = blueCarrier;
     messaging("carrier");
   });
-  $("#blue-btn-battleship").on("click", function() {
-    console.log("battleship clicked");
+  $("#blue-btn-battleShip").on("click", function() {
+    console.log("battleShip clicked");
     shipinplaylength = 4;
     shipinplay = blueBattleShip;
-    messaging("battleship");
+    messaging("battleShip");
   });
   $("#blue-btn-cruiser").on("click", function() {
     console.log("cruiser clicked");
@@ -371,11 +371,11 @@ $(document).ready(function() {
     shipinplay = redCarrier;
     messaging("carrier");
   });
-  $("#red-btn-battleship").on("click", function() {
-    console.log("battleship clicked");
+  $("#red-btn-battleShip").on("click", function() {
+    console.log("battleShip clicked");
     shipinplaylength = 4;
-    shipinplay = redBattleship;
-    messaging("battleship");
+    shipinplay = redBattleShip;
+    messaging("battleShip");
   });
   $("#red-btn-cruiser").on("click", function() {
     console.log("cruiser clicked");
@@ -482,8 +482,8 @@ function messaging(message) {
       $("#status").html("You picked Carrier.");
       break;
 
-    case "battleship":
-      $("#status").html("You picked Battleship.");
+    case "battleShip":
+      $("#status").html("You picked BattleShip.");
       break;
     case "cruiser":
       $("#status").html("You picked Cruiser.");
@@ -615,9 +615,7 @@ function recordShots(el, currentPlayer) {
 function findshipshit(el, currentPlayer) {
   console.log("figure out which  ship got hit");
 }
-function markshiphits(el) {
-  console.log("markshiphits");
-}
+
 function removefromtargetfields(el, currentPlayer) {
   console.log("removing from target fields list");
 }
@@ -750,9 +748,7 @@ function clickShip(el) {
     }
   }
 }
-function markhitship() {
-  console.log("need to write mark hit ship function");
-}
+
 function markShipObject(shipinplay, currentOrientation, currentselection) {
   shipinplay.orientation = currentOrientation;
   shipinplay.targets = currentselection;
@@ -771,7 +767,7 @@ function hideShipsTable(currentPlayer) {
 //var tableToHide = $("#blue-btn-carrier");
 
 function hideShipbutton(shipinplay) {
-  switch (shipinplay.player + shipinplay.shipType) {
+  switch (shipinplay.shipId) {
     case "blueCarrier":
       console.log(shipinplay + " placed");
       var buttonToHide = $("#blue-btn-carrier");
@@ -781,7 +777,7 @@ function hideShipbutton(shipinplay) {
 
     case "blueBattleShip":
       console.log(shipinplay + " placed");
-      var buttonToHide = $("#blue-btn-battleship");
+      var buttonToHide = $("#blue-btn-battleShip");
       buttonToHide.addClass("hidden");
       resetVariablesDuringLayout();
       break;
@@ -816,7 +812,7 @@ function hideShipbutton(shipinplay) {
 
     case "redBattleship":
       console.log(shipinplay + " placed");
-      var buttonToHide = $("#red-btn-battleship");
+      var buttonToHide = $("#red-btn-battleShip");
       buttonToHide.addClass("hidden");
       resetVariablesDuringLayout();
       break;

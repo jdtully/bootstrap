@@ -97,7 +97,7 @@ td.col_carrier {
   border-color: black;
 }
 /* colors for placed ships*/
-td.col_battleship {
+td.col_battleShip {
   background-color: orange;
   border-color: black;
 }
