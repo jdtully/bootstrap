@@ -544,10 +544,7 @@ function flipOrientation(orientation) {
 }
 
 function hoverShip(el) {
-  //el.addClass("hover");
-  //console.log(el.attr("id"));
   let field = el.attr("id").split(":");
-  //console.log(field);
   var spaces = shipinplaylength;
   //checking for edge collision first
   if (field[0] === "blue-ships-table" || field[0] === "red-ships-table") {
