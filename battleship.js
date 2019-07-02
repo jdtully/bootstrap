@@ -97,7 +97,6 @@ function buildGrid(elementId) {
   //append the table to the body
   tableContainer.appendChild(table);
 }
-//create ship variables
 
 class Ship {
   constructor(
@@ -273,18 +272,6 @@ function makeShips() {
 
   console.log("makeships done");
 }
-/* shipHit = function(gridLocation) {
-    var target = [];
-    for (let target of this.targets) {
-      if ($(target).attr("id") === gridLocation) {
-        return true;
-      }
-    }
-    return false;
-  }; check
-}
-*/
-//function checkForWinner
 
 function shipHit(el) {
   let shot = el.attr("id").split(":");
@@ -301,16 +288,6 @@ function shipHit(el) {
     }
   }
 }
-//}
-//} else {
-// for (i in blueTargets) {
-//  if (blueTargets.includes(target)) {
-//    return true;
-//  } else {
-//    return false;
-// }
-//}
-//}
 
 function shipObjHit(el) {
   let shot = el.attr("id").split(":");
@@ -331,25 +308,6 @@ function shipObjHit(el) {
   }
   return null;
 }
-
-/*function shipHit(gridLocation) {
-  if (currentPlayer === "blue") {
-    for (let ship of redShips) {
-      if (ship.shipHit(gridLocation)) {
-        return true;
-      }
-    }
-    return false;
-  } else {
-    for (let ship of blueShips) {
-      if (ship.shipHit(gridLocation)) {
-        return true;
-      }
-    }
-    return false;
-  }
-}
-*/
 
 $(document).ready(function() {
   console.log("ready");
@@ -626,12 +584,6 @@ function checkRepeatShot(el, currentPlayer) {
     return true;
   } else {
     return false;
-    //  }
-    //} else {
-    //if (redshots.indexOf(el.attr("id")) !== -1) {
-    // return true;
-    // } else {
-    //   return false;
   }
 }
 
@@ -645,15 +597,8 @@ function markHitShips(el) {
   squareToMark = targetTable + ":" + field[1] + ":" + field[2];
   squareToMark.addClass("shotHit");
   console.log(currentPlayer + "  is blue");
-  //} else {
-  //  console.log(el.attr("id"));
-  // let field = el.attr("id").split(":");
-  // squareToMark = "blue-ships-table" + ":" + field[1] + ":" + field[2];
-  // squareToMark.addClass("shotHit");
-  // console.log((currentPlayer = "red"));
-  // }
 }
-function recordshots(el, currentPlayer) {
+function recordShots(el, currentPlayer) {
   if (currentPlayer === "blue") {
     blueshots.push(el.attr("id"));
     console.log("shot added to blueshots");
@@ -769,7 +714,7 @@ function clickShip(el) {
         if (checkRepeatShot(el, currentPlayer)) {
           messaging("repeated shot");
         } else {
-          recordshots(el, currentPlayer);
+          recordShots(el, currentPlayer);
           if (shipHit(el)) {
             console.log("its a hit");
             $(el).addClass("shotHit");

@@ -109,7 +109,10 @@ td.col_submarine {
   background-color: blue;
   border-color: black;
 }
-
+td.shotHit {
+  background-color: yellow;
+  border-color: black;
+}
 td.col_destroyer {
   background-color: yellow;
   border-color: black;
