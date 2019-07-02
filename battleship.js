@@ -551,7 +551,7 @@ function hoverShip(el) {
   var spaces = shipinplaylength;
   //checking for edge collision first
   if (field[0] === "blue-ships-table" || field[0] === "red-ships-table") {
-    if (shipinplaylength > 1) {
+    if (shipinplay) {
       if (edgeCollision(el, currentorientation, spaces)) {
         elclass = "outofbounds";
       } else {
@@ -708,7 +708,7 @@ function clickShip(el) {
           hideShipbutton(shipinplay);
         }
       } else {
-        console.log(noship);
+        console.log("noship");
         messaging("noship");
       }
     }
