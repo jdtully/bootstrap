@@ -136,7 +136,6 @@ function isFleetSunk(currentPlayer) {
     fleet = redShips;
   }
   for (i = 0; i < fleet.length; i++) {
-    debugger;
     if (!fleet[i].isSunk()) {
       return false;
     }
@@ -215,11 +214,11 @@ function makeShips() {
     [],
     [],
     false,
-
     false
   );
   blueShips.push(blueCarrier);
-  blueBattleship = new Ship(
+
+  blueBattleShip = new Ship(
     "blueBattleship",
     "orange",
     "Battleship",
@@ -228,10 +227,9 @@ function makeShips() {
     [],
     [],
     false,
-
     false
   );
-  blueShips.push(blueBattleship);
+  blueShips.push(blueBattleShip);
   blueSubmarine = new Ship(
     "blueSubmarine",
     "blue",
@@ -329,7 +327,7 @@ $(document).ready(function() {
   $("#blue-btn-battleship").on("click", function() {
     console.log("battleship clicked");
     shipinplaylength = 4;
-    shipinplay = blueBattleship;
+    shipinplay = blueBattleShip;
     messaging("battleship");
   });
   $("#blue-btn-cruiser").on("click", function() {
@@ -528,6 +526,9 @@ function messaging(message) {
     case "noShip":
       $("#status").html(currentPlayer + " Please pick a ship");
       break;
+    case "overlaps":
+      $("#status").html(currentPlayer + " You have overlapped a ship");
+      break;
 
     default:
       console.warn("no message for " + message);
@@ -698,6 +699,7 @@ function clickShip(el) {
             currentOrientation,
             shipinplaylength
           );
+          debugger;
 
           addShipstotargetfields(currentPlayer, currentselection);
           addTargetFieldsToShips(currentPlayer, currentselection, shipinplay);
@@ -777,7 +779,7 @@ function hideShipbutton(shipinplay) {
       resetVariablesDuringLayout();
       break;
 
-    case "blueBattleship":
+    case "blueBattleShip":
       console.log(shipinplay + " placed");
       var buttonToHide = $("#blue-btn-battleship");
       buttonToHide.addClass("hidden");
@@ -944,6 +946,22 @@ function stringify(input) {
 function markShipObject(shipinplay, currentOrientation) {
   shipinplay.orientation = currentOrientation;
   shipinplay.placed = true;
+}
+
+function ifOverlaps(currentselection, currentPlayer) {
+  var fleet = redShips;
+  var selectionToTest = currentselection;
+  if (currentPlayer === "blue") {
+    fleet = redShips;
+  }
+  for (i = 0; i < fleet.length; i++) {
+    for (j = 0; j < selectionToTest.length; j++) {
+      if (fleet[i].targets.includes(selectionToTest[i])) {
+        return true;
+      }
+    }
+  }
+  return false;
 }
 
 function edgeCollision(el, currentOrientation, shipinplaylength) {
