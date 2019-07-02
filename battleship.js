@@ -99,11 +99,11 @@ function buildGrid(elementId) {
 }
 //create ship variables
 
-class ship {
+class Ship {
   constructor(
     shipId,
     shipColor,
-    shiptype,
+    shipType,
     player,
     length,
     targets,
@@ -113,7 +113,7 @@ class ship {
   ) {
     this.shipId = shipId;
     this.shipColor = shipColor;
-    this.shiptype = shiptype;
+    this.shipType = shipType;
     this.player = player;
     this.length = length;
     this.targets = targets;
@@ -121,9 +121,32 @@ class ship {
     this.placed = placed;
     this.sunk = sunk;
   }
+  isSunk = function() {
+    if (this.targets.length == 0) {
+      this.sunk = true;
+      return true;
+    } else {
+      console.log(this + " has" + this.targets.length + " targets left");
+      return false;
+    }
+  };
 }
+function isFleetSunk(currentPlayer) {
+  var fleet = blueShips;
+  if (currentPlayer === "blue") {
+    fleet = redShips;
+  }
+  for (i = 0; i < fleet.length; i++) {
+    debugger;
+    if (!fleet[i].isSunk()) {
+      return false;
+    }
+  }
+  return true;
+}
+
 function makeShips() {
-  redCarrier = new ship(
+  redCarrier = new Ship(
     "redCarrier",
     "grey",
     "Carrier",
@@ -135,7 +158,7 @@ function makeShips() {
     false
   );
   redShips.push(redCarrier);
-  redBattleship = new ship(
+  redBattleship = new Ship(
     "redBattleship",
     "orange",
     "Battleship",
@@ -147,7 +170,7 @@ function makeShips() {
     false
   );
   redShips.push(redBattleship);
-  redSubmarine = new ship(
+  redSubmarine = new Ship(
     "redSubmarine",
     "blue",
     "Submarine",
@@ -159,7 +182,7 @@ function makeShips() {
     false
   );
   redShips.push(redSubmarine);
-  redCruiser = new ship(
+  redCruiser = new Ship(
     "redCruiser",
     "green",
     "Cruiser",
@@ -171,7 +194,7 @@ function makeShips() {
     false
   );
   redShips.push(redCruiser);
-  redDestroyer = new ship(
+  redDestroyer = new Ship(
     "redDestroyer",
     "yellow",
     "Destroyer",
@@ -180,10 +203,11 @@ function makeShips() {
     [],
     [],
     false,
+
     false
   );
   redShips.push(redDestroyer);
-  blueCarrier = new ship(
+  blueCarrier = new Ship(
     "blueCarrier",
     "grey",
     "Carrier",
@@ -192,10 +216,11 @@ function makeShips() {
     [],
     [],
     false,
+
     false
   );
   blueShips.push(blueCarrier);
-  blueBattleship = new ship(
+  blueBattleship = new Ship(
     "blueBattleship",
     "orange",
     "Battleship",
@@ -204,10 +229,11 @@ function makeShips() {
     [],
     [],
     false,
+
     false
   );
   blueShips.push(blueBattleship);
-  blueSubmarine = new ship(
+  blueSubmarine = new Ship(
     "blueSubmarine",
     "blue",
     "Submarine",
@@ -219,7 +245,7 @@ function makeShips() {
     false
   );
   blueShips.push(blueSubmarine);
-  blueCruiser = new ship(
+  blueCruiser = new Ship(
     "blueCruiser",
     "green",
     "Cruiser",
@@ -231,7 +257,7 @@ function makeShips() {
     false
   );
   blueShips.push(blueCruiser);
-  blueDestroyer = new ship(
+  blueDestroyer = new Ship(
     "blueDestroyer",
     "yellow",
     "Destroyer",
@@ -240,6 +266,7 @@ function makeShips() {
     [],
     [],
     false,
+
     false
   );
   blueShips.push(blueDestroyer);
@@ -254,23 +281,26 @@ function makeShips() {
       }
     }
     return false;
-  };
+  }; check
 }
 */
+//function checkForWinner
 
-//function shipHit(el) {
-// let shot = el.attr("id").split(":");
-//let target = parseInt(shot[1]) + ":" + parseInt(shot[2]);
-//var targets = blueTargets;
-//if (currentPlayer == "blue") {
-// debugger;
-// targets = redTargets;
-//for (i in targets) {
-//  if (targets.includes(target)) {
-//   return true;
-//  } else {
-//   return false;
-// }
+function shipHit(el) {
+  let shot = el.attr("id").split(":");
+  let target = parseInt(shot[1]) + ":" + parseInt(shot[2]);
+  var targets = blueTargets;
+  if (currentPlayer == "blue") {
+    targets = redTargets;
+  }
+  for (i in targets) {
+    if (targets.includes(target)) {
+      return true;
+    } else {
+      return false;
+    }
+  }
+}
 //}
 //} else {
 // for (i in blueTargets) {
@@ -289,7 +319,6 @@ function shipObjHit(el) {
   if (currentPlayer === "blue") {
     targetShips = redShips;
   }
-  debugger;
   for (shipIdx in targetShips) {
     let ship = targetShips[shipIdx];
     var hitIdx = ship.targets.indexOf(target);
@@ -380,7 +409,6 @@ $(document).ready(function() {
     console.log("horiz or vert button clicked");
     currentorientation = flipOrientation(currentorientation);
   });
-  // red shiptypes
   $("#red-btn-carrier").on("click", function() {
     console.log("carrier clicked");
     shipinplaylength = 5;
@@ -608,19 +636,22 @@ function checkRepeatShot(el, currentPlayer) {
 }
 
 function markHitShips(el) {
+  targetTable = "blue-ships-table";
   if (currentPlayer === "blue") {
-    console.log(el.attr("id"));
-    let field = el.attr("id").split(":");
-    squareToMark = "red-ships-table" + ":" + field[1] + ":" + field[2];
-    squareToMark.addClass("shotHit");
-    console.log(currentPlayer + "  is blue");
-  } else {
-    console.log(el.attr("id"));
-    let field = el.attr("id").split(":");
-    squareToMark = "blue-ships-table" + ":" + field[1] + ":" + field[2];
-    squareToMark.addClass("shotHit");
-    console.log((currentPlayer = "red"));
+    targetTable = "red-ships-table";
   }
+  console.log(el.attr("id"));
+  let field = el.attr("id").split(":");
+  squareToMark = targetTable + ":" + field[1] + ":" + field[2];
+  squareToMark.addClass("shotHit");
+  console.log(currentPlayer + "  is blue");
+  //} else {
+  //  console.log(el.attr("id"));
+  // let field = el.attr("id").split(":");
+  // squareToMark = "blue-ships-table" + ":" + field[1] + ":" + field[2];
+  // squareToMark.addClass("shotHit");
+  // console.log((currentPlayer = "red"));
+  // }
 }
 function recordshots(el, currentPlayer) {
   if (currentPlayer === "blue") {
@@ -739,17 +770,25 @@ function clickShip(el) {
           messaging("repeated shot");
         } else {
           recordshots(el, currentPlayer);
-          //if (shipHit(el)) {
-          //  console.log("its a hit");
-          //$(el).addClass("shotHit");
-          //} else {
-          console.log("its a miss");
-          //$(el).addClass("shotMiss");
-          //}
+          if (shipHit(el)) {
+            console.log("its a hit");
+            $(el).addClass("shotHit");
+          } else {
+            console.log("its a miss");
+            $(el).addClass("shotMiss");
+          }
           var ship = shipObjHit(el);
           if (ship) {
-            console.log(ship.shiptype + " hit");
+            console.log(ship.shipType + " hit");
             $(el).addClass("shotHit");
+            if (ship.isSunk()) {
+              console.log("isSunk is " + ship.isSunk());
+              if (isFleetSunk(currentPlayer)) {
+                console.log("game is over " + currentPlayer + " wins");
+              } else {
+                console.log("play continues");
+              }
+            }
           } else {
             console.log("its a ship object miss");
             $(el).addClass("shotMiss");
@@ -782,7 +821,7 @@ function hideShipsTable(currentPlayer) {
 //var tableToHide = $("#blue-btn-carrier");
 
 function hideShipbutton(shipinplay) {
-  switch (shipinplay.player + shipinplay.shiptype) {
+  switch (shipinplay.player + shipinplay.shipType) {
     case "blueCarrier":
       console.log(shipinplay + " placed");
       var buttonToHide = $("#blue-btn-carrier");
