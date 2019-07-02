@@ -33,7 +33,7 @@ otherPlayer = [];
 gamePhase = ["setup", "layout", "play", "end"];
 shipinplaylength = 0;
 shipinplay = {};
-currentorientation = "horiz";
+currentOrientation = "horiz";
 blueShips = [];
 redShips = [];
 blueTargets = [];
@@ -365,7 +365,7 @@ $(document).ready(function() {
   });
   $("#blue-btn-fliporientation").on("click", function() {
     console.log("horiz or vert button clicked");
-    currentorientation = flipOrientation(currentorientation);
+    currentOrientation = flipOrientation(currentOrientation);
   });
   $("#red-btn-carrier").on("click", function() {
     console.log("carrier clicked");
@@ -413,7 +413,7 @@ $(document).ready(function() {
   });
   $("#red-btn-fliporientation").on("click", function() {
     console.log("horiz or vert button clicked");
-    currentorientation = flipOrientation(currentorientation);
+    currentOrientation = flipOrientation(currentOrientation);
   });
   $("#initmode-btn").on("click", function() {
     console.log("init mode button clicked");
@@ -549,7 +549,7 @@ function hoverShip(el) {
   //checking for edge collision first
   if (field[0] === "blue-ships-table" || field[0] === "red-ships-table") {
     if (shipinplay) {
-      if (edgeCollision(el, currentorientation, spaces)) {
+      if (edgeCollision(el, currentOrientation, spaces)) {
         elclass = "outofbounds";
       } else {
         elclass = "hover";
@@ -557,7 +557,7 @@ function hoverShip(el) {
       if (gamePhase === "layout") {
         marksquares(
           el,
-          currentorientation,
+          currentOrientation,
           shipinplaylength,
           shipinplay,
           elclass
@@ -634,12 +634,12 @@ function unhoverShip(el) {
   var spaces = shipinplaylength;
   if (gamePhase === "layout") {
     if (field[0] == "blue-ships-table" || field[0] == "red-ships-table") {
-      if (edgeCollision(el, currentorientation, spaces)) {
+      if (edgeCollision(el, currentOrientation, spaces)) {
         elclass = "outofbounds";
       } else {
         elclass = "hover";
       }
-      unmarksquares(el, currentorientation, spaces, elclass);
+      unmarksquares(el, currentOrientation, spaces, elclass);
     } else {
       console.log("got here");
     }
@@ -667,7 +667,7 @@ function initgame() {
   console.log("grids built");
   gamePhase = "layout";
   currentPlayer = "blue";
-  currentorientation = "horiz";
+  currentOrientation = "horiz";
   console.log("gamePhase = layout");
   messaging("setup");
   messaging("currentPlayer");
@@ -681,13 +681,13 @@ function clickShip(el) {
     //this is placing
     if (gamePhase === "layout") {
       if (shipinplaylength > 1) {
-        if (edgeCollision(el, currentorientation, spaces)) {
+        if (edgeCollision(el, currentOrientation, spaces)) {
           elclass = "outofbounds";
         } else {
           elclass = "placed_ship";
           marksquares(
             el,
-            currentorientation,
+            currentOrientation,
             shipinplaylength,
             shipinplay,
             elclass
@@ -695,13 +695,13 @@ function clickShip(el) {
 
           var currentselection = createcurrentselection(
             el,
-            currentorientation,
+            currentOrientation,
             shipinplaylength
           );
 
           addShipstotargetfields(currentPlayer, currentselection);
           addTargetFieldsToShips(currentPlayer, currentselection, shipinplay);
-          markShipObject(shipinplay, currentorientation, currentselection);
+          markShipObject(shipinplay, currentOrientation, currentselection);
           hideShipbutton(shipinplay);
         }
       } else {
@@ -751,8 +751,8 @@ function clickShip(el) {
 function markhitship() {
   console.log("need to write mark hit ship function");
 }
-function markShipObject(shipinplay, currentorientation, currentselection) {
-  shipinplay.orientation = currentorientation;
+function markShipObject(shipinplay, currentOrientation, currentselection) {
+  shipinplay.orientation = currentOrientation;
   shipinplay.targets = currentselection;
   shipinplay.placed = true;
 }
@@ -849,7 +849,7 @@ function resetVariablesDuringLayout() {
 
 function marksquares(
   el,
-  currentorientation,
+  currentOrientation,
   shipinplaylength,
   shipinplay,
   elclass
@@ -858,7 +858,7 @@ function marksquares(
   cship = shipinplay;
   spaces = shipinplaylength;
   for (i = 0; i < spaces; i++) {
-    if (currentorientation !== "horiz") {
+    if (currentOrientation !== "horiz") {
       squareStr = field[0] + ":" + (parseInt(field[1]) + i) + ":" + field[2];
     } else {
       squareStr = field[0] + ":" + field[1] + ":" + (parseInt(field[2]) + i);
@@ -869,11 +869,11 @@ function marksquares(
   }
 }
 
-function unmarksquares(el, currentorientation, shipinplaylength, elclass) {
+function unmarksquares(el, currentOrientation, shipinplaylength, elclass) {
   let field = el.attr("id").split(":");
   spaces = shipinplaylength;
   for (i = 0; i < spaces; i++) {
-    if (currentorientation !== "horiz") {
+    if (currentOrientation !== "horiz") {
       squareStr = field[0] + ":" + (parseInt(field[1]) + i) + ":" + field[2];
     } else {
       squareStr = field[0] + ":" + field[1] + ":" + (parseInt(field[2]) + i);
@@ -893,12 +893,12 @@ function changeCurrentPlayer(currentPlayer) {
   return currentPlayer;
 }
 
-function createcurrentselection(el, currentorientation, shipinplaylength) {
+function createcurrentselection(el, currentOrientation, shipinplaylength) {
   var currentselection = [];
   let field = el.attr("id").split(":");
   spaces = shipinplaylength;
   for (i = 0; i < spaces; i++) {
-    if (currentorientation !== "horiz") {
+    if (currentOrientation !== "horiz") {
       squareStr = field[0] + ":" + (parseInt(field[1]) + i) + ":" + field[2];
     } else {
       squareStr = field[0] + ":" + field[1] + ":" + (parseInt(field[2]) + i);
@@ -941,13 +941,13 @@ function stringify(input) {
   return strungdata;
 }
 
-function markShipObject(shipinplay, currentorientation) {
-  shipinplay.orientation = currentorientation;
+function markShipObject(shipinplay, currentOrientation) {
+  shipinplay.orientation = currentOrientation;
   shipinplay.placed = true;
 }
 
-function edgeCollision(el, currentorientation, shipinplaylength) {
-  console.log(el, currentorientation, shipinplaylength);
+function edgeCollision(el, currentOrientation, shipinplaylength) {
+  console.log(el, currentOrientation, shipinplaylength);
   let field = el.attr("id").split(":");
   console.log(field);
   var x = parseInt(field[1]);
@@ -956,7 +956,7 @@ function edgeCollision(el, currentorientation, shipinplaylength) {
   var maxx = x + shipinplaylength;
   var maxy = y + shipinplaylength;
 
-  if (currentorientation === "horiz") {
+  if (currentOrientation === "horiz") {
     if (maxy > numCols) {
       return true;
     } else {
