@@ -558,7 +558,13 @@ function hoverShip(el) {
         elclass = "hover";
       }
       if (gamePhase === "layout") {
-        marksquares(el, currentorientation, shipinplaylength, elclass);
+        marksquares(
+          el,
+          currentorientation,
+          shipinplaylength,
+          shipinplay,
+          elclass
+        );
       } else {
         console.log("we are in ship placement mode");
       }
@@ -636,7 +642,7 @@ function unhoverShip(el) {
       } else {
         elclass = "hover";
       }
-      unmarksquares(el, currentorientation, shipinplaylength, elclass);
+      unmarksquares(el, currentorientation, spaces, elclass);
     } else {
       console.log("got here");
     }
@@ -844,8 +850,15 @@ function resetVariablesDuringLayout() {
   shipinplaylength = 0;
 }
 
-function marksquares(el, currentorientation, shipinplaylength, elclass) {
+function marksquares(
+  el,
+  currentorientation,
+  shipinplaylength,
+  shipinplay,
+  elclass
+) {
   let field = el.attr("id").split(":");
+  cship = shipinplay;
   spaces = shipinplaylength;
   for (i = 0; i < spaces; i++) {
     if (currentorientation !== "horiz") {
@@ -931,7 +944,7 @@ function stringify(input) {
   return strungdata;
 }
 
-function markShipObject(shipinplay, currentorientation, currentselection) {
+function markShipObject(shipinplay, currentorientation) {
   shipinplay.orientation = currentorientation;
   shipinplay.placed = true;
 }
