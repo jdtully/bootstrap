@@ -525,7 +525,7 @@ function messaging(message) {
       $("#currentPlayer").html("current player is " + currentPlayer);
       break;
 
-    case "noship":
+    case "noShip":
       $("#status").html(currentPlayer + " Please pick a ship");
       break;
 
@@ -708,8 +708,8 @@ function clickShip(el) {
           hideShipbutton(shipinplay);
         }
       } else {
-        console.log("noship");
-        messaging("noship");
+        console.log("noShip");
+        messaging("noShip");
       }
     }
   } else {
