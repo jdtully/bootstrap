@@ -546,7 +546,7 @@ function flipOrientation(orientation) {
 
 function hoverShip(el) {
   let field = el.attr("id").split(":");
-  var spaces = shipinplaylength;
+  //var spaces = shipinplaylength;
   //checking for edge collision first
   var currentselection = createCurrentSelection(
     el,
@@ -567,7 +567,7 @@ function hoverShip(el) {
         marksquares(
           el,
           currentOrientation,
-          shipinplaylength,
+          //  shipinplaylength,
           shipinplay,
           elclass
         );
@@ -636,7 +636,7 @@ function unhoverShip(el) {
       } else {
         elclass = "hover";
       }
-      unmarksquares(el, currentOrientation, spaces, elclass);
+      unmarksquares(el, currentOrientation, shipinplay, elclass);
     } else {
       console.log("got here");
     }
@@ -668,7 +668,7 @@ function clickShip(el) {
   console.log(el.attr("id"));
   let field = el.attr("id").split(":");
   console.log(field);
-  var spaces = shipinplaylength;
+  //var spaces = shipinplaylength;
   var currentselection = createCurrentSelection(
     el,
     currentOrientation,
@@ -688,7 +688,7 @@ function clickShip(el) {
           marksquares(
             el,
             currentOrientation,
-            shipinplaylength,
+            //shipinplaylength,
             shipinplay,
             elclass
           );
@@ -843,17 +843,11 @@ function resetVariablesDuringLayout() {
   shipinplaylength = 0;
 }
 
-function marksquares(
-  el,
-  currentOrientation,
-  shipinplaylength,
-  shipinplay,
-  elclass
-) {
+function marksquares(el, currentOrientation, ship, elclass) {
   let field = el.attr("id").split(":");
   cship = shipinplay;
-  spaces = shipinplaylength;
-  for (i = 0; i < spaces; i++) {
+  //spaces = shipinplaylength;
+  for (i = 0; i < ship.length; i++) {
     if (currentOrientation !== "horiz") {
       squareStr = field[0] + ":" + (parseInt(field[1]) + i) + ":" + field[2];
     } else {
@@ -865,10 +859,9 @@ function marksquares(
   }
 }
 
-function unmarksquares(el, currentOrientation, shipinplaylength, elclass) {
+function unmarksquares(el, currentOrientation, ship, elclass) {
   let field = el.attr("id").split(":");
-  spaces = shipinplaylength;
-  for (i = 0; i < spaces; i++) {
+  for (i = 0; i < ship.length; i++) {
     if (currentOrientation !== "horiz") {
       squareStr = field[0] + ":" + (parseInt(field[1]) + i) + ":" + field[2];
     } else {
