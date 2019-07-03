@@ -548,7 +548,7 @@ function hoverShip(el) {
   let field = el.attr("id").split(":");
   var spaces = shipinplaylength;
   //checking for edge collision first
-  var currentselection = createcurrentselection(
+  var currentselection = createCurrentSelection(
     el,
     currentOrientation,
     shipinplaylength
@@ -679,7 +679,7 @@ function clickShip(el) {
             elclass
           );
 
-          var currentselection = createcurrentselection(
+          var currentselection = createCurrentSelection(
             el,
             currentOrientation,
             shipinplaylength
@@ -875,7 +875,7 @@ function changeCurrentPlayer(currentPlayer) {
   return currentPlayer;
 }
 
-function createcurrentselection(el, currentOrientation, shipinplaylength) {
+function createCurrentSelection(el, currentOrientation, shipinplaylength) {
   var currentselection = [];
   let field = el.attr("id").split(":");
   spaces = shipinplaylength;
