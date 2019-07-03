@@ -548,9 +548,17 @@ function hoverShip(el) {
   let field = el.attr("id").split(":");
   var spaces = shipinplaylength;
   //checking for edge collision first
+  var currentselection = createcurrentselection(
+    el,
+    currentOrientation,
+    shipinplaylength
+  );
   if (field[0] === "blue-ships-table" || field[0] === "red-ships-table") {
     if (shipinplay) {
-      if (edgeCollision(el, currentOrientation, spaces)) {
+      if (
+        edgeCollision(el, currentOrientation, spaces) ||
+        doesOverlap(currentselection, currentPlayer)
+      ) {
         elclass = "outofbounds";
       } else {
         elclass = "hover";
@@ -563,18 +571,14 @@ function hoverShip(el) {
           shipinplay,
           elclass
         );
-      } else {
-        console.log("we are in ship placement mode");
       }
     } else {
-      console.log("we are in ship placement mode");
-    }
-  } else {
-    if (gamePhase === "layout") {
-      console.log("hovering right grid in layout mode");
-    } else {
-      console.log("placeholder hovership");
-      el.addClass("hover");
+      if (gamePhase === "layout") {
+        console.log("hovering right grid in layout mode");
+      } else {
+        console.log("placeholder hovership");
+        el.addClass("hover");
+      }
     }
   }
 }
@@ -612,20 +616,6 @@ function recordShots(el, currentPlayer) {
   }
 }
 
-function findshipshit(el, currentPlayer) {
-  console.log("figure out which  ship got hit");
-}
-
-function removefromtargetfields(el, currentPlayer) {
-  console.log("removing from target fields list");
-}
-function checkshipsunk() {
-  console.log("checking to see if  ship sunk");
-}
-function checkgameover() {
-  console.log("checking to see if game over");
-}
-//}
 function unhoverShip(el) {
   //el.removeClass("hover");
   let field = el.attr("id").split(":");
@@ -650,9 +640,6 @@ function unhoverShip(el) {
     }
   }
 }
-//function selectGamePhase() {
-//  if(gamePhase ===)
-//}
 
 function chooseActiveTable() {}
 
@@ -697,7 +684,6 @@ function clickShip(el) {
             currentOrientation,
             shipinplaylength
           );
-          debugger;
 
           addShipstotargetfields(currentPlayer, currentselection);
           addTargetFieldsToShips(currentPlayer, currentselection, shipinplay);
@@ -763,8 +749,6 @@ function hideShipsTable(currentPlayer) {
     $("#red-ships-table").addClass("hidden");
   }
 }
-
-//var tableToHide = $("#blue-btn-carrier");
 
 function hideShipbutton(shipinplay) {
   switch (shipinplay.shipId) {
@@ -944,15 +928,23 @@ function markShipObject(shipinplay, currentOrientation) {
   shipinplay.placed = true;
 }
 
-function ifOverlaps(currentselection, currentPlayer) {
+function doesOverlap(currentselection, currentPlayer) {
+  debugger;
   var fleet = redShips;
-  var selectionToTest = currentselection;
   if (currentPlayer === "blue") {
-    fleet = redShips;
+    fleet = blueShips;
   }
+  var selectionToTest = currentselection;
   for (i = 0; i < fleet.length; i++) {
+    console.log(i);
     for (j = 0; j < selectionToTest.length; j++) {
-      if (fleet[i].targets.includes(selectionToTest[i])) {
+      console.log(j);
+      let testgroup = $(selectionToTest[j])
+        .attr("id")
+        .split(":");
+      let testee = parseInt(testgroup[1]) + ":" + parseInt(testgroup[2]);
+
+      if (fleet[i].targets.includes(testee)) {
         return true;
       }
     }
