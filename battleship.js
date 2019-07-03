@@ -621,9 +621,17 @@ function unhoverShip(el) {
   let field = el.attr("id").split(":");
   //console.log(field);
   var spaces = shipinplaylength;
+  var currentselection = createCurrentSelection(
+    el,
+    currentOrientation,
+    shipinplaylength
+  );
   if (gamePhase === "layout") {
     if (field[0] == "blue-ships-table" || field[0] == "red-ships-table") {
-      if (edgeCollision(el, currentOrientation, spaces)) {
+      if (
+        edgeCollision(el, currentOrientation, spaces) ||
+        doesOverlap(currentselection, currentPlayer)
+      ) {
         elclass = "outofbounds";
       } else {
         elclass = "hover";
