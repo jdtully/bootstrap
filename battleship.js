@@ -666,7 +666,7 @@ function clickShip(el) {
   if (field[0] == "blue-ships-table" || field[0] == "red-ships-table") {
     //this is placing
     if (gamePhase === "layout") {
-      if (shipinplaylength > 1) {
+      if (shipinplay) {
         if (edgeCollision(el, currentOrientation, spaces)) {
           elclass = "outofbounds";
         } else {
