@@ -551,12 +551,12 @@ function hoverShip(el) {
   var currentselection = createCurrentSelection(
     el,
     currentOrientation,
-    shipinplaylength
+    shipinplay
   );
   if (field[0] === "blue-ships-table" || field[0] === "red-ships-table") {
     if (shipinplay) {
       if (
-        edgeCollision(el, currentOrientation, spaces) ||
+        edgeCollision(el, currentOrientation, shipinplay) ||
         doesOverlap(currentselection, currentPlayer)
       ) {
         elclass = "outofbounds";
@@ -624,12 +624,12 @@ function unhoverShip(el) {
   var currentselection = createCurrentSelection(
     el,
     currentOrientation,
-    shipinplaylength
+    shipinplay
   );
   if (gamePhase === "layout") {
     if (field[0] == "blue-ships-table" || field[0] == "red-ships-table") {
       if (
-        edgeCollision(el, currentOrientation, spaces) ||
+        edgeCollision(el, currentOrientation, shipinplay) ||
         doesOverlap(currentselection, currentPlayer)
       ) {
         elclass = "outofbounds";
@@ -679,7 +679,7 @@ function clickShip(el) {
     if (gamePhase === "layout") {
       if (shipinplay) {
         if (
-          edgeCollision(el, currentOrientation, spaces) ||
+          edgeCollision(el, currentOrientation, shipinplay) ||
           doesOverlap(currentselection, currentPlayer)
         ) {
           elclass = "outofbounds";
@@ -966,15 +966,15 @@ function doesOverlap(currentselection, currentPlayer) {
   return false;
 }
 
-function edgeCollision(el, currentOrientation, shipinplaylength) {
-  console.log(el, currentOrientation, shipinplaylength);
+function edgeCollision(el, currentOrientation, ship) {
+  console.log(el, currentOrientation, ship.length);
   let field = el.attr("id").split(":");
   console.log(field);
   var x = parseInt(field[1]);
   var y = parseInt(field[2]);
 
-  var maxx = x + shipinplaylength;
-  var maxy = y + shipinplaylength;
+  var maxx = x + ship.length;
+  var maxy = y + ship.length;
 
   if (currentOrientation === "horiz") {
     if (maxy > numCols) {
