@@ -669,11 +669,19 @@ function clickShip(el) {
   let field = el.attr("id").split(":");
   console.log(field);
   var spaces = shipinplaylength;
+  var currentselection = createCurrentSelection(
+    el,
+    currentOrientation,
+    shipinplaylength
+  );
   if (field[0] == "blue-ships-table" || field[0] == "red-ships-table") {
     //this is placing
     if (gamePhase === "layout") {
       if (shipinplay) {
-        if (edgeCollision(el, currentOrientation, spaces)) {
+        if (
+          edgeCollision(el, currentOrientation, spaces) ||
+          doesOverlap(currentselection, currentPlayer)
+        ) {
           elclass = "outofbounds";
         } else {
           elclass = "placed_ship";
