@@ -649,8 +649,6 @@ function unhoverShip(el) {
   }
 }
 
-function chooseActiveTable() {}
-
 function initgame() {
   gamePhase = "setup";
   buildGrid("blue-ships-table");
