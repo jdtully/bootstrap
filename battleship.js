@@ -564,7 +564,7 @@ function hoverShip(el) {
         elclass = "hover";
       }
       if (gamePhase === "layout") {
-        marksquares(
+        markSquares(
           el,
           currentOrientation,
           //  shipinplaylength,
@@ -636,7 +636,7 @@ function unhoverShip(el) {
       } else {
         elclass = "hover";
       }
-      unmarksquares(el, currentOrientation, shipinplay, elclass);
+      unmarkSquares(el, currentOrientation, shipinplay, elclass);
     } else {
       console.log("got here");
     }
@@ -685,7 +685,7 @@ function clickShip(el) {
           elclass = "outofbounds";
         } else {
           elclass = "placed_ship";
-          marksquares(
+          markSquares(
             el,
             currentOrientation,
             //shipinplaylength,
@@ -843,7 +843,7 @@ function resetVariablesDuringLayout() {
   shipinplaylength = 0;
 }
 
-function marksquares(el, currentOrientation, ship, elclass) {
+function markSquares(el, currentOrientation, ship, elclass) {
   let field = el.attr("id").split(":");
   cship = shipinplay;
   //spaces = shipinplaylength;
@@ -859,7 +859,7 @@ function marksquares(el, currentOrientation, ship, elclass) {
   }
 }
 
-function unmarksquares(el, currentOrientation, ship, elclass) {
+function unmarkSquares(el, currentOrientation, ship, elclass) {
   let field = el.attr("id").split(":");
   for (i = 0; i < ship.length; i++) {
     if (currentOrientation !== "horiz") {
