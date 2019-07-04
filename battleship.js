@@ -558,8 +558,6 @@ function flipOrientation(orientation) {
 
 function hoverShip(el) {
   let field = el.attr("id").split(":");
-  //var spaces = shipinplaylength;
-  //checking for edge collision first
   var currentselection = createCurrentSelection(
     el,
     currentOrientation,
@@ -870,7 +868,7 @@ function markSquares(el, currentOrientation, ship, elclass) {
     }
     var square = document.getElementById(squareStr);
     console.log("fields are " + elclass);
-    $(square).addClass(ship.shipClass);
+    $(square).addClass(elclass);
   }
 }
 
@@ -884,7 +882,7 @@ function unmarkSquares(el, currentOrientation, ship, elclass) {
     }
     var square = document.getElementById(squareStr);
     console.log("square is" + elclass);
-    $(square).removeClass(ship.shipClass);
+    $(square).removeClass(elclass);
   }
 }
 
