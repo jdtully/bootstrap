@@ -102,6 +102,7 @@ class Ship {
   constructor(
     shipId,
     shipColor,
+    shipClass,
     shipType,
     player,
     length,
@@ -112,6 +113,7 @@ class Ship {
   ) {
     this.shipId = shipId;
     this.shipColor = shipColor;
+    this.shipClass = shipClass;
     this.shipType = shipType;
     this.player = player;
     this.length = length;
@@ -147,6 +149,7 @@ function makeShips() {
   redCarrier = new Ship(
     "redCarrier",
     "grey",
+    "col_carrier",
     "Carrier",
     "red",
     5,
@@ -159,6 +162,7 @@ function makeShips() {
   redBattleship = new Ship(
     "redBattleShip",
     "orange",
+    "col_battleShip",
     "Battleship",
     "red",
     4,
@@ -171,6 +175,7 @@ function makeShips() {
   redSubmarine = new Ship(
     "redSubmarine",
     "blue",
+    "col_submarine",
     "Submarine",
     "red",
     3,
@@ -183,6 +188,7 @@ function makeShips() {
   redCruiser = new Ship(
     "redCruiser",
     "green",
+    "col_cruiser",
     "Cruiser",
     "red",
     3,
@@ -195,6 +201,7 @@ function makeShips() {
   redDestroyer = new Ship(
     "redDestroyer",
     "yellow",
+    "col_destroyer",
     "Destroyer",
     "red",
     2,
@@ -208,6 +215,7 @@ function makeShips() {
   blueCarrier = new Ship(
     "blueCarrier",
     "grey",
+    "col_carrier",
     "Carrier",
     "blue",
     5,
@@ -221,6 +229,7 @@ function makeShips() {
   blueBattleShip = new Ship(
     "blueBattleShip",
     "orange",
+    "col_battleShip",
     "Battleship",
     "blue",
     4,
@@ -233,6 +242,7 @@ function makeShips() {
   blueSubmarine = new Ship(
     "blueSubmarine",
     "blue",
+    "col_submarine",
     "Submarine",
     "blue",
     3,
@@ -245,6 +255,7 @@ function makeShips() {
   blueCruiser = new Ship(
     "blueCruiser",
     "green",
+    "col_cruiser",
     "Cruiser",
     "blue",
     3,
@@ -257,6 +268,7 @@ function makeShips() {
   blueDestroyer = new Ship(
     "blueDestroyer",
     "yellow",
+    "col_destroyer",
     "Destroyer",
     "blue",
     2,
@@ -842,10 +854,13 @@ function resetVariablesDuringLayout() {
   currentselection = [];
   shipinplaylength = 0;
 }
+function pickShipColor() {
+  console.log(" getting  color for ship placement");
+}
 
 function markSquares(el, currentOrientation, ship, elclass) {
   let field = el.attr("id").split(":");
-  cship = shipinplay;
+
   //spaces = shipinplaylength;
   for (i = 0; i < ship.length; i++) {
     if (currentOrientation !== "horiz") {
@@ -855,7 +870,7 @@ function markSquares(el, currentOrientation, ship, elclass) {
     }
     var square = document.getElementById(squareStr);
     console.log("fields are " + elclass);
-    $(square).addClass(elclass);
+    $(square).addClass(ship.shipClass);
   }
 }
 
@@ -869,7 +884,7 @@ function unmarkSquares(el, currentOrientation, ship, elclass) {
     }
     var square = document.getElementById(squareStr);
     console.log("square is" + elclass);
-    $(square).removeClass(elclass);
+    $(square).removeClass(ship.shipClass);
   }
 }
 
