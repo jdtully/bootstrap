@@ -580,38 +580,26 @@ function hoverShip(el) {
     shipinplay
   );
   if (field[0] === "blue-ships-table" || field[0] === "red-ships-table") {
-    if (shipinplay) {
+    if (gamePhase === "layout" && shipinplay) {
       if (
         edgeCollision(el, currentOrientation, shipinplay) ||
         doesOverlap(currentselection, currentPlayer)
       ) {
         elclass = "outofbounds";
-        markSquares(
-          el,
-          currentOrientation,
-          //  shipinplaylength,
-          shipinplay,
-          elclass
-        );
+        markSquares(el, currentOrientation, shipinplay, elclass);
       } else {
         elclass = "hover";
         if (gamePhase === "layout") {
-          markSquares(
-            el,
-            currentOrientation,
-            //  shipinplaylength,
-            shipinplay,
-            elclass
-          );
+          markSquares(el, currentOrientation, shipinplay, elclass);
         }
       }
+    }
+  } else {
+    if (gamePhase === "layout") {
+      console.log("hovering right grid in layout mode");
     } else {
-      if (gamePhase === "layout") {
-        console.log("hovering right grid in layout mode");
-      } else {
-        console.log("placeholder hovership");
-        el.addClass("hover");
-      }
+      console.log("placeholder hovership");
+      el.addClass("hover");
     }
   }
 }
@@ -626,8 +614,9 @@ function unhoverShip(el) {
     currentOrientation,
     shipinplay
   );
-  if (gamePhase === "layout") {
-    if (field[0] == "blue-ships-table" || field[0] == "red-ships-table") {
+
+  if (field[0] == "blue-ships-table" || field[0] == "red-ships-table") {
+    if (gamePhase === "layout" && shipinplay) {
       if (
         edgeCollision(el, currentOrientation, shipinplay) ||
         doesOverlap(currentselection, currentPlayer)
@@ -662,38 +651,36 @@ function clickShip(el) {
   );
   if (field[0] == "blue-ships-table" || field[0] == "red-ships-table") {
     //this is placing
-    if (gamePhase === "layout") {
-      if (shipinplay) {
-        if (
-          edgeCollision(el, currentOrientation, shipinplay) ||
-          doesOverlap(currentselection, currentPlayer)
-        ) {
-          elclass = "outofbounds";
-        } else {
-          elclass = ship.shipClass;
-          markSquares(
-            el,
-            currentOrientation,
-            //shipinplaylength,
-            shipinplay,
-            elclass
-          );
-
-          var currentselection = createCurrentSelection(
-            el,
-            currentOrientation,
-            shipinplay
-          );
-
-          addShipstotargetfields(currentPlayer, currentselection);
-          addTargetFieldsToShips(currentPlayer, currentselection, shipinplay);
-          markShipObject(shipinplay, currentOrientation, currentselection);
-          hideShipbutton(shipinplay);
-        }
+    if (gamePhase === "layout" && shipinplay) {
+      if (
+        edgeCollision(el, currentOrientation, shipinplay) ||
+        doesOverlap(currentselection, currentPlayer)
+      ) {
+        elclass = "outofbounds";
       } else {
-        console.log("noShip");
-        messaging("noShip");
+        elclass = ship.shipClass;
+        markSquares(
+          el,
+          currentOrientation,
+          //shipinplaylength,
+          shipinplay,
+          elclass
+        );
+
+        var currentselection = createCurrentSelection(
+          el,
+          currentOrientation,
+          shipinplay
+        );
+
+        addShipstotargetfields(currentPlayer, currentselection);
+        addTargetFieldsToShips(currentPlayer, currentselection, shipinplay);
+        markShipObject(shipinplay, currentOrientation, currentselection);
+        hideShipbutton(shipinplay);
       }
+    } else {
+      console.log("noShip");
+      messaging("noShip");
     }
   } else {
     //This is Shooting
@@ -858,9 +845,8 @@ function recordShots(el, currentPlayer) {
 }
 
 function resetVariablesDuringLayout() {
-  shipinplay = {};
+  shipinplay = null;
   currentselection = [];
-  shipinplaylength = 0;
   elclass = {};
 }
 function pickShipColor() {
@@ -884,16 +870,18 @@ function markSquares(el, currentOrientation, ship, elclass) {
 }
 
 function unmarkSquares(el, currentOrientation, ship, elclass) {
-  let field = el.attr("id").split(":");
-  for (i = 0; i < ship.length; i++) {
-    if (currentOrientation !== "horiz") {
-      squareStr = field[0] + ":" + (parseInt(field[1]) + i) + ":" + field[2];
-    } else {
-      squareStr = field[0] + ":" + field[1] + ":" + (parseInt(field[2]) + i);
+  if (ship) {
+    let field = el.attr("id").split(":");
+    for (i = 0; i < ship.length; i++) {
+      if (currentOrientation !== "horiz") {
+        squareStr = field[0] + ":" + (parseInt(field[1]) + i) + ":" + field[2];
+      } else {
+        squareStr = field[0] + ":" + field[1] + ":" + (parseInt(field[2]) + i);
+      }
+      var square = document.getElementById(squareStr);
+      console.log("square is" + elclass);
+      $(square).removeClass(elclass);
     }
-    var square = document.getElementById(squareStr);
-    console.log("square is" + elclass);
-    $(square).removeClass(elclass);
   }
 }
 
@@ -908,17 +896,19 @@ function changeCurrentPlayer(currentPlayer) {
 
 function createCurrentSelection(el, currentOrientation, ship) {
   var currentselection = [];
-  let field = el.attr("id").split(":");
-  spaces = shipinplaylength;
-  for (i = 0; i < ship.length; i++) {
-    if (currentOrientation !== "horiz") {
-      squareStr = field[0] + ":" + (parseInt(field[1]) + i) + ":" + field[2];
-    } else {
-      squareStr = field[0] + ":" + field[1] + ":" + (parseInt(field[2]) + i);
+  if (ship) {
+    let field = el.attr("id").split(":");
+    spaces = shipinplaylength;
+    for (i = 0; i < ship.length; i++) {
+      if (currentOrientation !== "horiz") {
+        squareStr = field[0] + ":" + (parseInt(field[1]) + i) + ":" + field[2];
+      } else {
+        squareStr = field[0] + ":" + field[1] + ":" + (parseInt(field[2]) + i);
+      }
+      var square = document.getElementById(squareStr);
+      console.log("square is" + elclass);
+      currentselection.push(square);
     }
-    var square = document.getElementById(squareStr);
-    console.log("square is" + elclass);
-    currentselection.push(square);
   }
   return currentselection;
 }
@@ -984,26 +974,29 @@ function doesOverlap(currentselection, currentPlayer) {
 }
 
 function edgeCollision(el, currentOrientation, ship) {
-  console.log(el, currentOrientation, ship.length);
-  let field = el.attr("id").split(":");
-  console.log(field);
-  var x = parseInt(field[1]);
-  var y = parseInt(field[2]);
+  if (ship) {
+    console.log(el, currentOrientation, ship.length);
+    let field = el.attr("id").split(":");
+    console.log(field);
+    var x = parseInt(field[1]);
+    var y = parseInt(field[2]);
 
-  var maxx = x + ship.length;
-  var maxy = y + ship.length;
+    var maxx = x + ship.length;
+    var maxy = y + ship.length;
 
-  if (currentOrientation === "horiz") {
-    if (maxy > numCols) {
-      return true;
+    if (currentOrientation === "horiz") {
+      if (maxy > numCols) {
+        return true;
+      } else {
+        return false;
+      }
     } else {
-      return false;
-    }
-  } else {
-    if (maxx > numRows) {
-      return true;
-    } else {
-      return false;
+      if (maxx > numRows) {
+        return true;
+      } else {
+        return false;
+      }
     }
   }
+  return false;
 }
