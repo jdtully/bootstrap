@@ -332,31 +332,26 @@ $(document).ready(function() {
   // buttons 2->6  blueShiptypes
   $("#blue-btn-carrier").on("click", function() {
     console.log("carrier clicked");
-    shipinplaylength = 5;
     shipinplay = blueCarrier;
     messaging("carrier");
   });
   $("#blue-btn-battleShip").on("click", function() {
     console.log("battleShip clicked");
-    shipinplaylength = 4;
     shipinplay = blueBattleShip;
     messaging("battleShip");
   });
   $("#blue-btn-cruiser").on("click", function() {
     console.log("cruiser clicked");
-    shipinplaylength = 3;
     shipinplay = blueCruiser;
     messaging("cruiser");
   });
   $("#blue-btn-submarine").on("click", function() {
     console.log("submarine clicked");
-    shipinplaylength = 3;
     shipinplay = blueSubmarine;
     messaging("submarine");
   });
   $("#blue-btn-destroyer").on("click", function() {
     console.log("destroyer clicked");
-    shipinplaylength = 2;
     shipinplay = blueDestroyer;
     messaging("destroyer");
   });
@@ -379,31 +374,26 @@ $(document).ready(function() {
   });
   $("#red-btn-carrier").on("click", function() {
     console.log("carrier clicked");
-    shipinplaylength = 5;
     shipinplay = redCarrier;
     messaging("carrier");
   });
   $("#red-btn-battleShip").on("click", function() {
     console.log("battleShip clicked");
-    shipinplaylength = 4;
     shipinplay = redBattleShip;
     messaging("battleShip");
   });
   $("#red-btn-cruiser").on("click", function() {
     console.log("cruiser clicked");
-    shipinplaylength = 3;
     shipinplay = redCruiser;
     messaging("cruiser");
   });
   $("#red-btn-submarine").on("click", function() {
     console.log("submarine clicked");
-    shipinplaylength = 3;
     shipinplay = redSubmarine;
     messaging("submarine");
   });
   $("#red-btn-destroyer").on("click", function() {
     console.log("destroyer clicked");
-    shipinplaylength = 2;
     shipinplay = redDestroyer;
     messaging("destroyer");
   });
@@ -605,10 +595,7 @@ function hoverShip(el) {
 }
 
 function unhoverShip(el) {
-  //el.removeClass("hover");
   let field = el.attr("id").split(":");
-  //console.log(field);
-  var spaces = shipinplaylength;
   var currentselection = createCurrentSelection(
     el,
     currentOrientation,
@@ -643,7 +630,6 @@ function clickShip(el) {
   console.log(el.attr("id"));
   let field = el.attr("id").split(":");
   console.log(field);
-  //var spaces = shipinplaylength;
   var currentselection = createCurrentSelection(
     el,
     currentOrientation,
@@ -662,8 +648,8 @@ function clickShip(el) {
         markSquares(
           el,
           currentOrientation,
-          //shipinplaylength,
           shipinplay,
+
           elclass
         );
 
@@ -856,7 +842,6 @@ function pickShipColor() {
 function markSquares(el, currentOrientation, ship, elclass) {
   let field = el.attr("id").split(":");
 
-  //spaces = shipinplaylength;
   for (i = 0; i < ship.length; i++) {
     if (currentOrientation !== "horiz") {
       squareStr = field[0] + ":" + (parseInt(field[1]) + i) + ":" + field[2];
@@ -898,7 +883,6 @@ function createCurrentSelection(el, currentOrientation, ship) {
   var currentselection = [];
   if (ship) {
     let field = el.attr("id").split(":");
-    spaces = shipinplaylength;
     for (i = 0; i < ship.length; i++) {
       if (currentOrientation !== "horiz") {
         squareStr = field[0] + ":" + (parseInt(field[1]) + i) + ":" + field[2];
