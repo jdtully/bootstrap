@@ -586,6 +586,13 @@ function hoverShip(el) {
         doesOverlap(currentselection, currentPlayer)
       ) {
         elclass = "outofbounds";
+        markSquares(
+          el,
+          currentOrientation,
+          //  shipinplaylength,
+          shipinplay,
+          elclass
+        );
       } else {
         elclass = "hover";
         if (gamePhase === "layout") {
