@@ -588,15 +588,15 @@ function hoverShip(el) {
         elclass = "outofbounds";
       } else {
         elclass = "hover";
-      }
-      if (gamePhase === "layout") {
-        markSquares(
-          el,
-          currentOrientation,
-          //  shipinplaylength,
-          shipinplay,
-          elclass
-        );
+        if (gamePhase === "layout") {
+          markSquares(
+            el,
+            currentOrientation,
+            //  shipinplaylength,
+            shipinplay,
+            elclass
+          );
+        }
       }
     } else {
       if (gamePhase === "layout") {
@@ -651,7 +651,7 @@ function clickShip(el) {
   var currentselection = createCurrentSelection(
     el,
     currentOrientation,
-    shipinplaylength
+    shipinplay
   );
   if (field[0] == "blue-ships-table" || field[0] == "red-ships-table") {
     //this is placing
@@ -664,7 +664,6 @@ function clickShip(el) {
           elclass = "outofbounds";
         } else {
           elclass = ship.shipClass;
-          debugger;
           markSquares(
             el,
             currentOrientation,
@@ -676,7 +675,7 @@ function clickShip(el) {
           var currentselection = createCurrentSelection(
             el,
             currentOrientation,
-            shipinplaylength
+            shipinplay
           );
 
           addShipstotargetfields(currentPlayer, currentselection);
@@ -900,11 +899,11 @@ function changeCurrentPlayer(currentPlayer) {
   return currentPlayer;
 }
 
-function createCurrentSelection(el, currentOrientation, shipinplaylength) {
+function createCurrentSelection(el, currentOrientation, ship) {
   var currentselection = [];
   let field = el.attr("id").split(":");
   spaces = shipinplaylength;
-  for (i = 0; i < spaces; i++) {
+  for (i = 0; i < ship.length; i++) {
     if (currentOrientation !== "horiz") {
       squareStr = field[0] + ":" + (parseInt(field[1]) + i) + ":" + field[2];
     } else {
@@ -959,6 +958,7 @@ function doesOverlap(currentselection, currentPlayer) {
     fleet = blueShips;
   }
   var selectionToTest = currentselection;
+  debugger;
   for (i = 0; i < fleet.length; i++) {
     console.log(i);
     for (j = 0; j < selectionToTest.length; j++) {
