@@ -150,7 +150,7 @@ function isFleetPlaced(currentPlayer) {
   }
   for (i = 0; i < fleet.length; i++) {
     if (!fleet[i].placed) {
-      console.log(i);
+      console.log("iterater is " + i);
       return false;
     }
   }
@@ -450,7 +450,12 @@ function messaging(message) {
       console.log("shot duplicated message");
       $("#status").html("You already shot here");
       break;
-
+    case "gamePhasePlay":
+      console.log("shot duplicated message");
+      $("#status").html(
+        "Ships placed, changing to play mode blue shoots  first"
+      );
+      break;
     case "reset":
       console.log("reset Clicked");
       $("#status").html("New game! blue first!.");
@@ -669,11 +674,12 @@ function clickShip(el) {
         hideShipbutton(shipinplay);
         debugger;
         if (isFleetPlaced(currentPlayer)) {
-          changeCurrentPlayer(currentPlayer);
+          currentPlayer = changeCurrentPlayer(currentPlayer);
         }
 
         if (isFleetPlaced(currentPlayer)) {
           gamePhase = "play";
+          messaging("gamePhasePlay");
         }
       }
     } else {
