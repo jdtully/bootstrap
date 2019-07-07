@@ -31,7 +31,6 @@ letters = [
 currentPlayer = "";
 otherPlayer = [];
 gamePhase = ["setup", "layout", "play", "end"];
-shipinplaylength = 0;
 shipinplay = {};
 currentOrientation = "horiz";
 blueShips = [];
@@ -144,7 +143,19 @@ function isFleetSunk(currentPlayer) {
   }
   return true;
 }
-
+function isFleetPlaced(currentPlayer) {
+  var fleet = redShips;
+  if (currentPlayer === "blue") {
+    fleet = blueShips;
+  }
+  for (i = 0; i < fleet.length; i++) {
+    if (!fleet[i].placed) {
+      console.log(i);
+      return false;
+    }
+  }
+  return true;
+}
 function makeShips() {
   redCarrier = new Ship(
     "redCarrier",
@@ -159,7 +170,7 @@ function makeShips() {
     false
   );
   redShips.push(redCarrier);
-  redBattleship = new Ship(
+  redBattleShip = new Ship(
     "redBattleShip",
     "orange",
     "col_battleShip",
@@ -171,7 +182,7 @@ function makeShips() {
     false,
     false
   );
-  redShips.push(redBattleship);
+  redShips.push(redBattleShip);
   redSubmarine = new Ship(
     "redSubmarine",
     "blue",
@@ -402,7 +413,6 @@ $(document).ready(function() {
     currentPlayer = "red";
     hideShipsTable(currentPlayer);
     messaging("hide");
-    //This button is  to hide your ship selections
   });
   //this button flips  theplayer
   $("#red-btn-flipplayer").on("click", function() {
@@ -645,13 +655,7 @@ function clickShip(el) {
         elclass = "outofbounds";
       } else {
         elclass = ship.shipClass;
-        markSquares(
-          el,
-          currentOrientation,
-          shipinplay,
-
-          elclass
-        );
+        markSquares(el, currentOrientation, shipinplay, elclass);
 
         var currentselection = createCurrentSelection(
           el,
@@ -663,6 +667,14 @@ function clickShip(el) {
         addTargetFieldsToShips(currentPlayer, currentselection, shipinplay);
         markShipObject(shipinplay, currentOrientation, currentselection);
         hideShipbutton(shipinplay);
+        debugger;
+        if (isFleetPlaced(currentPlayer)) {
+          changeCurrentPlayer(currentPlayer);
+        }
+
+        if (isFleetPlaced(currentPlayer)) {
+          gamePhase = "play";
+        }
       }
     } else {
       console.log("noShip");
@@ -708,10 +720,10 @@ function clickShip(el) {
   }
 }
 
-function markShipObject(shipinplay, currentOrientation, currentselection) {
-  shipinplay.orientation = currentOrientation;
-  shipinplay.targets = currentselection;
-  shipinplay.placed = true;
+function markShipObject(ship, currentOrientation, currentselection) {
+  ship.orientation = currentOrientation;
+  ship.targets = currentselection;
+  ship.placed = true;
 }
 
 function hideShipsTable(currentPlayer) {
@@ -767,7 +779,7 @@ function hideShipbutton(shipinplay) {
       resetVariablesDuringLayout();
       break;
 
-    case "redBattleship":
+    case "redBattleShip":
       console.log(shipinplay + " placed");
       var buttonToHide = $("#red-btn-battleShip");
       buttonToHide.addClass("hidden");
@@ -939,7 +951,7 @@ function doesOverlap(currentselection, currentPlayer) {
     fleet = blueShips;
   }
   var selectionToTest = currentselection;
-  debugger;
+
   for (i = 0; i < fleet.length; i++) {
     console.log(i);
     for (j = 0; j < selectionToTest.length; j++) {
