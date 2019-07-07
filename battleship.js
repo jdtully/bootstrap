@@ -679,7 +679,9 @@ function clickShip(el) {
 
         if (isFleetPlaced(currentPlayer)) {
           gamePhase = "play";
-          messaging("gamePhasePlay");
+          messaging("flip");
+
+          messaging("playing");
         }
       }
     } else {
@@ -688,7 +690,10 @@ function clickShip(el) {
     }
   } else {
     //This is Shooting
-    if (field[0] === "blue-shots-table" || field[0] === "red-shots-table") {
+    if (
+      (field[0] === "blue-shots-table" && currentPlayer === "blue") ||
+      (field[0] === "red-shots-table" && currentPlayer === "red")
+    ) {
       if (gamePhase === "play") {
         $(el).removeClass("hover");
         if (checkRepeatShot(el, currentPlayer)) {
@@ -718,6 +723,8 @@ function clickShip(el) {
             console.log("its a ship object miss");
             $(el).addClass("shotMiss");
           }
+          currentPlayer = changeCurrentPlayer(currentPlayer);
+          messaging("flip");
         }
       } else {
         console.log("gamephase is not play");
