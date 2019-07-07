@@ -126,3 +126,6 @@ td.target {
 td.placed_ship {
   background-color: red;
 }
+td.shipHit {
+  content: "x";
+}
