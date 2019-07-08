@@ -324,6 +324,7 @@ function shipObjHit(el) {
     if (hitIdx > -1) {
       let hitplace = ship.targets.splice(hitIdx, 1);
       ship.hits.push(hitplace);
+
       return ship;
     }
   }
@@ -672,7 +673,6 @@ function clickShip(el) {
         addTargetFieldsToShips(currentPlayer, currentselection, shipinplay);
         markShipObject(shipinplay, currentOrientation, currentselection);
         hideShipbutton(shipinplay);
-        debugger;
         if (isFleetPlaced(currentPlayer)) {
           currentPlayer = changeCurrentPlayer(currentPlayer);
         }
@@ -711,6 +711,7 @@ function clickShip(el) {
           if (ship) {
             console.log(ship.shipType + " hit");
             $(el).addClass("shotHit");
+            addXToHitShip(el);
             if (ship.isSunk()) {
               console.log("isSunk is " + ship.isSunk());
               if (isFleetSunk(currentPlayer)) {
@@ -834,6 +835,23 @@ function checkRepeatShot(el, currentPlayer) {
   }
 }
 
+function addXToHitShip(el) {
+  debugger;
+  targetTable = "blue-ships-table";
+  if (currentPlayer === "blue") {
+    targetTable = "red-ships-table";
+  }
+  console.log(el.attr("id"));
+  let field = el.attr("id").split(":");
+  var squareToMark = targetTable + ":" + field[1] + ":" + field[2];
+  var square = document.getElementById(squareToMark);
+  console.log("square to x " + square);
+  $(square).removeClass("hover");
+  $(square).addClass("shipHit");
+
+  console.log(currentPlayer + "  is blue");
+}
+
 function markHitShips(el) {
   targetTable = "blue-ships-table";
   if (currentPlayer === "blue") {
@@ -875,6 +893,7 @@ function markSquares(el, currentOrientation, ship, elclass) {
     }
     var square = document.getElementById(squareStr);
     console.log("fields are " + elclass);
+
     $(square).addClass(elclass);
   }
 }
