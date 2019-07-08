@@ -127,5 +127,8 @@ td.placed_ship {
   background-color: red;
 }
 td.shipHit {
-  content: "x";
+  background-size: 50px 50px;
+  background-position: center;
+  background-repeat: 1;
+  background-image: url("./boom.png");
 }
