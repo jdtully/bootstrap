@@ -29,7 +29,7 @@ letters = [
   "Z"
 ];
 
-shipinplay = {};
+shipInPlay = {};
 currentOrientation = "horiz";
 blueShips = [];
 redShips = [];
@@ -59,16 +59,16 @@ function buildGrid(elementId) {
       var td = document.createElement("td");
       $(td).hover(
         function() {
-          hoverShip($(this));
+          hoverShip($(this), shipInPlay);
         },
         function() {
-          unhoverShip($(this));
+          unhoverShip($(this), shipInPlay);
         }
       );
 
       $(td).click(function() {
         console.log("cell clicked");
-        clickShip($(this), shipinplay);
+        clickShip($(this), shipInPlay);
 
         //var selected =
       });
@@ -332,27 +332,27 @@ $(document).ready(function() {
   // buttons 2->6  blueShiptypes
   $("#blue-btn-carrier").on("click", function() {
     console.log("carrier clicked");
-    shipinplay = blueCarrier;
+    shipInPlay = blueCarrier;
     messaging("carrier");
   });
   $("#blue-btn-battleShip").on("click", function() {
     console.log("battleShip clicked");
-    shipinplay = blueBattleShip;
+    shipInPlay = blueBattleShip;
     messaging("battleShip");
   });
   $("#blue-btn-cruiser").on("click", function() {
     console.log("cruiser clicked");
-    shipinplay = blueCruiser;
+    shipInPlay = blueCruiser;
     messaging("cruiser");
   });
   $("#blue-btn-submarine").on("click", function() {
     console.log("submarine clicked");
-    shipinplay = blueSubmarine;
+    shipInPlay = blueSubmarine;
     messaging("submarine");
   });
   $("#blue-btn-destroyer").on("click", function() {
     console.log("destroyer clicked");
-    shipinplay = blueDestroyer;
+    shipInPlay = blueDestroyer;
     messaging("destroyer");
   });
   //This button is  to hide your ship selections
@@ -374,27 +374,27 @@ $(document).ready(function() {
   });
   $("#red-btn-carrier").on("click", function() {
     console.log("carrier clicked");
-    shipinplay = redCarrier;
+    shipInPlay = redCarrier;
     messaging("carrier");
   });
   $("#red-btn-battleShip").on("click", function() {
     console.log("battleShip clicked");
-    shipinplay = redBattleShip;
+    shipInPlay = redBattleShip;
     messaging("battleShip");
   });
   $("#red-btn-cruiser").on("click", function() {
     console.log("cruiser clicked");
-    shipinplay = redCruiser;
+    shipInPlay = redCruiser;
     messaging("cruiser");
   });
   $("#red-btn-submarine").on("click", function() {
     console.log("submarine clicked");
-    shipinplay = redSubmarine;
+    shipInPlay = redSubmarine;
     messaging("submarine");
   });
   $("#red-btn-destroyer").on("click", function() {
     console.log("destroyer clicked");
-    shipinplay = redDestroyer;
+    shipInPlay = redDestroyer;
     messaging("destroyer");
   });
   $("#red-btn-hide").on("click", function() {
@@ -566,25 +566,21 @@ function initgame() {
   messaging("currentPlayer");
 }
 
-function hoverShip(el) {
+function hoverShip(el, ship) {
   let field = el.attr("id").split(":");
-  var currentselection = createCurrentSelection(
-    el,
-    currentOrientation,
-    shipinplay
-  );
+  var currentselection = createCurrentSelection(el, currentOrientation, ship);
   if (field[0] === "blue-ships-table" || field[0] === "red-ships-table") {
-    if (gamePhase === "layout" && shipinplay) {
+    if (gamePhase === "layout" && ship) {
       if (
-        edgeCollision(el, currentOrientation, shipinplay) ||
+        edgeCollision(el, currentOrientation, ship) ||
         doesOverlap(currentselection, currentPlayer)
       ) {
         elclass = "outofbounds";
-        markSquares(el, currentOrientation, shipinplay, elclass);
+        markSquares(el, currentOrientation, ship, elclass);
       } else {
         elclass = "hover";
         if (gamePhase === "layout") {
-          markSquares(el, currentOrientation, shipinplay, elclass);
+          markSquares(el, currentOrientation, ship, elclass);
         }
       }
     }
@@ -598,25 +594,21 @@ function hoverShip(el) {
   }
 }
 
-function unhoverShip(el) {
+function unhoverShip(el, ship) {
   let field = el.attr("id").split(":");
-  var currentselection = createCurrentSelection(
-    el,
-    currentOrientation,
-    shipinplay
-  );
+  var currentselection = createCurrentSelection(el, currentOrientation, ship);
 
   if (field[0] == "blue-ships-table" || field[0] == "red-ships-table") {
-    if (gamePhase === "layout" && shipinplay) {
+    if (gamePhase === "layout" && ship) {
       if (
-        edgeCollision(el, currentOrientation, shipinplay) ||
+        edgeCollision(el, currentOrientation, ship) ||
         doesOverlap(currentselection, currentPlayer)
       ) {
         elclass = "outofbounds";
       } else {
         elclass = "hover";
       }
-      unmarkSquares(el, currentOrientation, shipinplay, elclass);
+      unmarkSquares(el, currentOrientation, ship, elclass);
     } else {
       console.log("got here");
     }
@@ -654,7 +646,7 @@ function clickShip(el, ship) {
 
         addShipstotargetfields(currentPlayer, currentselection);
         addTargetFieldsToShip(currentPlayer, currentselection, ship);
-        markShipObject(ship, currentOrientation, currentselection);
+        markShipObject(ship, currentOrientation);
         hideShipbutton(ship);
         if (isFleetPlaced(currentPlayer)) {
           currentPlayer = changeCurrentPlayer(currentPlayer);
@@ -857,7 +849,7 @@ function recordShots(el, currentPlayer) {
 }
 
 function resetVariablesDuringLayout() {
-  shipinplay = null;
+  shipInPlay = null;
   currentselection = [];
   elclass = {};
 }
@@ -937,20 +929,20 @@ function addShipstotargetfields(currentPlayer, currentselection) {
     }
   }
 }
-function addTargetFieldsToShip(currentPlayer, currentselection, shipinplay) {
+function addTargetFieldsToShip(currentPlayer, currentselection, ship) {
   console.log(currentPlayer);
   console.log(currentselection);
   for (i in currentselection) {
     var j = $(currentselection[i]);
     let k = j.attr("id").split(":");
     var l = parseInt(k[1]) + ":" + parseInt(k[2]);
-    shipinplay.targets.push(l);
+    ship.targets.push(l);
   }
 }
 
-function markShipObject(shipinplay, currentOrientation) {
-  shipinplay.orientation = currentOrientation;
-  shipinplay.placed = true;
+function markShipObject(ship, currentOrientation) {
+  ship.orientation = currentOrientation;
+  ship.placed = true;
 }
 
 function doesOverlap(currentselection, currentPlayer) {
